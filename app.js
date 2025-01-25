@@ -12,7 +12,18 @@ app.get('/status', (_, res) => {
   return res.send({ "status": "Funcional" });
 })
 
-app.post('/msg', (req, res) => {
-  console.log(req.body);
-  return res.send({ "message": "Mensagem recebida" })
+app.get('/teste', (req, res) => {
+  console.log(req.query)
+  console.log(req.query["hub.mode"])
+  console.log(req.query["hub.verify_token"])
+  return res.send({ 'message': 'test successfull' })
 })
+
+app.get('/webhook', (req, res) => {
+  const queries = req.query;
+  if (queries["hub.verify_token"] !== process.env.VERIFY_TOKEN) return res.status(401).send({ "error": "token mismatch" });
+  if (queries["hub.mode"] === "subscribe") {
+    return res.send(queries["hub.challenge"]);
+  }
+  return res.send({ "message": "no data?" });
+});
