@@ -11,6 +11,7 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (_req, res) => res.send({ "data": "" }) );
+app.get("/healthcheck", (req, res) => res.status(200).end());
 app.get("/coffee", (_req, res) => res.status(418).end());
 
 app.get("/webhook", (req, res) => {
