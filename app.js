@@ -29,7 +29,7 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-  console.info("Incoming webhook message:", JSON.stringify(req.body, null, 2));
+  return console.info("Incoming webhook message:", JSON.stringify(req.body, null, 2));
 
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
