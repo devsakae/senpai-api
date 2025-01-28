@@ -10,7 +10,7 @@ app.listen(PORT, () => {
   console.log("API iniciou na porta", PORT);
 });
 
-app.get("/", (_req, res) => res.send({ "data": "" }) );
+app.get("/", (_req, res) => res.send({ "status": "online" }) );
 app.get("/healthcheck", (req, res) => res.status(200).end());
 app.get("/coffee", (_req, res) => res.status(418).end());
 
