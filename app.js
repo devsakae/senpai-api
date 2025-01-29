@@ -37,23 +37,30 @@ app.post("/webhook", async (req, res) => {
   // check if the incoming message contains text
   if (message?.type === "text") {
     const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-    await axios({
-      method: "POST",
-      url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
-      headers: {
-        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      },
-      data: {
-        messaging_product: "whatsapp",
-        to: message.from,
-        text: { body: "Obrigado por sua mensagem." },
-        context: {
-          message_id: message.id,
+    try {
+      await axios({
+        method: "POST",
+        url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
+        headers: {
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
         },
-        status: "read",
-        message_id: message.id
-      },
-    });
+        data: {
+          messaging_product: "whatsapp",
+          to: message.from,
+          text: { body: "Obrigado por sua mensagem." },
+          context: {
+            message_id: message.id,
+          },
+          status: "read",
+          message_id: message.id
+        },
+      });
+    } catch(err) {
+      console.log("Erro!")
+      console.error(err);
+    } finally {
+      console.info("end");
+    }
 
     // mark incoming message as read
     // await axios({
