@@ -4,7 +4,7 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
-const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN, PORT } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN, PORT, VERSION } = process.env;
 
 app.listen(PORT, () => {
   console.log("API iniciou na porta", PORT);
@@ -39,7 +39,7 @@ app.post("/webhook", async (req, res) => {
     const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
     await axios({
       method: "POST",
-      url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
+      url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
       headers: {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       },
@@ -58,7 +58,7 @@ app.post("/webhook", async (req, res) => {
     // mark incoming message as read
     // await axios({
     //   method: "POST",
-    //   url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
+    //   url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
     //   headers: {
     //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
     //   },
