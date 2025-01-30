@@ -38,7 +38,7 @@ app.post("/webhook", async (req, res) => {
 
   console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + messages[0]?.type + "]");
   
-  if (messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
+  // if (messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
 
   // check if the incoming message contains text
   if (messages[0]?.type === "text") {
