@@ -32,11 +32,12 @@ app.get("/webhook", (req, res) => {
 app.post("/webhook", async (req, res) => {
   
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-  const payload = req.body.entry?.[0]?.changes;
-  const contact = payload[0]?.value?.contacts;
-  const message = payload[0]?.value?.messages?.[0];
+  const payload = req.body.entry[0]?.changes;
+  const phone_number = payload[0]?.value?.metadata?.display_phone_number;
+  const contact = payload[0]?.value?.contacts[0];
+  const message = payload[0]?.value?.messages[0];
   const message_content = message?.type === "text" ? message?.text?.body : message?.type;
-  console.info("message from", contact?.profile?.name, payload[0]?.value?.metadata?.display_nome_number, ">", message_content);
+  console.info("message from", contact?.profile?.name, phone_number, ">", message_content);
   
   if (message?.type === "request_welcome") return greetFirstUser(req, res);
 
