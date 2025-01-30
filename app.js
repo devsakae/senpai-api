@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const { greetFirstUser } = require('./src/templates');
 
 const app = express();
 app.use(express.json());
@@ -29,10 +30,15 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-  console.info("Incoming webhook message:", JSON.stringify(req.body, null, 2));
-
+  
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-  const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+  const payload = req.body.entry?.[0]?.changes;
+  const contact = payload[0]?.contacts;
+  const message = payload[0]?.value?.messages?.[0];
+  const message_content = message?.type === "text" ? message?.text?.body : message?.type;
+  console.info("message from", contact?.profile?.name, payload?.value?.metadata?.display_nome_number, ">", message_content);
+  
+  if (message?.type === "request_welcome") return greetFirstUser(req, res);
 
   // check if the incoming message contains text
   if (message?.type === "text") {
@@ -46,36 +52,13 @@ app.post("/webhook", async (req, res) => {
         },
         data: {
           messaging_product: "whatsapp",
-          to: message.from,
-          text: { body: "Obrigado por sua mensagem." },
-          context: {
-            message_id: message.id,
-          },
           status: "read",
           message_id: message.id
         },
       });
     } catch(err) {
-      console.log("Erro!")
-      console.error(err);
-    } finally {
-      console.info("end");
-    }
-
-    // mark incoming message as read
-    // await axios({
-    //   method: "POST",
-    //   url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
-    //   headers: {
-    //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-    //   },
-    //   data: {
-    //     messaging_product: "whatsapp",
-    //     status: "read",
-    //     message_id: message.id,
-    //   },
-    // });
+      return console.error("ERROR:", err);
+    };
   }
-
   return res.sendStatus(200);
 });
