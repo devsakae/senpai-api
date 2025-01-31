@@ -53,7 +53,7 @@ app.post("/webhook", async (req, res) => {
         data: {
           messaging_product: "whatsapp",
           status: "read",
-          message_id: messages[0]?.id
+          message_id: payload?.messages[0]?.id
         },
       });
     } catch(err) {
