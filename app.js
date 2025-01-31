@@ -33,15 +33,13 @@ app.post("/webhook", async (req, res) => {
   
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const { metadata, contacts } = payload;
-  const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";
-
-  console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
   
   // if (payload?.messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
-
-  // check if the incoming message contains text
+  
   if (payload?.messages[0]?.type === "text") {
+      const { metadata, contacts } = payload;
+      const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";    
+      console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
     const business_phone_number_id = metadata?.phone_number_id;
     try {
       await axios({
@@ -58,7 +56,11 @@ app.post("/webhook", async (req, res) => {
       });
     } catch(err) {
       return console.error("ERROR:", err);
+    } finally {
+      return res.sendStatus(200);
     };
-  }
+  } 
+  console.info("----- unknown ----", req?.body?.entry[0]?.changes[0]?.value);
   return res.sendStatus(200);
+  
 });
