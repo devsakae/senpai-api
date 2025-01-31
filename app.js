@@ -33,15 +33,15 @@ app.post("/webhook", async (req, res) => {
   
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const { metadata, contacts, messages } = payload;
-  const message_content = messages[0]?.type === "text" ? messages[0]?.text?.body : messages[0]?.type;
+  const { metadata, contacts } = payload;
+  const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";
 
-  console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + messages[0]?.type + "]");
+  console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
   
-  // if (messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
+  // if (payload?.messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
 
   // check if the incoming message contains text
-  if (messages[0]?.type === "text") {
+  if (payload?.messages[0]?.type === "text") {
     const business_phone_number_id = metadata?.phone_number_id;
     try {
       await axios({
