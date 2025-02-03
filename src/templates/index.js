@@ -10,21 +10,16 @@ const greetFirstUser = async (data) => {
   myHeaders.append('Authorization', `Bearer ${GRAPH_API_TOKEN}`);
 
   const raw = JSON.stringify({
-    messaging_product: 'whatsapp',
-    recipient_type: 'individual',
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
     to: metadata?.display_phone_number,
-    type: 'template',
+    type: "template",
     template: {
-      name: 'modo_manutencao',
+      name: "modo_manutencao",
       language: {
-        code: 'pt_br',
+        code: "pt_br",
       },
-      components: [
-        {
-          type: 'header',
-          parameters: [],
-        },
-      ],
+      components: [],
     },
   });
 
