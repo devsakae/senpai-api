@@ -59,7 +59,7 @@ app.post("/webhook", async (req, res) => {
       console.error("ERROR:", err);
     } finally {
       if (metadata?.display_phone_number.startsWith("55")) {
-        await greetFirstUser(req, res);
+        await greetFirstUser(req);
       }
     }
   }

@@ -1,8 +1,9 @@
 const axios = require('axios');
-const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN, PORT, VERSION } = process.env;
+const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (data) => {
   const metadata = data.body.entry?.[0].changes?.[0].value?.metadata;
+  console.info(metadata);
   try {
     await axios({
       method: 'POST',
