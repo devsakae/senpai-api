@@ -3,9 +3,43 @@ const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (data) => {
   const metadata = data.body.entry?.[0].changes?.[0].value?.metadata;
-  console.info('greeting first user with phone', metadata?.display_phone_number);
+  console.info('greeting first user with phone', metadata.display_phone_number);
 
-  const myHeaders = new Headers();
+  let data = JSON.stringify({
+    messaging_product: 'whatsapp',
+    recipient_type: 'individual',
+    to: metadata.display_phone_number,
+    type: 'template',
+    template: {
+      name: 'modo_manutencao',
+      language: {
+        code: 'pt_br',
+      },
+      components: [],
+    },
+  });
+
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: `https://graph.facebook.com/${VERSION}/${metadata.phone_number_id}/messages`,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+    },
+    data: data,
+  };
+
+  await axios
+    .request(config)
+    .then((response) => {
+      console.log('ok!', JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.error('Erro!', error);
+    });
+
+  /* const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${GRAPH_API_TOKEN}`);
 
@@ -36,38 +70,7 @@ const greetFirstUser = async (data) => {
   )
     .then((response) => response.text())
     .then((result) => console.log("sent!", result))
-    .catch((error) => console.error("error!", error));
-
-  /*   try {
-    await axios({
-      method: 'POST',
-      url: `https://graph.facebook.com/${VERSION}/${metadata?.phone_number_id}/messages`,
-      headers: {
-        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      },
-      data: {
-        messaging_product: 'whatsapp',
-        recipient_type: 'individual',
-        to: metadata?.display_phone_number,
-        type: 'template',
-        template: {
-          name: 'modo_manutencao',
-          language: {
-            code: 'pt_br',
-          },
-          components: [
-            {
-              type: 'header',
-              parameters: [],
-            },
-          ],
-        },
-      },
-    });
-  } catch (err) {
-    console.error('Erro ao enviar mensagem de boas vindas!');
-    console.error(err.code);
-  } */
+    .catch((error) => console.error("error!", error)); */
 };
 
 module.exports = {
