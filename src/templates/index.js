@@ -1,8 +1,8 @@
 const axios = require('axios');
 const { GRAPH_API_TOKEN, VERSION } = process.env;
 
-const greetFirstUser = async (data) => {
-  const metadata = data.body.entry?.[0].changes?.[0].value?.metadata;
+const greetFirstUser = async (payload) => {
+  const metadata = payload.body.entry?.[0].changes?.[0].value?.metadata;
   console.info('greeting first user with phone', metadata.display_phone_number);
 
   let data = JSON.stringify({
