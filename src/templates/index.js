@@ -1,30 +1,30 @@
-const axios = require('axios');
+const axios = require("axios");
 const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (payload) => {
   const metadata = payload.body.entry?.[0].changes?.[0].value?.metadata;
-  console.info('greeting first user with phone', metadata.display_phone_number);
+  console.info("greeting first user with phone", metadata.display_phone_number);
 
   let data = JSON.stringify({
-    messaging_product: 'whatsapp',
-    recipient_type: 'individual',
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
     to: metadata.display_phone_number,
-    type: 'template',
+    type: "template",
     template: {
-      name: 'modo_manutencao',
+      name: "modo_manutencao",
       language: {
-        code: 'pt_br',
+        code: "pt_br",
       },
       components: [],
     },
   });
 
   let config = {
-    method: 'post',
+    method: "POST",
     maxBodyLength: Infinity,
     url: `https://graph.facebook.com/${VERSION}/${metadata.phone_number_id}/messages`,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
     },
     data: data,
@@ -33,15 +33,15 @@ const greetFirstUser = async (payload) => {
   await axios
     .request(config)
     .then((response) => {
-      console.log('ok!', JSON.stringify(response.data));
+      console.log("ok!", JSON.stringify(response.data));
     })
     .catch((error) => {
-      console.error('Erro!', error);
+      console.error("Erro!", error.code);
     });
 
   /* const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Authorization', `Bearer ${GRAPH_API_TOKEN}`);
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${GRAPH_API_TOKEN}`);
 
   const raw = JSON.stringify({
     messaging_product: "whatsapp",
@@ -58,10 +58,10 @@ const greetFirstUser = async (payload) => {
   });
 
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   fetch(
