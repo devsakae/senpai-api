@@ -41,9 +41,13 @@ app.post("/webhook", async (req, res) => {
     const { metadata, contacts } = payload;
     const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";
     console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
-    const business_phone_number_id = metadata?.phone_number_id;
+    /* const business_phone_number_id = metadata?.phone_number_id; */
     try {
-      await axios({
+      if (metadata?.display_phone_number.startsWith("55")) {
+        await greetFirstUser(req);
+      }
+
+      /* await axios({
         method: "POST",
         url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
         headers: {
@@ -54,13 +58,9 @@ app.post("/webhook", async (req, res) => {
           status: "read",
           message_id: payload?.messages[0]?.id
         },
-      });
+      }); */
     } catch(err) {
       console.error("ERROR:", err);
-    } finally {
-      if (metadata?.display_phone_number.startsWith("55")) {
-        await greetFirstUser(req);
-      }
     }
   }
   console.info("***\n", req?.body?.entry[0]?.changes[0]?.value);

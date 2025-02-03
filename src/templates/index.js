@@ -30,14 +30,21 @@ const greetFirstUser = async (payload) => {
     data: data,
   };
 
-  await axios
+  try {
+    const response = axios(config);
+    console.log("ok!", response);
+  } catch (err) {
+    console.error("erro!", err);
+  }
+
+  /* await axios
     .request(config)
     .then((response) => {
       console.log("ok!", JSON.stringify(response.data));
     })
     .catch((error) => {
       console.error("Erro!", error.code);
-    });
+    }); */
 
   /* const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
