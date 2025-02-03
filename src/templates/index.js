@@ -3,19 +3,19 @@ const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (payload) => {
   const metadata = payload.body.entry?.[0].changes?.[0].value?.metadata;
-  console.info("greeting first user with phone", metadata.display_phone_number);
+  console.info("greeting first user with phone", metadata?.display_phone_number);
 
   let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
-    to: metadata.display_phone_number,
+    to: metadata?.phone_number_id,
     type: "template",
     template: {
       name: "modo_manutencao",
       language: {
+        policy: "deterministic",
         code: "pt_br",
-      },
-      components: [],
+      }
     },
   });
 
@@ -30,54 +30,15 @@ const greetFirstUser = async (payload) => {
     data: data,
   };
 
-  try {
-    const response = axios(config);
-    console.log("ok!", response);
-  } catch (err) {
-    console.error("erro!", err);
-  }
-
-  /* await axios
+  await axios
     .request(config)
     .then((response) => {
-      console.log("ok!", JSON.stringify(response.data));
+      console.log("ok!", JSON.stringify(response?.data));
     })
     .catch((error) => {
       console.error("Erro!", error.code);
-    }); */
+    });
 
-  /* const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", `Bearer ${GRAPH_API_TOKEN}`);
-
-  const raw = JSON.stringify({
-    messaging_product: "whatsapp",
-    recipient_type: "individual",
-    to: metadata?.display_phone_number,
-    type: "template",
-    template: {
-      name: "modo_manutencao",
-      language: {
-        code: "pt_br",
-      },
-      components: [],
-    },
-  });
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  fetch(
-    `https://graph.facebook.com/${VERSION}/${metadata?.phone_number_id}/messages`,
-    requestOptions,
-  )
-    .then((response) => response.text())
-    .then((result) => console.log("sent!", result))
-    .catch((error) => console.error("error!", error)); */
 };
 
 module.exports = {
