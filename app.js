@@ -36,7 +36,7 @@ app.post("/webhook", async (req, res) => {
   
   // if (payload?.messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
   
-  if (req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === "text") {
+  if (req.body.entry[0]?.changes[0]?.value?.messages.length > 0 && req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === "text") {
     const payload = req.body.entry[0]?.changes[0]?.value;
     const { metadata, contacts } = payload;
     const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";

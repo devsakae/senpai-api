@@ -3,7 +3,7 @@ const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (data) => {
   const metadata = data.body.entry?.[0].changes?.[0].value?.metadata;
-  console.info(metadata);
+  console.info('greeting first user', metadata);
   try {
     await axios({
       method: 'POST',
@@ -32,6 +32,7 @@ const greetFirstUser = async (data) => {
     });
   } catch (err) {
     console.error('Erro ao enviar mensagem de boas vindas!');
+    console.error(err);
   }
 };
 
