@@ -63,5 +63,6 @@ app.post("/webhook", async (req, res) => {
       }
     }
   }
+  console.info("***\n", req?.body?.entry[0]?.changes[0]?.value);
   return res.sendStatus(200);
 });

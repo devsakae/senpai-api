@@ -2,6 +2,7 @@ const axios = require("axios");
 const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (payload) => {
+  const msg = req.body.entry[0]?.changes[0]?.value?.messages[0];
   const metadata = payload.body.entry[0]?.changes[0]?.value?.metadata;
   console.info("greeting first user with phone", metadata?.display_phone_number);
 
@@ -17,13 +18,14 @@ const greetFirstUser = async (payload) => {
         code: "pt_br",
       }
     },
-  }); */
+  }); */ 
+  console.log('replying to', msg?.id);
   let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
     to: metadata?.phone_number_id,
     context: {
-      message_id: payload.body.entry[0]?.id
+      message_id: msg?.id
     },
     type: "text",
     text: {
@@ -45,12 +47,9 @@ const greetFirstUser = async (payload) => {
 
   await axios
     .request(config)
-    .then((response) => {
-      console.log("greeting sent!", JSON.stringify(response?.data));
-    })
-    .catch((error) => {
-      console.error("Erro!", error.code);
-    });
+    .then((response) => console.log("greeting sent!", JSON.stringify(response?.data)))
+    .catch((error) => console.error("Erro!", error.code))
+    .finally(() => console.log('end greeting'));
 
 };
 
