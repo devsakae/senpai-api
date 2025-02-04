@@ -45,7 +45,7 @@ app.post("/webhook", async (req, res) => {
     try {
       await axios({
         method: "POST",
-        url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages?access_token=${WEBHOOK_VERIFY_TOKEN}`,
+        url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
         headers: {
           Authorization: `Bearer ${GRAPH_API_TOKEN}`,
         },

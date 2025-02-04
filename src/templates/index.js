@@ -1,14 +1,17 @@
 const axios = require("axios");
-const { GRAPH_API_TOKEN, VERSION } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (payload) => {
   const msg = payload.body.entry[0]?.changes[0]?.value?.messages[0];
   const metadata = payload.body.entry[0]?.changes[0]?.value?.metadata;
   console.info("greeting first user with phone", metadata?.display_phone_number);
 
-/*   let data = JSON.stringify({
+  let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
+    context: {
+      message_id: msg?.id
+    },
     to: metadata?.phone_number_id,
     type: "template",
     template: {
@@ -18,9 +21,8 @@ const greetFirstUser = async (payload) => {
         code: "pt_br",
       }
     },
-  }); */ 
-  console.log('replying to', msg?.id);
-  let data = JSON.stringify({
+  }); 
+  /* let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
     to: metadata?.phone_number_id,
@@ -32,12 +34,12 @@ const greetFirstUser = async (payload) => {
       preview_url: false,
       body: "Ficamos felizes que você nos escolheu! Estamos em manutenção para melhorias, estaremos disponíveis em alguns dias, agradecemos pela atenção. ♥️\n\nQue tal acompanhar as novidades direto no nosso site?\n\nhttp://www.botdosenpai.com.br"
     }
-  });
+  }); */
 
   let config = {
     method: "POST",
     maxBodyLength: Infinity,
-    url: `https://graph.facebook.com/${VERSION}/${metadata.phone_number_id}/messages`,
+    url: `https://graph.facebook.com/${VERSION}/${metadata.phone_number_id}/messages?verify_token=${WEBHOOK_VERIFY_TOKEN}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
