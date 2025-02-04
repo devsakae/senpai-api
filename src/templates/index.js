@@ -2,10 +2,10 @@ const axios = require("axios");
 const { GRAPH_API_TOKEN, VERSION } = process.env;
 
 const greetFirstUser = async (payload) => {
-  const metadata = payload.body.entry?.[0].changes?.[0].value?.metadata;
+  const metadata = payload.body.entry[0]?.changes[0]?.value?.metadata;
   console.info("greeting first user with phone", metadata?.display_phone_number);
 
-  let data = JSON.stringify({
+/*   let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
     to: metadata?.phone_number_id,
@@ -17,6 +17,19 @@ const greetFirstUser = async (payload) => {
         code: "pt_br",
       }
     },
+  }); */
+  let data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: metadata?.phone_number_id,
+    context: {
+      message_id: payload.body.entry[0]?.id
+    },
+    type: "text",
+    text: {
+      preview_url: false,
+      body: "Ficamos felizes que você nos escolheu! Estamos em manutenção para melhorias, estaremos disponíveis em alguns dias, agradecemos pela atenção. ♥️\n\nQue tal acompanhar as novidades direto no nosso site?\n\nhttp://www.botdosenpai.com.br"
+    }
   });
 
   let config = {
@@ -33,7 +46,7 @@ const greetFirstUser = async (payload) => {
   await axios
     .request(config)
     .then((response) => {
-      console.log("ok!", JSON.stringify(response?.data));
+      console.log("greeting sent!", JSON.stringify(response?.data));
     })
     .catch((error) => {
       console.error("Erro!", error.code);
