@@ -49,7 +49,7 @@ app.post('/webhook', async (req, res) => {
     console.info(
       'msg from',
       contacts[0]?.profile?.name,
-      metadata?.display_phone_number,
+      contacts[0]?.wa_id,
       '>',
       message_content,
       '[' + payload?.messages[0]?.type + ']',
@@ -67,7 +67,7 @@ app.post('/webhook', async (req, res) => {
       data: {
         messaging_product: "whatsapp",
         recipient_type: "individual",
-        to: metadata?.display_phone_number,
+        to: contacts[0]?.wa_id,
         type: "template",
         template: {
             name: "modo_manutencao",
