@@ -54,25 +54,50 @@ app.post('/webhook', async (req, res) => {
       message_content,
       '[' + payload?.messages[0]?.type + ']',
     );
-    const myHeaders = metaHeadersById(metadata?.phone_number_id);
-    await axios
-      .request({
-        myHeaders,
-        data: {
-          messaging_product: 'whatsapp',
-          status: 'read',
-          message_id: payload?.messages[0]?.id,
-        },
-      })
-      .then((response) =>
-        console.log('greeting sent!', JSON.stringify(response?.data)),
-      )
-      .catch((error) => console.error('Erro!', error.code))
-      .finally(() => {
-        if (metadata?.display_phone_number.startsWith('55')) {
-          greetFirstUser(req);
+    console.log("metadata", metadata);
+    // const myHeaders = metaHeadersById(metadata?.phone_number_id);
+
+    await axios({
+      method: "POST",
+      url: `https://graph.facebook.com/v18.0/${metadata?.phone_number_id}/messages`,
+      headers: {
+        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+        "Content-Type": application/json,
+      },
+      data: {
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to: metadata?.display_phone_number,
+        type: "template",
+        template: {
+            name: "modo_manutencao",
+            language: {
+                code: "pt_br"
+            },
+            components: [
+            ]
         }
-      });
+    }
+    })
+
+    // await axios
+    //   .request({
+    //     myHeaders,
+    //     data: {
+    //       messaging_product: 'whatsapp',
+    //       status: 'read',
+    //       message_id: payload?.messages[0]?.id,
+    //     },
+    //   })
+    //   .then((response) =>
+    //     console.log('greeting sent!', JSON.stringify(response?.data)),
+    //   )
+    //   .catch((error) => console.error('Erro!', error.code))
+    //   .finally(() => {
+    //     if (metadata?.display_phone_number.startsWith('55')) {
+    //       greetFirstUser(req);
+    //     }
+    //   });
 
     // try {
     //   const sendRead = await axios(
