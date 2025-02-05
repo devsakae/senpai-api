@@ -62,7 +62,7 @@ app.post('/webhook', async (req, res) => {
       url: `https://graph.facebook.com/v18.0/${metadata?.phone_number_id}/messages`,
       headers: {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        "Content-Type": application/json,
+        "Content-Type": "application/json",
       },
       data: {
         messaging_product: "whatsapp",
