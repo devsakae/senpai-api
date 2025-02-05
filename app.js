@@ -33,14 +33,15 @@ app.get("/webhook", (req, res) => {
 app.post("/webhook", async (req, res) => {
   
   // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-  const payload = req.body.entry[0]?.changes[0]?.value;
+  // const payload = req.body.entry[0]?.changes[0]?.value;
   
   // if (payload?.messages[0]?.type === "request_welcome") return greetFirstUser(req, res);
   
-  if (payload?.messages[0]?.type === "text") {
-      const { metadata, contacts } = payload;
-      const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";    
-      console.info("[" + payload?.messages[0]?.id + "]", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
+  if (req.body.entry[0]?.changes[0]?.value?.messages && req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === "text") {
+    const payload = req.body.entry[0]?.changes[0]?.value;
+    const { metadata, contacts } = payload;
+    const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";
+    console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
     const myHeaders = metaHeadersById(metadata?.phone_number_id);
     try {
       await axios(
@@ -53,12 +54,13 @@ app.post("/webhook", async (req, res) => {
           },
         });
     } catch(err) {
-      return console.error("ERROR:", err);
+      console.error("ERROR:", err);
     } finally {
-      return res.sendStatus(200);
-    };
-  } 
-  console.info("***", req?.body?.entry[0]?.changes[0]?.value);
+      if (metadata?.display_phone_number.startsWith("55")) {
+        await greetFirstUser(req);
+      }
+    }
+  }
+  console.info("***\n", req?.body?.entry[0]?.changes[0]?.value);
   return res.sendStatus(200);
-  
 });
