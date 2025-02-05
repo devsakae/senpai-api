@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const { greetFirstUser } = require('./src/templates');
+const { metaHeadersById } = require('./src/post');
 
 const app = express();
 app.use(express.json());
@@ -39,21 +40,18 @@ app.post("/webhook", async (req, res) => {
   if (payload?.messages[0]?.type === "text") {
       const { metadata, contacts } = payload;
       const message_content = payload?.messages[0]?.type === "text" ? payload?.messages[0]?.text?.body : payload?.messages[0]?.type || "unknown";    
-      console.info("msg from", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
-    const business_phone_number_id = metadata?.phone_number_id;
+      console.info("[" + payload?.messages[0]?.id + "]", contacts[0]?.profile?.name, metadata?.display_phone_number, ">", message_content, "[" + payload?.messages[0]?.type + "]");
+    const myHeaders = metaHeadersById(metadata?.phone_number_id);
     try {
-      await axios({
-        method: "POST",
-        url: `https://graph.facebook.com/${VERSION}/${business_phone_number_id}/messages`,
-        headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        },
-        data: {
-          messaging_product: "whatsapp",
-          status: "read",
-          message_id: payload?.messages[0]?.id
-        },
-      });
+      await axios(
+        {
+          myHeaders,
+          data: {
+            messaging_product: "whatsapp",
+            status: "read",
+            message_id: payload?.messages[0]?.id
+          },
+        });
     } catch(err) {
       return console.error("ERROR:", err);
     } finally {
