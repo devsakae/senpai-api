@@ -2,17 +2,15 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require("../templates");
 
 const checkContact = async (req) => {
-  console.log('checking contact');
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   const sender = await senpaiMongoDb
                         .collection('customers')
                         .findOne({ "wa_id": contact.wa_id });
   if (sender) {
-    console.log(sender);
-    await message_hello(req);
+    return console.info('(usuário conhecido do bot)');
   }
   else {
-    console.info('saving @ mongodb...')
+    console.info('dando boas vindas ao usuário')
     await senpaiMongoDb
           .collection('customers')
           .insertOne({ 
@@ -21,7 +19,7 @@ const checkContact = async (req) => {
             "contact": contact,
             "first_contact": new Date(),
           })
-          .then((response) => console.log(response.data))
+          .then((response) => console.log(response))
           .catch((err) => console.error(err.code))
           .finally(() => message_hello(req));
   }
