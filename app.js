@@ -4,36 +4,23 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 const { checkContact } = require('./src/controllers/saveContact.controller');
+const { senpaiMongoDb } = require('./src/utils/connections');
 
 const app = express();
 app.use(express.json());
 
-const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN, PORT, VERSION, MONGODB_URI } =
-  process.env;
-
-const mongoclient = new MongoClient(MONGODB_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-const senpaiMongoDb = mongoclient.db('senpai');
+const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
 
 (async () => {
-  console.log('Senpai, by devsakae (2025)\n')
+  console.log('Senpai, by devsakae (2025)\nInicializando o bot, aguarde...');
   try {
-    console.info('Iniciando bot...');
-    mongoclient.connect();
-    senpaiMongoDb.command({ ping: 1 })
-      .then((response) => {
-              if (!response) throw Error('❌ Conexão com MongoDB')
-              console.info('✔ Conexão com MongoDB');
-          });
-} catch (err) {
-  return console.error(err);
-} finally {
+    senpaiMongoDb.command({ ping: 1 }).then((response) => {
+      if (!response) throw Error('❌ Conexão com MongoDB');
+      console.info('✔ Conexão com MongoDB');
+    });
+  } catch (err) {
+    return console.error(err.code);
+  } finally {
     app.listen(PORT, () => {
       console.log('✔ API escutando na porta', PORT);
     });
@@ -55,14 +42,19 @@ const senpaiMongoDb = mongoclient.db('senpai');
 
     app.post('/webhook', async (req, res) => {
       testData.incoming.push(req.body);
-      fs.writeFileSync('./data/data.json', JSON.stringify(testData, null, 4), 'utf-8', (err) => err)
+      fs.writeFileSync(
+        './data/data.json',
+        JSON.stringify(testData, null, 4),
+        'utf-8',
+        (err) => err,
+      );
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
       ) {
         const payload = req.body.entry[0]?.changes[0]?.value;
         const { contacts } = payload;
-        const msg_time = new Date(payload?.messages[0]?.timestamp * 1000)
+        const msg_time = new Date(payload?.messages[0]?.timestamp * 1000);
         const message_content =
           payload?.messages[0]?.type === 'text'
             ? payload?.messages[0]?.text?.body
@@ -85,4 +77,4 @@ const senpaiMongoDb = mongoclient.db('senpai');
 
 module.exports = {
   senpaiMongoDb,
-}
+};
