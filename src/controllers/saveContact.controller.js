@@ -7,7 +7,10 @@ const checkContact = async (req) => {
   const sender = await senpaiMongoDb
                         .collection('customers')
                         .findOne({ "wa_id": contact.wa_id });
-  if (sender) console.log('found')
+  if (sender) {
+    console.log(sender);
+    await message_hello(req);
+  }
   else {
     console.info('saving @ mongodb...')
     await senpaiMongoDb
