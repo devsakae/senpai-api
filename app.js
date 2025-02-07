@@ -1,6 +1,5 @@
 const fs = require('fs');
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 const { checkContact } = require('./src/controllers/saveContact.controller');
