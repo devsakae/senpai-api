@@ -51,8 +51,7 @@ const greetFirstUser = async (payload) => {
   await axios
     .request(config)
     .then((response) => console.log("greeting sent!", JSON.stringify(response?.data)))
-    .catch((error) => console.error("Erro!", error.code))
-    .finally(() => console.log('end greeting'));
+    .catch((error) => console.error(error.code));
 
 };
 

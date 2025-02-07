@@ -19,7 +19,7 @@ const checkContact = async (req) => {
             "first_contact": new Date(),
           })
           .then((response) => console.log(response.data))
-          .catch((err) => console.error(err))
+          .catch((err) => console.error(err.code))
           .finally(() => menu(req));
 
   }
