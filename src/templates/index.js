@@ -1,3 +1,4 @@
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const axios = require("axios");
 
 const template_manutencao = async (req) => {
