@@ -1,4 +1,4 @@
-const { senpaiMongoDb } = require("../../app");
+const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require("../templates");
 
 const checkContact = async (req) => {
