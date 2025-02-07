@@ -53,7 +53,7 @@ const senpaiMongoDb = mongoclient.db('senpai');
     });
 
     app.post('/webhook', async (req, res) => {
-      testData.push(req.body);
+      testData.incoming.push(req.body);
       fs.writeFileSync('./data/data.json', JSON.stringify(testData, null, 4), 'utf-8', (err) => err)
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
