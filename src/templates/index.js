@@ -26,7 +26,12 @@ const message_hello = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const myHeaders = jsonHeaders()
   await axios({
-    myHeaders,
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
