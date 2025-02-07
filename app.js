@@ -1,8 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 const { greetFirstUser, modoManutencao } = require('./src/templates');
-const { metaHeadersById } = require('./src/post');
+const { metaHeadersById } = require('./src/utils/post');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { markAsRead } = require('./src/controllers/markAsRead.controller');
 
 const app = express();
 app.use(express.json());
@@ -71,7 +72,7 @@ const senpaiMongoDb = mongoclient.db('senpai');
           message_content,
           '[' + payload?.messages[0]?.type + ']',
         );
-        
+        await markAsRead(req.body.entry[0]?.changes[0]?.value);
         // if (false) {
         //   await modoManutencao(req);
         // }
