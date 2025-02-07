@@ -1,17 +1,14 @@
 const { default: axios } = require('axios');
-const { jsonHeaders } = require('../utils');
-// const { jsonHeaders } = require('../utils');
+const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const markAsRead = async ({ messages }) => {
-  const myHeaders = jsonHeaders();
   await axios({
-    // method: 'POST',
-    // url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-    // headers: {
-    //   Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-    //   'Content-Type': 'application/json',
-    // },
-    myHeaders,
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
     data: {
       messaging_product: 'whatsapp',
       status: 'read',
