@@ -1,7 +1,6 @@
 const { senpaiMongoDb } = require("../../app");
 const { menu } = require("../templates");
 
-
 const checkContact = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   const msg_payload = req.body.entry[0]?.changes[0]?.value?.messages[0];

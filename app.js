@@ -1,6 +1,7 @@
+const fs = require('fs');
 const express = require('express');
-const axios = require('axios');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 
 const app = express();
@@ -24,10 +25,11 @@ const senpaiMongoDb = mongoclient.db('senpai');
   try {
     console.info('Iniciando bot...');
     mongoclient.connect();
-    senpaiMongoDb.command({ ping: 1 }).then((response) => {
-      if (!response) throw Error('❌ Conexão com MongoDB')
-      console.info('✔ Conexão com MongoDB');
-  });
+    senpaiMongoDb.command({ ping: 1 })
+      .then((response) => {
+              if (!response) throw Error('❌ Conexão com MongoDB')
+              console.info('✔ Conexão com MongoDB');
+          });
 } catch (err) {
   return console.error(err);
 } finally {
@@ -51,6 +53,8 @@ const senpaiMongoDb = mongoclient.db('senpai');
     });
 
     app.post('/webhook', async (req, res) => {
+      testData.push(req.body);
+      fs.writeFileSync('./data/data.json', JSON.stringify(testData, null, 4), 'utf-8', (err) => err)
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
