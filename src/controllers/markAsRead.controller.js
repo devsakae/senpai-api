@@ -4,10 +4,11 @@ const { VERSION, GRAPH_API_TOKEN } = process.env;
 
 const markAsRead = async ({ contacts, messages }) => {
   console.log('contact id:', contacts[0].wa_id);
+  console.log('contact/message id:', messages[0].from);
   console.log('message id:', messages[0].id);
   await axios({
     method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${contacts[0].wa_id}/messages`,
+    url: `https://graph.facebook.com/${VERSION}/${messages[0].from}/messages`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       'Content-Type': 'application/json',
