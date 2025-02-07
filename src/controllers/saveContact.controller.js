@@ -2,6 +2,7 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require("../templates");
 
 const checkContact = async (req) => {
+  console.log('checking contact');
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   const sender = await senpaiMongoDb
                         .collection('customers')

@@ -16,7 +16,7 @@ const markAsRead = async ({ messages }) => {
     },
   })
     .then((response) => {
-      if (response.success !== "true") throw new Error({ message: 'Não leu', code: 171 })
+      if (!response.success) throw new Error({ message: 'Não leu', code: 171 })
     })
     .catch((err) => console.error('error reading msg..', err.code));
 };
