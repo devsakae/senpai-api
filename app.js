@@ -1,7 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-const { greetFirstUser, modoManutencao } = require('./src/templates');
-const { metaHeadersById } = require('./src/utils/post');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 
