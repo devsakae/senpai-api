@@ -3,6 +3,7 @@ const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
+const { checkContact } = require('./src/controllers/saveContact.controller');
 
 const app = express();
 app.use(express.json());
@@ -75,10 +76,7 @@ const senpaiMongoDb = mongoclient.db('senpai');
           '[' + payload?.messages[0]?.type + ']',
         );
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
-        // if (false) {
-        //   await modoManutencao(req);
-        // }
-
+        await checkContact(req);
       }
       return res.sendStatus(200);
     });
