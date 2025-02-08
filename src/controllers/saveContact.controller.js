@@ -66,6 +66,7 @@ const checkContact = async (req) => {
         },
       },
     };
+    console.info('dispatching...');
     return await dispatchAxios(data)
       .then((res) => console.log('ok', res))
       .catch((err) => console.error('erro', err));

@@ -6,8 +6,8 @@ const dispatchAxios = async (data) => {
     jsonHeaders,
     data: data,
   })
-    .then((response) => response)
-    .catch((error) => error);
+    .then((response) => console.log('dispatch/ok', response))
+    .catch((error) => console.error('dispatch/error', error));
 };
 
 
