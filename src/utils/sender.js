@@ -1,7 +1,8 @@
 const { default: axios } = require('axios');
-const { jsonHeaders } = require(".");
+const { jsonHeaders } = require("./index");
 
 const dispatchAxios = async (data) => {
+  console.log('dispatch 2', jsonHeaders);
   return await axios({
     jsonHeaders,
     data: data,
