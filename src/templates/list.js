@@ -48,7 +48,7 @@ const rootMenu = async (contact) => {
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'text/plain',
     },
     data: data,
   })
