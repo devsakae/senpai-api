@@ -21,6 +21,8 @@ Resposta ao cliente  ╰┈➤ ⌗ Para garantir que nosso grupo seja um espaço
 
 🕊️ Lembre-se de usar alguns de nossos comandos. */
 
+const { dispatchAxios } = require("../utils/sender");
+
 const rootMenu = async (contact) => {
   let data = {
     messaging_product: 'whatsapp',
