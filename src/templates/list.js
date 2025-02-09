@@ -3,6 +3,37 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 // const { dispatchAxios } = require("../utils/sender");
 
 const rootMenu = async (contact) => {
+  // let data = {
+  //   type: 'button',
+  //   body: {
+  //     text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
+  //   },
+  //   action: {
+  //     buttons: [
+  //       {
+  //         type: 'reply',
+  //         reply: {
+  //           id: '.canal',
+  //           title: '.canal (Canal de atualizações ee descontos)',
+  //         },
+  //       },
+  //       {
+  //         type: 'reply',
+  //         reply: {
+  //           id: '.suporte',
+  //           title: '.suporte (Falar com um atendente)',
+  //         },
+  //       },
+  //       {
+  //         type: 'reply',
+  //         reply: {
+  //           id: '.sobre',
+  //           title: '.sobre (Conheça mais sobre nós)',
+  //         },
+  //       },
+  //     ],
+  //   },
+  // };
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -18,7 +49,7 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\nSomos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento!\n\nSe tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
         },
         action: {
           buttons: [
@@ -40,7 +71,7 @@ const rootMenu = async (contact) => {
               type: 'reply',
               reply: {
                 id: 'reply003',
-                title: '.sobre (Quem somos?)',
+                title: '.sobre (Quem somos)',
               },
             },
           ],
@@ -48,9 +79,7 @@ const rootMenu = async (contact) => {
       },
     },
   })
-    .then((response) => {
-      if (response.statusText !== "OK") console.info('Erro', response.status)
-    })
+    .then((response) => console.log('dispatch/ok', response))
     .catch(({ response }) => console.error('dispatch/error', response.error));
 };
 
