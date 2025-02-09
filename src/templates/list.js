@@ -49,7 +49,7 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo:`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\nSomos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo:`,
         },
         action: {
           buttons: [
@@ -57,21 +57,21 @@ const rootMenu = async (contact) => {
               type: 'reply',
               reply: {
                 id: 'reply001',
-                title: '.canal (Canal de atualizações ee descontos)',
+                title: '.canal',
               },
             },
             {
               type: 'reply',
               reply: {
                 id: 'reply002',
-                title: '.suporte (Falar com um atendente)',
+                title: '.suporte',
               },
             },
             {
               type: 'reply',
               reply: {
                 id: 'reply003',
-                title: '.sobre (Quem somos)',
+                title: '.sobre',
               },
             },
           ],
