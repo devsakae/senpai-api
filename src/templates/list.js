@@ -1,3 +1,4 @@
+const { default: axios } = require("axios");
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 // const { dispatchAxios } = require("../utils/sender");
 
