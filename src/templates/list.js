@@ -49,7 +49,7 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo:`,
         },
         action: {
           buttons: [
@@ -80,7 +80,7 @@ const rootMenu = async (contact) => {
     },
   })
     .then((response) => console.log('dispatch/ok', response))
-    .catch(({ response }) => console.error('dispatch/error', response.error));
+    .catch(({ response }) => console.error('dispatch/error', response));
 };
 
 const replyMessage = async () => {
