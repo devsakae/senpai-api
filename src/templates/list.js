@@ -1,27 +1,5 @@
-/* ✎ Reconhece qualquer mensagem digitada e logo em seguida enviar o menu. *Funcionar somente 1 vez e não enviar mais o menu novamente.*
-
-Olá! @user como posso ajudar você hoje? Selecione uma das opções abaixo:
-
-1️⃣ Fazer figurinhas estáticas e animadas automáticas
-
-Resposta ao cliente ╰┈➤ ⌗ Primeiro, você precisa enviar uma imagem ou GIF/VIDEO para a figurinha.
-─────────────────────────၄၃
-2️⃣ .suporte (Falar com um atendente)
-
-Resposta ao cliente ╰┈➤ ⌗ Clique aqui [link zap] e envie uma mensagem com a sua duvida!
-─────────────────────────၄၃
-3️⃣ .canal (Canal de descontos e atualizações)
-
-Resposta ao cliente ╰┈➤ ⌗ Há algo novo toda semana, não esqueça de nos seguir! Clique [link do canal] e fique atento.
-─────────────────────────၄၃
-4️⃣ .grupo (Faça parte da nossa comunidade)
-
-Resposta ao cliente  ╰┈➤ ⌗ Para garantir que nosso grupo seja um espaço agradável e produtivo para todos, pedimos que leiam atentamente as regras! [link do grupo]
-
-
-🕊️ Lembre-se de usar alguns de nossos comandos. */
-
-const { dispatchAxios } = require("../utils/sender");
+const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
+// const { dispatchAxios } = require("../utils/sender");
 
 const rootMenu = async (contact) => {
   let data = {
@@ -61,9 +39,20 @@ const rootMenu = async (contact) => {
       },
     },
   };
-  return await dispatchAxios(data)
-    .then((res) => console.log('ok', res))
-    .catch((err) => console.error('erro', err));
+  // return await dispatchAxios(data)
+  //   .then((res) => console.log('ok', res))
+  //   .catch((err) => console.error('erro', err));
+  axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: data,
+  })
+    .then((response) => console.log('dispatch/ok', response))
+    .catch((error) => console.error('dispatch/error', error.code));
 };
 
 const replyMessage = async () => {
@@ -130,3 +119,26 @@ module.exports = {
   rootMenu,
   replyMessage,
 };
+
+/* ✎ Reconhece qualquer mensagem digitada e logo em seguida enviar o menu. *Funcionar somente 1 vez e não enviar mais o menu novamente.*
+
+Olá! @user como posso ajudar você hoje? Selecione uma das opções abaixo:
+
+1️⃣ Fazer figurinhas estáticas e animadas automáticas
+
+Resposta ao cliente ╰┈➤ ⌗ Primeiro, você precisa enviar uma imagem ou GIF/VIDEO para a figurinha.
+─────────────────────────၄၃
+2️⃣ .suporte (Falar com um atendente)
+
+Resposta ao cliente ╰┈➤ ⌗ Clique aqui [link zap] e envie uma mensagem com a sua duvida!
+─────────────────────────၄၃
+3️⃣ .canal (Canal de descontos e atualizações)
+
+Resposta ao cliente ╰┈➤ ⌗ Há algo novo toda semana, não esqueça de nos seguir! Clique [link do canal] e fique atento.
+─────────────────────────၄၃
+4️⃣ .grupo (Faça parte da nossa comunidade)
+
+Resposta ao cliente  ╰┈➤ ⌗ Para garantir que nosso grupo seja um espaço agradável e produtivo para todos, pedimos que leiam atentamente as regras! [link do grupo]
+
+
+🕊️ Lembre-se de usar alguns de nossos comandos. */

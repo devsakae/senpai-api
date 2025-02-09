@@ -3,7 +3,6 @@ const { default: axios } = require('axios');
 const { jsonHeaders } = require('./index');
 
 const dispatchAxios = async (data) => {
-  console.log('dispatch 2', jsonHeaders);
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
