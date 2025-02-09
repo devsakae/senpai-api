@@ -59,7 +59,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
             ? payload?.messages[0]?.text?.body
             : payload?.messages[0]?.type || 'unknown';
         console.info(
-          msg_time.toLocaleString('pt-br'),
+          msg_time.toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" }),
           contacts[0]?.profile?.name,
           contacts[0]?.wa_id,
           '>',
