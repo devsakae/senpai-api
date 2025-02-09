@@ -3,6 +3,43 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 // const { dispatchAxios } = require("../utils/sender");
 
 const rootMenu = async (contact) => {
+  let data = JSON.stringify({
+    messaging_product: 'whatsapp',
+    recipient_type: 'individual',
+    to: contact.wa_id,
+    type: 'interactive',
+    interactive: {
+      type: 'button',
+      body: {
+        text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
+      },
+      action: {
+        buttons: [
+          {
+            type: 'reply',
+            reply: {
+              id: '.canal',
+              title: '.canal (Canal de atualizações ee descontos)',
+            },
+          },
+          {
+            type: 'reply',
+            reply: {
+              id: '.suporte',
+              title: '.suporte (Falar com um atendente)',
+            },
+          },
+          {
+            type: 'reply',
+            reply: {
+              id: '.sobre',
+              title: '.sobre (Conheça mais sobre nós)',
+            },
+          },
+        ],
+      },
+    },
+  });
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -10,43 +47,7 @@ const rootMenu = async (contact) => {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       'Content-Type': 'application/json',
     },
-    data: {
-      messaging_product: 'whatsapp',
-      recipient_type: 'individual',
-      to: contact.wa_id,
-      type: 'interactive',
-      interactive: {
-        type: 'button',
-        body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje? Somos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo ou acesse nosso site para mais informações: http://www.botdosenpai.com.br`,
-        },
-        action: {
-          buttons: [
-            {
-              type: 'reply',
-              reply: {
-                id: '.canal',
-                title: '.canal (Canal de atualizações ee descontos)',
-              },
-            },
-            {
-              type: 'reply',
-              reply: {
-                id: '.suporte',
-                title: '.suporte (Falar com um atendente)',
-              },
-            },
-            {
-              type: 'reply',
-              reply: {
-                id: '.sobre',
-                title: '.sobre (Conheça mais sobre nós)',
-              },
-            },
-          ],
-        },
-      },
-    },
+    data: data,
   })
     .then((response) => console.log('dispatch/ok', response))
     .catch((error) => console.error('dispatch/error', error.code));
