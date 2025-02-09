@@ -48,6 +48,13 @@ const rootMenu = async (contact) => {
               title: '.suporte (Falar com um atendente)',
             },
           },
+          {
+            type: 'reply',
+            reply: {
+              id: '.sobre',
+              title: '.sobre (Conheça mais sobre nós)',
+            },
+          },
         ],
       },
     },
