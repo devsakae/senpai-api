@@ -17,8 +17,8 @@ const checkContact = async (req) => {
 
   const sender = await senpaiMongoDb
     .collection('customers')
-    // .findOneAndUpdate({ wa_id: contact.wa_id }, { last_contact: new Date() })
-    .findOne({ wa_id: contact.wa_id });
+    .findOneAndUpdate({ wa_id: contact.wa_id }, { $set: { "last_contact": new Date() } }, { upsert: true });
+    // .findOne({ wa_id: contact.wa_id });
 
   console.log(sender);
   if (sender) return await checkCommand(req);
