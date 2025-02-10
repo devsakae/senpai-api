@@ -21,7 +21,7 @@ const checkContact = async (req) => {
 
   if (!sender) {
     console.info('primeiro contato do usuário!');
-    await senpaiMongoDb
+    return await senpaiMongoDb
       .collection('customers')
       .insertOne({
         wa_id: contact.wa_id,
