@@ -1,7 +1,7 @@
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello, canal } = require('../templates');
-const { dispatchAxios } = require('../utils/sender');
 const { rootMenu } = require('../templates/list');
+const { checkCommand } = require('./checkCommand.controller');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -12,13 +12,17 @@ const checkContact = async (req) => {
     contact.wa_id === process.env.BOT_ADMIN_WAID ||
     contact.wa_id === process.env.BOT_SUBADMIN_WAID
   ) {
-    if (payload?.messages[0]?.text?.body === '.canal') return await canal(req);
-    return rootMenu(contact);
+    await checkCommand(req);
   }
 
   const sender = await senpaiMongoDb
     .collection('customers')
-    .findOne({ wa_id: contact.wa_id });
+    .findOneAndUpdate({ wa_id: contact.wa_id }, { last_contact: new Date() })
+    // .findOne({ wa_id: contact.wa_id });
+
+  console.log(sender);
+  if (sender) return await checkCommand(req);
+
   if (!sender) {
     console.info('primeiro contato do usuário!');
     await senpaiMongoDb
@@ -28,6 +32,7 @@ const checkContact = async (req) => {
         name: contact?.profile?.name,
         contact: contact,
         first_contact: new Date(),
+        last_contact: new Date(),
       })
       .then((response) => {
         if (!response.acknowledged)
