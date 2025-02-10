@@ -1,7 +1,7 @@
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello, canal } = require('../templates');
 const { rootMenu } = require('../templates/list');
-const { checkCommand } = require('./checkCommand.controller');
+const { checkCommand, checkLastInteraction } = require('./checkCommand.controller');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -18,10 +18,6 @@ const checkContact = async (req) => {
   const sender = await senpaiMongoDb
     .collection('customers')
     .findOneAndUpdate({ wa_id: contact.wa_id }, { $set: { "last_contact": new Date() } }, { upsert: true });
-    // .findOne({ wa_id: contact.wa_id });
-
-  console.log(sender);
-  if (sender) return await checkCommand(req);
 
   if (!sender) {
     console.info('primeiro contato do usuário!');
@@ -44,6 +40,9 @@ const checkContact = async (req) => {
       .catch((err) => console.error(err.code))
       .finally(() => message_hello(req));
   }
+  
+  if (!checkCommand(req)) return await checkLastInteraction(sender, req);
+  
 };
 
 module.exports = {
