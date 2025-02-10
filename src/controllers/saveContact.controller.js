@@ -1,6 +1,5 @@
 const { senpaiMongoDb } = require('../utils/connections');
-const { message_hello, canal } = require('../templates');
-const { rootMenu } = require('../templates/list');
+const { message_hello } = require('../templates');
 const { checkCommand, checkLastInteraction } = require('./checkCommand.controller');
 
 const checkContact = async (req) => {

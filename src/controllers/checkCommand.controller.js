@@ -14,8 +14,8 @@ const checkLastInteraction = async (sender, req) => {
 const checkCommand = async (req) => {  
   const cmdList = ['.canal', '.suporte', '.sobre'];
   const user_msg = req.body.entry[0]?.changes[0]?.value?.messages[0]?.text?.body
+  console.log(user_msg, 'is part of list?', cmdList.includes(user_msg));
   if (!cmdList.includes(user_msg)) return false;
-
   if (user_msg === '.canal') return await canal(req);
   if (user_msg === '.suporte') return console.log('.suporte');
   if (user_msg === '.sobre') return console.log('.sobre');
