@@ -1,5 +1,5 @@
 const { senpaiMongoDb } = require('../utils/connections');
-const { message_hello } = require('../templates');
+const { message_hello, canal } = require('../templates');
 const { dispatchAxios } = require('../utils/sender');
 const { rootMenu } = require('../templates/list');
 
@@ -12,6 +12,7 @@ const checkContact = async (req) => {
     contact.wa_id === process.env.BOT_ADMIN_WAID ||
     contact.wa_id === process.env.BOT_SUBADMIN_WAID
   ) {
+    if (payload?.messages[0]?.text?.body === '.canal') return await canal(req);
     return rootMenu(contact);
   }
 
