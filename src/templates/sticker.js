@@ -1,7 +1,5 @@
 // const { Sticker, createSticker, StickerTypes } = require('@laxeder/wa-sticker');
 const { default: axios } = require("axios");
-const fs = require('fs');
-const path = require('path');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -36,8 +34,6 @@ const staticSticker = async (req) => {
   console.log('Início da construção da sticker aqui');
   const imgURL = await downloadImage(req.body.entry[0]?.changes[0]?.value?.messages[0]?.image?.id);
   console.log(imgURL);
-  // const filePath = path.join(__dirname, 'teste.jpg');
-  // saveImage(imageData, filePath);
 };
 
 const downloadImage = async (imageId) => {
@@ -53,11 +49,6 @@ const downloadImage = async (imageId) => {
       console.error('Error downloading image:', error);
       throw error;
   }
-};
-
-const saveImage = (imageData, filePath) => {
-  fs.writeFileSync(filePath, imageData);
-  console.log(`Image saved to ${filePath}`);
 };
 
 

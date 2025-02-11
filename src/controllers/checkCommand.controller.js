@@ -22,7 +22,7 @@ const checkCommand = async (sender, req) => {
   }
   if (user_sent?.type === 'image') {
     console.info(user_sent?.image);
-    // if (user_sent?.image?.caption === '.figurinha') return await staticSticker(req);
+    if (user_sent?.image?.caption === '.figurinha') return await staticSticker(req);
   }
   return checkLastInteraction(sender, req);
 }
