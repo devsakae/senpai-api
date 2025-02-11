@@ -69,7 +69,8 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
         await checkContact(req);
       }
-      console.log(req?.body)
+      console.log(req?.body?.entry[0]?.changes?.field)
+      console.log(req?.body?.entry[0]?.changes?.value)
       return res.sendStatus(200);
     });
   }
