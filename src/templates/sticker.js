@@ -31,6 +31,8 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (payload.messages[0].type !== 'image') return await stickerTutorial(req);
+  
+  return console.log('Iniciar construção da sticker aqui');
 
 };
 

@@ -7,7 +7,6 @@ const {
 
 const checkContact = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
-
   const sender = await senpaiMongoDb
     .collection('customers')
     .findOneAndUpdate(
