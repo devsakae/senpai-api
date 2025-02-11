@@ -3,7 +3,6 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 // const { dispatchAxios } = require("../utils/sender");
 
 const rootMenu = async (contact) => {
-
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -50,11 +49,10 @@ const rootMenu = async (contact) => {
     },
   })
     .then((response) => {
-      if (response.status === 200) {
-        console.log('dispatch/ok', response.statusText)
-      }
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'Erro ao enviar rootMenu' });
     })
-    .catch(({ response }) => console.error('dispatch/error', response));
+    .catch((err) => console.error(err.response));
 };
 
 const replyMessage = async () => {

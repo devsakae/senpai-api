@@ -1,6 +1,6 @@
 const { canal } = require("../templates");
 const { rootMenu } = require("../templates/list");
-const { staticSticker } = require("../templates/sticker");
+const { staticSticker, stickerTutorial } = require("../templates/sticker");
 
 const checkLastInteraction = async (sender, req) => {
   const today = new Date();
@@ -13,14 +13,18 @@ const checkLastInteraction = async (sender, req) => {
 }
 
 const checkCommand = async (req) => {  
-  const cmdList = ['.canal', '.suporte', '.sobre', '.figurinha'];
-  const user_msg = req.body.entry[0]?.changes[0]?.value?.messages[0]?.text?.body
-  console.log(user_msg, 'is part of list?', cmdList.includes(user_msg));
-  if (!cmdList.includes(user_msg)) return false;
-  if (user_msg === '.figurinha') return await staticSticker(req);
-  if (user_msg === '.canal') return await canal(req);
-  if (user_msg === '.suporte') return console.log('.suporte');
-  if (user_msg === '.sobre') return console.log('.sobre');
+  const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
+  if (user_sent?.type === 'text') {
+    if (user_sent?.text?.body === '.canal') return await canal(req);
+    if (user_sent?.text?.body === '.suporte') return console.log('.suporte');
+    if (user_sent?.text?.body === '.sobre') return console.log('.sobre');
+    if (user_sent?.text?.body === '.figurinha') return stickerTutorial(req);
+  }
+  if (user_sent?.type === 'image') {
+    console.info(user_sent?.image);
+    // if (user_sent?.image?.caption === '.figurinha') return await staticSticker(req);
+  }
+  return false;
 }
 
 module.exports = {
