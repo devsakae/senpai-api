@@ -2,7 +2,6 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const {
   checkCommand,
-  checkLastInteraction,
 } = require('./checkCommand.controller');
 
 const checkContact = async (req) => {
@@ -17,7 +16,7 @@ const checkContact = async (req) => {
 
   if (!sender) {
     console.info('primeiro contato do usuário!');
-    return await senpaiMongoDb
+    await senpaiMongoDb
       .collection('customers')
       .insertOne({
         wa_id: contact.wa_id,
@@ -34,9 +33,7 @@ const checkContact = async (req) => {
           });
       })
       .catch((err) => console.error(err.code))
-      .finally(() => {
-        return message_hello(req);
-      });
+      .finally(() => message_hello(req));
   }
 
   /* Testing for admin and subadmin */

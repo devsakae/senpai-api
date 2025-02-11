@@ -71,7 +71,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       }
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
         const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
-        return console.log("[" + st?.status, "/" + st?.pricing?.category + "] wa_id: ",  st?.id);
+        return console.log("[" + st?.status, "/", st?.pricing?.category + "] wa_id: ",  st?.id);
       }
       return res.sendStatus(200);
     });
