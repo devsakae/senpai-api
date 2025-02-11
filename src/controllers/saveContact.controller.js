@@ -45,7 +45,8 @@ const checkContact = async (req) => {
     contact.wa_id === process.env.BOT_ADMIN_WAID ||
     contact.wa_id === process.env.BOT_SUBADMIN_WAID
   ) {
-    if (!checkCommand(req)) return await checkLastInteraction(sender, req);
+    // if (!checkCommand(req)) return await checkLastInteraction(sender, req);
+    return await checkCommand(sender, req)
   }
 
   // if (!checkCommand(req)) {

@@ -12,7 +12,7 @@ const checkLastInteraction = async (sender, req) => {
   return console.info('o que fazer? usuário mandou:', payload.messages[0].text.body);
 }
 
-const checkCommand = async (req) => {  
+const checkCommand = async (sender, req) => {  
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   console.log(user_sent);
   if (user_sent?.type === 'text') {
@@ -25,7 +25,7 @@ const checkCommand = async (req) => {
     console.info(user_sent?.image);
     // if (user_sent?.image?.caption === '.figurinha') return await staticSticker(req);
   }
-  return false;
+  return checkLastInteraction(sender, req);
 }
 
 module.exports = {
