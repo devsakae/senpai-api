@@ -67,7 +67,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
           '[' + payload?.messages[0]?.type + ']',
         );
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
-        await checkContact(req);
+        return await checkContact(req);
       }
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
         const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
