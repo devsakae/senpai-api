@@ -14,10 +14,11 @@ const checkLastInteraction = async (sender, req) => {
 
 const checkCommand = async (req) => {  
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
+  console.log(user_sent);
   if (user_sent?.type === 'text') {
     if (user_sent?.text?.body === '.canal') return await canal(req);
-    if (user_sent?.text?.body === '.suporte') return console.log('.suporte');
-    if (user_sent?.text?.body === '.sobre') return console.log('.sobre');
+    if (user_sent?.text?.body === '.suporte') return console.log('user requested .suporte!');
+    if (user_sent?.text?.body === '.sobre') return console.log('user requested .sobre!');
     if (user_sent?.text?.body === '.figurinha') return stickerTutorial(req);
   }
   if (user_sent?.type === 'image') {

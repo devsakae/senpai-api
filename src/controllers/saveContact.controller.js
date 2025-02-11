@@ -35,7 +35,9 @@ const checkContact = async (req) => {
           });
       })
       .catch((err) => console.error(err.code))
-      .finally(() => message_hello(req));
+      .finally(() => {
+        return message_hello(req);
+      });
   }
 
   /* Testing for admin and subadmin */

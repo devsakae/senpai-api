@@ -1,4 +1,5 @@
 // const { Sticker, createSticker, StickerTypes } = require('@laxeder/wa-sticker');
+const { default: axios } = require("axios");
 
 const stickerTutorial = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
