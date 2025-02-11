@@ -9,7 +9,7 @@ const checkLastInteraction = async (sender, req) => {
     console.log('usuário sem contato há 24h+')
     return await rootMenu(payload.contact[0]);
   }
-  return console.info('o que fazer? usuário mandou:', payload.messages[0].text.body);
+  return console.info('o que fazer? usuário mandou:', payload.messages[0]?.type);
 }
 
 const checkCommand = async (sender, req) => {  
