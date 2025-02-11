@@ -69,7 +69,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
         await checkContact(req);
       }
-      console.log('pensar em figurinhas...')
+      console.log(req?.body)
       return res.sendStatus(200);
     });
   }
