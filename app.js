@@ -73,6 +73,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
         const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
         return console.log("[" + st?.status, "/", st?.pricing?.category + "] wa_id: ",  st?.id);
       }
+      await checkContact(req);
       return res.sendStatus(200);
     });
   }
