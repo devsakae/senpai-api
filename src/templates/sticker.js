@@ -34,20 +34,20 @@ const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (payload.messages[0].type !== 'image') return await stickerTutorial(req);  
   console.log('Início da construção da sticker aqui');
-  const imageData = await downloadImage(req.body.entry[0]?.changes[0]?.value?.messages[0]?.image?.id);
-  const filePath = path.join(__dirname, 'teste.jpg');
-  saveImage(imageData, filePath);
+  const imgURL = await downloadImage(req.body.entry[0]?.changes[0]?.value?.messages[0]?.image?.id);
+  console.log(imgURL);
+  // const filePath = path.join(__dirname, 'teste.jpg');
+  // saveImage(imageData, filePath);
 };
 
 const downloadImage = async (imageId) => {
-  const url = `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media/${imageId}`;
-  // const url = `https://graph.facebook.com/v13.0/${phoneNumberId}/media/${imageId}`;
-  const headers = {
-    Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  };
-
   try {
-      const response = await axios.get(url, { headers, responseType: 'arraybuffer' });
+    const response = await axios.get({
+        url: `https://graph.facebook.com/${VERSION}/${imageId}?phone_number_id=${PHONE_NUMBER_ID}`,
+        headers: {
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+        },
+      });
       return response.data;
   } catch (error) {
       console.error('Error downloading image:', error);
