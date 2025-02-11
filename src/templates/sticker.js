@@ -1,4 +1,4 @@
-import { Sticker, createSticker, StickerTypes } from '@laxeder/wa-sticker';
+// const { Sticker, createSticker, StickerTypes } = require('@laxeder/wa-sticker');
 
 const stickerTutorial = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -29,7 +29,7 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (payload.messages[0].type !== 'image') return await stickerTutorial(req);
-  
+
 };
 
 module.exports = {
