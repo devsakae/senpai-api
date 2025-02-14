@@ -27,13 +27,14 @@ const checkContact = async (req) => {
       })
       .then((response) => {
         console.log('usuário criado no MongoDB?', response.data);
-        if (!response.data.acknowledged)
-          throw new Error({
-            message: 'Erro criando usuário no MongoDB',
-            code: 500,
-          });
+        console.log('response:', response)
+        // if (!response.data.acknowledged)
+        //   throw new Error({
+        //     message: 'Erro criando usuário no MongoDB',
+        //     code: 500,
+        //   });
       })
-      .catch((err) => console.error('erro:', err.code))
+      .catch((err) => console.error('erro:', err))
       .finally(() => {
         console.log('enviando hello...');
         return message_hello(req);
