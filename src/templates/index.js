@@ -56,7 +56,7 @@ const message_hello = async (req) => {
         throw new Error({ response: 'Erro ao enviar' });
     })
     .catch((err) => console.error(err.response))
-    .finally((res) => res);
+    .finally((res) => console.log('enviando hello pra usuário novo...', res));
 };
 
 const canal = async (req) => {
