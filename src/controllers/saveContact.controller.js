@@ -26,12 +26,12 @@ const checkContact = async (req) => {
         last_contact: new Date(),
       })
       .then((response) => {
-        if (!response.acknowledged)
+        console.log('usuário criado no MongoDB?', response.data);
+        if (!response.data.acknowledged)
           throw new Error({
             message: 'Erro criando usuário no MongoDB',
             code: 500,
           });
-        console.log('usuário criado no MongoDB?', response.acknowledged);
       })
       .catch((err) => console.error('erro:', err.code))
       .finally(() => {
