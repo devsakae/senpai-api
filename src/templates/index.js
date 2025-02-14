@@ -52,11 +52,11 @@ const message_hello = async (req) => {
     },
   })
     .then((response) => {
+      console.log('hello sent!', response.status);
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar' });
     })
-    .catch((err) => console.error(err.response))
-    .finally((res) => console.log('enviando hello pra usuário novo...', res));
+    .catch((err) => console.error('Erro ao enviar hello!', err.response));
 };
 
 const canal = async (req) => {

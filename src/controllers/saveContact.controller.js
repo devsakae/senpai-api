@@ -33,8 +33,11 @@ const checkContact = async (req) => {
           });
         console.log('usuário criado no MongoDB?', response.acknowledged);
       })
-      .catch((err) => console.error(err.code))
-      .finally(() => message_hello(req));
+      .catch((err) => console.error('erro:', err.code))
+      .finally(() => {
+        console.log('enviando hello...');
+        return message_hello(req);
+      });
   }
 
   /* Testing for admin and subadmin */
