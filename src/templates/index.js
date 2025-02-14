@@ -33,6 +33,7 @@ const template_manutencao = async (req) => {
 
 const message_hello = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
+  console.log('>> usuario não existe no mongoDB:', payload?.contacts[0]?.profile?.name, '[' + payload?.contacts[0]?.wa_id + ']');
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -52,7 +53,6 @@ const message_hello = async (req) => {
     },
   })
     .then((response) => {
-      console.log('hello sent!', response.status);
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar' });
     })
