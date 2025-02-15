@@ -34,7 +34,7 @@ const staticSticker = async (req) => {
   console.log('solicitando media URL');
   const media = await getMediaURL(payload?.messages[0]?.image?.id);
   if (media) {
-    console.log('downloading media from', media.url)
+    console.log('downloading media from', media.url);
     const response = await axios({
       method: 'GET',
       url: `https://graph.facebook.com/${VERSION}/${media.url}`,
@@ -42,14 +42,16 @@ const staticSticker = async (req) => {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       },
       responseType: 'arraybuffer',
-    }).then((response) => {
-      console.log('get/response!', response);
-      return response
     })
-    .catch((err) => console.error('get/error!', err));
-
+      .then((response) => {
+        console.log('get/response!', response);
+        return response;
+      })
+      .catch((err) => console.error('get/error!', err));
     const buffer = Buffer.from(response.data, 'utf-8');
-    const sticker = sharp(buffer).resize(512, 512).toFile(media.url + '.webp', (err, info) => {})
+    const sticker = sharp(buffer)
+      .resize(512, 512)
+      .toFile(media.url + '.webp', (err, info) => {});
     console.log('starting sending sticker');
     await axios({
       method: 'POST',
@@ -59,11 +61,13 @@ const staticSticker = async (req) => {
       },
       data: {
         messageing_product: 'whatsapp',
-        file: sticker,
+        file: media.url + '.webp',
       },
-    }).then((response) => {
-      console.log('response ok', response.data);
-    }).catch((err) => console.error('error sending sticker', err));
+    })
+      .then((response) => {
+        console.log('response ok', response.data);
+      })
+      .catch((err) => console.error('error sending sticker', err));
   }
 };
 
@@ -79,8 +83,7 @@ const getMediaURL = async (imageId) => {
       if (response.statusText === 'OK') {
         console.log('response ok!');
         return response.data;
-      }
-      else throw new Error({ status: 500 })
+      } else throw new Error({ status: 500 });
     })
     .catch((err) => console.error('Error downloading image', err));
 };
