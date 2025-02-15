@@ -49,10 +49,21 @@ const staticSticker = async (req) => {
     .catch((err) => console.error('get/error!', err));
 
     const buffer = Buffer.from(response.data, 'utf-8');
-    sharp(buffer).resize(512, 512).toFile(media.url + '.webp', (err, info) => {
-      console.log('sharp complete!');
-      console.log(info);
-    })
+    const sticker = sharp(buffer).resize(512, 512).toFile(media.url + '.webp', (err, info) => {})
+    console.log('starting sending sticker');
+    await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+      headers: {
+        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      },
+      data: {
+        messageing_product: 'whatsapp',
+        file: sticker,
+      },
+    }).then((response) => {
+      console.log('response ok', response.data);
+    }).catch((err) => console.error('error sending sticker', err));
   }
 };
 
