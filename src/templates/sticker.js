@@ -39,11 +39,11 @@ const staticSticker = async (req) => {
   //   return await stickerTutorial(req);
   // }
   console.log('Início da construção da sticker aqui');
-  const imgURL = await downloadImage(payload?.messages[0]?.image?.id);
-  console.log(imgURL);
+  const media = await getMediaURL(payload?.messages[0]?.image?.id);
+  console.log(media);
 };
 
-const downloadImage = async (imageId) => {
+const getMediaURL = async (imageId) => {
   return await axios({
     method: 'GET',
     url: `https://graph.facebook.com/${VERSION}/${imageId}?phone_number_id=${PHONE_NUMBER_ID}`,
@@ -52,10 +52,10 @@ const downloadImage = async (imageId) => {
     },
   })
     .then((response) => {
-      console.log('Ok', response);
-      return response;
+      if (response.statusText === 'OK') return response.data;
+      else throw new Error({ status: 500 })
     })
-    .catch((err) => console.error('error', err));
+    .catch((err) => console.error('Error downloading image', err));
 };
 
 module.exports = {
