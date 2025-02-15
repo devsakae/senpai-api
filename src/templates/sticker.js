@@ -30,12 +30,14 @@ const stickerTutorial = async (req) => {
 
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  if (
-    payload?.messages[0]?.type === 'image' &&
-    payload?.messages[0]?.caption !== '.s' &&
-    payload?.messages[0]?.caption !== '.sticker'
-  )
-    return await stickerTutorial(req);
+  // if (
+  //   payload?.messages[0]?.type === 'image' &&
+  //   payload?.messages[0]?.caption !== '.s' &&
+  //   payload?.messages[0]?.caption !== '.sticker'
+  // ) {
+  //   console.log('image without .s or .sticker')
+  //   return await stickerTutorial(req);
+  // }
   console.log('Início da construção da sticker aqui');
   const imgURL = await downloadImage(payload?.messages[0]?.image?.id);
   console.log(imgURL);
