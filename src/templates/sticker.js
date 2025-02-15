@@ -1,5 +1,5 @@
-// const { Sticker, createSticker, StickerTypes } = require('@laxeder/wa-sticker');
 const { default: axios } = require('axios');
+const sharp = require('sharp');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -30,17 +30,22 @@ const stickerTutorial = async (req) => {
 
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  // if (
-  //   payload?.messages[0]?.type === 'image' &&
-  //   payload?.messages[0]?.caption !== '.s' &&
-  //   payload?.messages[0]?.caption !== '.sticker'
-  // ) {
-  //   console.log('image without .s or .sticker')
-  //   return await stickerTutorial(req);
-  // }
-  console.log('Início da construção da sticker aqui');
+  const user = payload?.contacts[0]?.wa_id;
+  console.log('solicitando media URL');
   const media = await getMediaURL(payload?.messages[0]?.image?.id);
-  console.log(media);
+  if (media) {
+    console.log('downloading media from', media.url)
+    const response = await axios({
+      method: 'GET',
+      url: media.url,
+      responseType: 'arraybuffer',
+    });
+    const buffer = Buffer.from(response.data, 'utf-8');
+    sharp(buffer).resize(512, 512).toFile(media.url + '.webp', (err, info) => {
+      console.log('sharp complete!');
+      console.log(info);
+    })
+  }
 };
 
 const getMediaURL = async (imageId) => {
@@ -52,7 +57,10 @@ const getMediaURL = async (imageId) => {
     },
   })
     .then((response) => {
-      if (response.statusText === 'OK') return response.data;
+      if (response.statusText === 'OK') {
+        console.log('response ok!');
+        return response.data;
+      }
       else throw new Error({ status: 500 })
     })
     .catch((err) => console.error('Error downloading image', err));
