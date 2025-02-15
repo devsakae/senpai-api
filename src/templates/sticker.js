@@ -51,7 +51,7 @@ const staticSticker = async (req) => {
     const buffer = Buffer.from(response.data, 'utf-8');
     const sticker = sharp(buffer)
       .resize(512, 512)
-      .toFile(media.url + '.webp', (err, info) => {});
+      .toFile(payload?.messages[0]?.image?.id + '.webp', (err, info) => {});
     console.log('starting sending sticker');
     await axios({
       method: 'POST',
@@ -61,7 +61,7 @@ const staticSticker = async (req) => {
       },
       data: {
         messageing_product: 'whatsapp',
-        file: media.url + '.webp',
+        file: payload?.messages[0]?.image?.id + '.webp',
       },
     })
       .then((response) => {
