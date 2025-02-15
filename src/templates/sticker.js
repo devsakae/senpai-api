@@ -60,7 +60,7 @@ const staticSticker = async (req) => {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       },
       data: {
-        messageing_product: 'whatsapp',
+        messaging_product: 'whatsapp',
         file: payload?.messages[0]?.image?.id + '.webp',
       },
     })
