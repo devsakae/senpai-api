@@ -35,7 +35,7 @@ const staticSticker = async (req) => {
   const media = await getMediaURL(payload?.messages[0]?.image?.id);
   if (media) {
     console.log('downloading media from', media.url);
-    const response = await axios({
+    const downloadedImage = await axios({
       method: 'GET',
       url: `https://graph.facebook.com/${VERSION}/${media.url}`,
       headers: {
@@ -43,16 +43,15 @@ const staticSticker = async (req) => {
       },
       responseType: 'arraybuffer',
     })
-      .then((response) => {
-        console.log('get/response!', response);
-        return response;
-      })
+      .then((response) => response)
       .catch((err) => console.error('get/error!', err));
-    const buffer = Buffer.from(response.data, 'utf-8');
-    const sticker = sharp(buffer)
+    const buffer = Buffer.from(downloadedImage.data, 'utf-8');
+    sharp(buffer)
       .resize(512, 512)
-      .toFile(payload?.messages[0]?.image?.id + '.webp', (err, info) => {});
+      .toFile(payload?.messages[0]?.image?.id + '.webp');
+    console.log('finished sharp');
     console.log('starting sending sticker');
+    return;
     await axios({
       method: 'POST',
       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
