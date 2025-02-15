@@ -31,8 +31,9 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (
-    payload?.messages[0]?.type !== 'image' ||
-    payload?.messages[0]?.caption !== '.figurinha'
+    payload?.messages[0]?.type === 'image' &&
+    payload?.messages[0]?.caption !== '.s' &&
+    payload?.messages[0]?.caption !== '.sticker'
   )
     return await stickerTutorial(req);
   console.log('Início da construção da sticker aqui');
@@ -49,7 +50,7 @@ const downloadImage = async (imageId) => {
     },
   })
     .then((response) => {
-      console.log('Ok', response)
+      console.log('Ok', response);
       return response;
     })
     .catch((err) => console.error('error', err));
