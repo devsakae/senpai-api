@@ -67,7 +67,7 @@ const staticSticker = async (req) => {
       .then((response) => {
         console.log('response ok', response.data);
       })
-      .catch((err) => console.error('error sending sticker', err));
+      .catch((err) => console.error('error sending sticker', err.response.data.error));
   }
 };
 
