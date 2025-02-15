@@ -37,9 +37,17 @@ const staticSticker = async (req) => {
     console.log('downloading media from', media.url)
     const response = await axios({
       method: 'GET',
-      url: media.url,
+      url: `https://graph.facebook.com/${VERSION}/${media.url}`,
+      headers: {
+        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      },
       responseType: 'arraybuffer',
-    });
+    }).then((response) => {
+      console.log('get/response!', response);
+      return response
+    })
+    .catch((err) => console.error('get/error!', err));
+
     const buffer = Buffer.from(response.data, 'utf-8');
     sharp(buffer).resize(512, 512).toFile(media.url + '.webp', (err, info) => {
       console.log('sharp complete!');
