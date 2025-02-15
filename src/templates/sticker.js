@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const sharp = require('sharp');
+const fs = require('fs');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -33,25 +34,30 @@ const staticSticker = async (req) => {
   const user = payload?.contacts[0]?.wa_id;
   console.log('solicitando media URL');
   const media = await getMediaURL(payload?.messages[0]?.image?.id);
+  console.log('media url:', media.url);
+  return;
   if (media) {
     console.log('downloading media from', media.url);
     const downloadedImage = await axios({
       method: 'GET',
-      url: `https://graph.facebook.com/${VERSION}/${media.url}`,
+      url: media.url,
       headers: {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
       },
       responseType: 'arraybuffer',
     })
-      .then((response) => response)
+      .then((response) => {
+        console.log('response ok!');
+        return response
+      })
       .catch((err) => console.error('get/error!', err));
+    
     const buffer = Buffer.from(downloadedImage.data, 'utf-8');
     sharp(buffer)
       .resize(512, 512)
-      .toFile(payload?.messages[0]?.image?.id + '.webp');
-    console.log('finished sharp');
+      .toFile('teste.webp');
+        
     console.log('starting sending sticker');
-    return;
     await axios({
       method: 'POST',
       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
