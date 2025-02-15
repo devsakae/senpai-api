@@ -21,7 +21,7 @@ const checkCommand = async (sender, req) => {
     if (user_sent?.text?.body === '.figurinha') return stickerTutorial(req);
   }
   if (user_sent?.type === 'image') {
-    console.info(user_sent?.image);
+    console.info(sender?.name ,'sent image id', user_sent?.image?.id);
     if (user_sent?.image?.caption === '.figurinha') return await staticSticker(req);
   }
   return checkLastInteraction(sender, req);
