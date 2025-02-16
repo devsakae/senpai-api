@@ -53,17 +53,17 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       ) {
         const payload = req.body.entry[0]?.changes[0]?.value;
         const { contacts } = payload;
-        const msg_time = new Date(payload?.messages[0]?.timestamp * 1000);
-        const message_content =
-          payload?.messages[0]?.type === 'text'
-            ? payload?.messages[0]?.text?.body
-            : payload?.messages[0]?.type || 'unknown';
         console.info(
-          msg_time.toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" }),
+          new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
+            'pt-br',
+            { timeZone: 'America/Sao_Paulo' },
+          ),
           contacts[0]?.profile?.name,
           contacts[0]?.wa_id,
           '>',
-          message_content,
+          payload?.messages[0]?.type === 'text'
+            ? payload?.messages[0]?.text?.body
+            : payload?.messages[0]?.type || 'unknown',
           '[' + payload?.messages[0]?.type + ']',
         );
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
@@ -71,7 +71,12 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       }
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
         const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
-        return console.log("[" + st?.status, "/", st?.pricing?.category + "] ",  st?.id);
+        return console.log(
+          '[' + st?.status,
+          '/',
+          st?.pricing?.category + '] ',
+          st?.id,
+        );
       }
       await checkContact(req);
       return res.sendStatus(200);

@@ -7,7 +7,7 @@ const checkLastInteraction = async (sender, req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (today.getTime() - new Date(sender.last_contact).getTime() > 86400000) {
     console.log('usuário sem contato há 24h+');
-    return await rootMenu(payload.contact[0]);
+    return await rootMenu(payload.contacts[0]);
   }
   return console.info(
     'o que fazer? usuário mandou:',
