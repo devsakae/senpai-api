@@ -37,23 +37,18 @@ const staticSticker = async (req) => {
   console.log('media info', mediaInfo);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
+  const stickerWebp = sharp(localBuffer).resize(512, 512).toFile(mediaInfo.id + '.webp');
   console.log('writing local');
   const destDir = './media/' + user;
-  if (!fs.existsSync(destDir)) {
-    fs.mkdirSync(destDir);
-  }
-  const extension = mediaInfo.mime_type.split('/')[1];
-  const filename = user + '.' + extension;
-  const filePath = path.join(destDir, filename);
-  fs.writeFile(
-    filePath,
-    localBuffer,
-    (err) => console.error(err),
-  );
+  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
+  const filePath = path.join(destDir, mediaInfo.id + '.webp');
+  fs.writeFile(filePath, stickerWebp, (err) => console.error(err));
+
+  // const extension = mediaInfo.mime_type.split('/')[1];
+  // const filename = mediaInfo.id + '.' + extension;
+  // const filePath = path.join(destDir, filename);
+  // fs.writeFile(filePath, localBuffer, (err) => console.error(err));
   return;
-  // sharp(localBuffer)
-  //   .resize(512, 512)
-  //   .toFile('teste.webp');
 
   // if (mediaURL) {
   //   console.log('downloading media from', mediaURL);
