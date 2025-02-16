@@ -1,6 +1,7 @@
 const { default: axios } = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
+const path = require('path');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -32,14 +33,23 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
-  console.log('getMediaURL');
-  const mediaURL = await getMediaURL(payload?.messages[0]?.image?.id);
-  console.log('getMediaBuffer');
-  const mediaBuffer = await getMediaBuffer(mediaURL);
-  console.log('localBuffer');
+  const mediaInfo = await getMedia(payload?.messages[0]?.image?.id);
+  console.log('media info', mediaInfo);
+  const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
   console.log('writing local');
-  fs.writeFile('./teste.jpg', localBuffer, (err) => console.error(err));
+  const destDir = './media/' + user;
+  if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir);
+  }
+  const extension = mediaInfo.mime_type.split('/')[1];
+  const filename = user + '.' + extension;
+  const filePath = path.join(destDir, filename);
+  fs.writeFile(
+    filePath,
+    localBuffer,
+    (err) => console.error(err),
+  );
   return;
   // sharp(localBuffer)
   //   .resize(512, 512)
@@ -85,7 +95,7 @@ const staticSticker = async (req) => {
   // }
 };
 
-const getMediaURL = async (imageId) => {
+const getMedia = async (imageId) => {
   return await axios({
     method: 'GET',
     url: `https://graph.facebook.com/${VERSION}/${imageId}?phone_number_id=${PHONE_NUMBER_ID}`,
@@ -93,7 +103,7 @@ const getMediaURL = async (imageId) => {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
     },
   })
-    .then((response) => response.data.url)
+    .then((response) => response.data)
     .catch((err) => console.error('Error getting URL', err.code));
 };
 
