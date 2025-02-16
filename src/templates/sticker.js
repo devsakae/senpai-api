@@ -37,7 +37,7 @@ const staticSticker = async (req) => {
   console.log('media info', mediaInfo);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
-  const stickerWebp = sharp(localBuffer).resize(512, 512).toFile(mediaInfo.id + '.webp');
+  const stickerWebp = await sharp(localBuffer).resize(512, 512).toFile(mediaInfo.id + '.webp');
   console.log('writing local');
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
