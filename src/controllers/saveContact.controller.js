@@ -11,6 +11,8 @@ const checkContact = async (req) => {
         name: contact?.profile?.name,
         contact: contact,
         last_contact: new Date(),
+        last_type: req.body.entry[0]?.changes[0]?.value?.messages[0]?.type,
+        last_sticker: req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image' ? new Date() : '$last_sticker',
       },
     },
     { upsert: true },

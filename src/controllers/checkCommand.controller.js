@@ -1,6 +1,7 @@
 const { canal } = require('../templates');
 const { rootMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
+const { noGrace } = require('../utils');
 
 const checkLastInteraction = async (sender, req) => {
   const today = new Date();
@@ -27,6 +28,7 @@ const checkCommand = async (sender, req) => {
       return stickerTutorial(req);
   }
   if (user_sent?.type === 'image') {
+    if (sender.last_type === 'image' && noGrace(sender.last_contact)) return await 
     console.info(sender?.name, 'sent image id', user_sent?.image?.id);
     return await staticSticker(req);
   }

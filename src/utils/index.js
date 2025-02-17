@@ -17,7 +17,19 @@ const metaHeaders = {
   },
 };
 
+// returns true if user last contact was more than 24 hours
+const onGrace = (last_time) => {
+  return (today - last_time) > 86400000
+}
+
+// returns true if user last contact was less than 24 hours
+const onProb = (last_time) => {
+  return (today - last_time) < 86400000
+}
+
 module.exports = {
   jsonHeaders,
   metaHeaders,
+  onGrace,
+  onProb,
 };

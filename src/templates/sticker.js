@@ -46,33 +46,6 @@ const staticSticker = async (req) => {
     .toFile(filePath)
     .then((res) => console.log(res));
 
-  // const extension = mediaInfo.mime_type.split('/')[1];
-  // const filename = mediaInfo.id + '.' + extension;
-  // const filePath = path.join(destDir, filename);
-  // fs.writeFile(filePath, localBuffer, (err) => console.error(err));
-  return;
-
-  // if (mediaURL) {
-  //   console.log('downloading media from', mediaURL);
-  //   const downloadedImage = await axios({
-  //     method: 'GET',
-  //     url: mediaURL,
-  //     headers: {
-  //       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  //     },
-  //     responseType: 'arraybuffer',
-  //   })
-  //     .then((response) => {
-  //       console.log('response ok!');
-  //       return response
-  //     })
-  //     .catch((err) => console.error('get/error!', err));
-
-  //   const buffer = Buffer.from(downloadedImage.data, 'utf-8');
-  //   sharp(buffer)
-  //     .resize(512, 512)
-  //     .toFile('teste.webp');
-
   //   console.log('starting sending sticker');
   //   await axios({
   //     method: 'POST',
@@ -89,7 +62,6 @@ const staticSticker = async (req) => {
   //       console.log('response ok', response.data);
   //     })
   //     .catch((err) => console.error('error sending sticker', err.response.data.error));
-  // }
 };
 
 const getMedia = async (imageId) => {
