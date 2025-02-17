@@ -1,4 +1,5 @@
 const { canal } = require('../templates');
+const { limitedStickers } = require('../templates/errors');
 const { rootMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { noGrace } = require('../utils');
@@ -28,7 +29,7 @@ const checkCommand = async (sender, req) => {
       return stickerTutorial(req);
   }
   if (user_sent?.type === 'image') {
-    if (sender.last_type === 'image' && noGrace(sender.last_contact)) return await 
+    if (sender.last_type === 'image' && noGrace(sender.last_contact)) return await limitedStickers(req);
     console.info(sender?.name, 'sent image id', user_sent?.image?.id);
     return await staticSticker(req);
   }
