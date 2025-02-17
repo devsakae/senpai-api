@@ -46,22 +46,24 @@ const staticSticker = async (req) => {
     .toFile(filePath)
     .then((res) => console.log(res));
 
-  //   console.log('starting sending sticker');
-  //   await axios({
-  //     method: 'POST',
-  //     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-  //     headers: {
-  //       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  //     },
-  //     data: {
-  //       messaging_product: 'whatsapp',
-  //       file: payload?.messages[0]?.image?.id + '.webp',
-  //     },
-  //   })
-  //     .then((response) => {
-  //       console.log('response ok', response.data);
-  //     })
-  //     .catch((err) => console.error('error sending sticker', err.response.data.error));
+  console.log('starting sending sticker');
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      file: filePath,
+    },
+  })
+    .then((response) => {
+      console.log('response ok', response.data);
+    })
+    .catch((err) =>
+      console.error('error sending sticker', err.response.data.error),
+    );
 };
 
 const getMedia = async (imageId) => {
