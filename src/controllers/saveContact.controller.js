@@ -23,7 +23,8 @@ const checkContact = async (req) => {
   /* Testing for admin and subadmin */
   if (
     contact.wa_id === process.env.BOT_ADMIN_WAID ||
-    contact.wa_id === process.env.BOT_SUBADMIN_WAID
+    contact.wa_id === process.env.BOT_SUBADMIN_WAID ||
+    contact.wa_id === process.env.BOT_SUBADMIN2_WAID
   ) {
     // if (!checkCommand(req)) return await checkLastInteraction(sender, req);
     return await checkCommand(sender, req);
