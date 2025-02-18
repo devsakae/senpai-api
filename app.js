@@ -8,6 +8,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 
 const app = express();
 app.use(express.json());
+const oneDay = 24 * 60 * 60;
 
 const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
 
@@ -54,13 +55,19 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
     });
 
     app.post('/webhook', async (req, res) => {
-      testData.incoming.push(req.body);
-      fs.writeFileSync(
-        './data/data.json',
-        JSON.stringify(testData, null, 4),
-        'utf-8',
-        (err) => err,
-      );
+      // testData.incoming.push(req.body);
+      // fs.writeFileSync(
+      //   './data/data.json',
+      //   JSON.stringify(testData, null, 4),
+      //   'utf-8',
+      //   (err) => err,
+      // );
+      if (req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp
+          && (new Date(req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000) < (new Date().getTime() - oneDay))) {
+            await markAsRead(req.body.entry[0]?.changes[0]?.value);
+            return console.log('reading old msg from', req.body.entry[0]?.changes[0]?.value?.contacts[0]?.profile?.name, ">", req.body.entry[0]?.changes[0]?.value?.messages[0]?.text?.body);
+          }
+
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
@@ -80,7 +87,6 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
             : payload?.messages[0]?.type || 'unknown',
           '[' + payload?.messages[0]?.type + ']',
         );
-        // await markAsRead(req.body.entry[0]?.changes[0]?.value);
         return await checkContact(req);
       }
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
