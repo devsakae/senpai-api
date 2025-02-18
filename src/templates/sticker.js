@@ -2,6 +2,7 @@ const { default: axios } = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const FormData = require('form-data');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -44,11 +45,14 @@ const staticSticker = async (req) => {
     .resize(512, 512)
     .toFile(filePath)
     .then((res) => console.log(res));
-  
-    console.info('starting sending sticker...')
+
+  console.info('starting sending sticker...');
   const form_data = new FormData();
-  form_data.append("file", fs.createReadStream(filePath));
-  await axios({
+  form_data.append('file', fs.createReadStream(filePath));
+  form_data.append('type', 'image');
+  form_data.append('messaging_product', 'whatsapp');
+
+  const uploadImage = await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
@@ -60,11 +64,9 @@ const staticSticker = async (req) => {
       file: form_data,
     },
   })
-    .then((response) => {
-      return console.log('response ok', response.data);
-    })
+    .then((response) => sendMediaIdToUser(response.data.id, user))
     .catch((err) =>
-      console.error('error sending sticker', err),
+      console.error('error sending sticker', err.response?.data || err),
     );
 };
 
@@ -91,6 +93,30 @@ const getMediaBuffer = async (mediaUrl) => {
   })
     .then((response) => response.data)
     .catch((err) => console.error('error media buffer', err.code));
+};
+
+const sendMediaIdToUser = async (mediaId, userId) => {
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSOPM}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      to: userId,
+      type: 'sticker',
+      sticker: {
+        id: mediaId,
+      },
+    },
+  })
+    .then((response) => {
+      console.log('sticker sent ok!', response.data);
+    })
+    .catch((err) =>
+      console.error('error sending sticker', err.response?.data || err),
+    );
 };
 
 module.exports = {
