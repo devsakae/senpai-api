@@ -41,7 +41,10 @@ const staticSticker = async (req) => {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   await sharp(localBuffer)
-    .resize(512, 512)
+    .resize(512, 512, {
+      fit: "inside",
+      background: { r: 0, g: 0, b: 0, alpha: 0 }
+    })
     .toFile(filePath);
 
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
