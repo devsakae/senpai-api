@@ -44,8 +44,10 @@ const staticSticker = async (req) => {
     .resize(512, 512)
     .toFile(filePath)
     .then((res) => console.log(res));
-
-  console.log('filepath:', filePath);
+  
+    console.info('starting sending sticker...')
+  const form_data = new FormData();
+  form_data.append("file", fs.createReadStream(filePath));
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
@@ -55,11 +57,11 @@ const staticSticker = async (req) => {
     },
     data: {
       messaging_product: 'whatsapp',
-      file: filePath,
+      file: form_data,
     },
   })
     .then((response) => {
-      console.log('response ok', response.data);
+      return console.log('response ok', response.data);
     })
     .catch((err) =>
       console.error('error sending sticker', err.response.data.error),
