@@ -37,7 +37,6 @@ const staticSticker = async (req) => {
   console.log('media info', mediaInfo);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
-  console.log('writing local');
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
@@ -47,15 +46,20 @@ const staticSticker = async (req) => {
     .then((res) => console.log(res));
 
   console.log('starting sending sticker');
+
+  const imageData = await fs.readFile('943475834576182.webp');
+
+
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'multipart/form-data',
     },
     data: {
       messaging_product: 'whatsapp',
-      file: filePath,
+      file: imageData,
     },
   })
     .then((response) => {
