@@ -1,4 +1,5 @@
 const fs = require('fs');
+const stream = require('stream');
 const express = require('express');
 const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
@@ -24,7 +25,6 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       console.log('✔ API escutando na porta', PORT);
     });
     app.get('/', (_req, res) => res.send({ status: 'online' }));
-    app.get('/healthcheck', (req, res) => res.status(200).end());
     app.get('/coffee', (_req, res) => res.status(418).end());
     app.get('/webhook', (req, res) => {
       const mode = req.query['hub.mode'];
@@ -37,6 +37,20 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       } else {
         return res.sendStatus(403).end();
       }
+    });
+    app.get('/report/:user_id/:media_id', (req, res) => {
+      const r = fs.createReadStream(
+        './media/' + req.params.user_id + '/' + req.params.media_id + '.webp',
+      );
+      const ps = new stream.PassThrough();
+      stream.pipeline(r, ps, (err) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(400);
+        }
+      });
+      ps.pipe(res);
+      console.log('end');
     });
 
     app.post('/webhook', async (req, res) => {

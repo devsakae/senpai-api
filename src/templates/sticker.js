@@ -45,21 +45,17 @@ const staticSticker = async (req) => {
     .toFile(filePath)
     .then((res) => console.log(res));
 
-  console.log('starting sending sticker');
-
-  const imageData = await fs.readFile('943475834576182.webp');
-
-
+  console.log('filepath:', filePath);
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
     },
     data: {
       messaging_product: 'whatsapp',
-      file: imageData,
+      file: filePath,
     },
   })
     .then((response) => {
