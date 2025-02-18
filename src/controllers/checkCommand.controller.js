@@ -11,10 +11,7 @@ const checkLastInteraction = async (sender, req) => {
     console.log('usuário sem contato há 24h+');
     return await rootMenu(payload.contacts[0]);
   }
-  return console.info(
-    'o que fazer? usuário mandou:',
-    payload.messages[0]?.type,
-  );
+  await checkCommand(sender, req);
 };
 
 const checkCommand = async (sender, req) => {
