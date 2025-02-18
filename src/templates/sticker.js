@@ -53,7 +53,7 @@ const staticSticker = async (req) => {
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
     data: {
       messaging_product: 'whatsapp',
