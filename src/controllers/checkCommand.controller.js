@@ -30,7 +30,7 @@ const checkCommand = async (sender, req) => {
     console.info(sender?.name, 'sent image id', user_sent?.image?.id);
     return await staticSticker(req);
   }
-  return checkLastInteraction(sender, req);
+  return console.log('do nothing');
 };
 
 module.exports = {
