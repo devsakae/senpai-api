@@ -35,7 +35,6 @@ const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
   const mediaInfo = await getMedia(payload?.messages[0]?.image?.id);
-  console.log('media info', mediaInfo);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
   const destDir = './media/' + user;
@@ -43,8 +42,7 @@ const staticSticker = async (req) => {
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   await sharp(localBuffer)
     .resize(512, 512)
-    .toFile(filePath)
-    .then((res) => console.log(res));
+    .toFile(filePath);
 
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
   await axios({
