@@ -1,6 +1,6 @@
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
-const { checkCommand } = require('./checkCommand.controller');
+const { checkCommand, checkLastInteraction } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
 const testers = process.env.TESTERS.split(',');
 
