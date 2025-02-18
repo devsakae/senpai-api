@@ -20,7 +20,7 @@ const stickerTutorial = async (req) => {
       to: payload?.contacts[0]?.wa_id,
       type: 'text',
       text: {
-        body: 'Para converter uma imagem em figurinha, envie uma imagem com a legenda .sticker',
+        body: 'Para converter uma imagem em figurinha, envie uma imagem que eu me encarrego do resto!',
       },
     },
   })
@@ -46,7 +46,6 @@ const staticSticker = async (req) => {
     .toFile(filePath)
     .then((res) => console.log(res));
 
-  console.info('starting sending sticker...');
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
   await axios({
     method: 'POST',
@@ -65,33 +64,11 @@ const staticSticker = async (req) => {
       },
     },
   }).then((response) => {
-    console.log('sent!');
-    console.log(response.data);
+    if (response.statusText !== "OK") throw new Error({ message: 'Erro ao enviar sticker' })
   }).catch((err) => {
     console.error('error sending sticker!', err.response?.data || err)
   });
 
-  /* const form_data = new FormData();
-  form_data.append('file', fs.createReadStream(filePath));
-  form_data.append('type', 'image');
-  form_data.append('messaging_product', 'whatsapp');
-
-  const uploadImage = await axios({
-    method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-    headers: {
-      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'multipart/form-data',
-    },
-    data: {
-      messaging_product: 'whatsapp',
-      file: form_data,
-    },
-  })
-    .then((response) => sendMediaIdToUser(response.data.id, user))
-    .catch((err) =>
-      console.error('error sending sticker', err.response?.data || err),
-    ); */
 };
 
 const getMedia = async (imageId) => {

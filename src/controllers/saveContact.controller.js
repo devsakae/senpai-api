@@ -2,6 +2,7 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const { checkCommand } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
+const testers = process.env.TESTERS.split(',');
 
 const checkContact = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
@@ -22,14 +23,10 @@ const checkContact = async (req) => {
   if (!sender) return await message_hello(req);
 
   /* Testing for admin and subadmin */
-  if (
-    contact.wa_id === process.env.BOT_ADMIN_WAID ||
-    contact.wa_id === process.env.BOT_SUBADMIN_WAID ||
-    contact.wa_id === process.env.BOT_SUBADMIN2_WAID
-  ) {
+  if (testers.includes(contact.wa_id)) {
     await markAsRead(req.body.entry[0]?.changes[0]?.value);
-    // if (!checkCommand(req)) return await checkLastInteraction(sender, req);
-    return await checkCommand(sender, req);
+    return await checkLastInteraction(sender, req);
+    //return await checkCommand(sender, req);
   }
 
   // if (!checkCommand(req)) {
