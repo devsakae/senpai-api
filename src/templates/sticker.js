@@ -3,7 +3,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
-const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
+const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -47,7 +47,31 @@ const staticSticker = async (req) => {
     .then((res) => console.log(res));
 
   console.info('starting sending sticker...');
-  const form_data = new FormData();
+  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: user,
+      type: 'sticker',
+      sticker: {
+        link: stickerURL,
+      },
+    },
+  }).then((response) => {
+    console.log('sent!');
+    console.log(response.data);
+  }).catch((err) => {
+    console.error('error sending sticker!', err.response?.data || err)
+  });
+
+  /* const form_data = new FormData();
   form_data.append('file', fs.createReadStream(filePath));
   form_data.append('type', 'image');
   form_data.append('messaging_product', 'whatsapp');
@@ -67,7 +91,7 @@ const staticSticker = async (req) => {
     .then((response) => sendMediaIdToUser(response.data.id, user))
     .catch((err) =>
       console.error('error sending sticker', err.response?.data || err),
-    );
+    ); */
 };
 
 const getMedia = async (imageId) => {

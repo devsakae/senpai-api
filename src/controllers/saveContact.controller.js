@@ -1,6 +1,7 @@
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const { checkCommand } = require('./checkCommand.controller');
+const { markAsRead } = require('./markAsRead.controller');
 
 const checkContact = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
@@ -26,6 +27,7 @@ const checkContact = async (req) => {
     contact.wa_id === process.env.BOT_SUBADMIN_WAID ||
     contact.wa_id === process.env.BOT_SUBADMIN2_WAID
   ) {
+    await markAsRead(req.body.entry[0]?.changes[0]?.value);
     // if (!checkCommand(req)) return await checkLastInteraction(sender, req);
     return await checkCommand(sender, req);
   }

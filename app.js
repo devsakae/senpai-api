@@ -38,7 +38,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
         return res.sendStatus(403).end();
       }
     });
-    app.get('/report/:user_id/:media_id', (req, res) => {
+    app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
         './media/' + req.params.user_id + '/' + req.params.media_id + '.webp',
       );
@@ -80,7 +80,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
             : payload?.messages[0]?.type || 'unknown',
           '[' + payload?.messages[0]?.type + ']',
         );
-        await markAsRead(req.body.entry[0]?.changes[0]?.value);
+        // await markAsRead(req.body.entry[0]?.changes[0]?.value);
         return await checkContact(req);
       }
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
