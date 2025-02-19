@@ -25,28 +25,28 @@ const rootMenu = async (contact) => {
             {
               type: 'reply',
               reply: {
-                id: 'reply010',
+                id: 'reply001',
                 title: '.sticker',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply020',
+                id: 'reply002',
                 title: '.canal',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply030',
+                id: 'reply003',
                 title: '.suporte',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply040',
+                id: 'reply004',
                 title: '.sobre',
               },
             },
@@ -59,7 +59,7 @@ const rootMenu = async (contact) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar rootMenu' });
     })
-    .catch((err) => console.error(err.response));
+    .catch((err) => console.error('Erro sending rootMenu!', err.response?.data || err));
 };
 
 const replyMessage = async () => {

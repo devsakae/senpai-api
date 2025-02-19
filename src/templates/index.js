@@ -63,7 +63,8 @@ const message_hello = async (req) => {
     .catch((err) => console.error('Erro ao enviar hello!', err.response))
     .finally(() => {
       if (testers.includes(payload?.contacts[0]?.wa_id)) {
-        return rootMenu(payload?.contacts[0]);
+        console.log('sending rootmenu to tester!')
+        rootMenu(payload?.contacts[0]);
       }
     });
 };
