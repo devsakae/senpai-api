@@ -33,20 +33,13 @@ const rootMenu = async (contact) => {
               type: 'reply',
               reply: {
                 id: 'reply002',
-                title: '.canal',
-              },
-            },
-            {
-              type: 'reply',
-              reply: {
-                id: 'reply003',
                 title: '.suporte',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply004',
+                id: 'reply003',
                 title: '.sobre',
               },
             },
