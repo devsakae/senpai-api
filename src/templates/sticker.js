@@ -7,6 +7,7 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
+  const sticker_message = randomizeThis(msg_sticker) || 'Para receber uma sticker, envie uma imagem pra mim! :)';
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -20,7 +21,7 @@ const stickerTutorial = async (req) => {
       to: payload?.contacts[0]?.wa_id,
       type: 'text',
       text: {
-        body: randomizeThis(msg_sticker),
+        body: sticker_message,
       },
     },
   })

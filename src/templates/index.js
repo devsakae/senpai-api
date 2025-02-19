@@ -34,6 +34,7 @@ const template_manutencao = async (req) => {
 
 const message_hello = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
+  const hello_msg = randomizeThis(message_hello) || 'Olá! Obrigado por utilizar o Bot do Senpai! Acesse nosso site em http://www.botdosenpai.com.br';
   console.log('>> usuario não existe no mongoDB:', payload?.contacts[0]?.profile?.name, '[' + payload?.contacts[0]?.wa_id + ']');
   await axios({
     method: 'POST',
@@ -49,7 +50,7 @@ const message_hello = async (req) => {
       type: 'text',
       text: {
         preview_url: true,
-        body: randomizeThis(message_hello),
+        body: hello_msg,
       },
     },
   })
