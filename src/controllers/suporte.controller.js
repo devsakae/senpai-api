@@ -1,9 +1,6 @@
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, SUPORTE_TECNICO } =
   process.env;
 const axios = require('axios');
-const { randomizeThis } = require('./info');
-const { rootMenu } = require('./list');
-const testers = process.env.TESTERS.split(',');
 
 const getSuporte = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
