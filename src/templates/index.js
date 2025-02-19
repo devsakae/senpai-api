@@ -1,6 +1,9 @@
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const axios = require('axios');
 const { randomizeThis } = require('./info');
+const { checkLastInteraction } = require('../controllers/checkCommand.controller');
+const { rootMenu } = require('./list');
+const testers = process.env.TESTERS.split(',');
 
 const template_manutencao = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -58,7 +61,12 @@ const message_hello = async (req) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar' });
     })
-    .catch((err) => console.error('Erro ao enviar hello!', err.response));
+    .catch((err) => console.error('Erro ao enviar hello!', err.response))
+    .finally(() => {
+      if (testers.includes(payload?.contacts[0]?.wa_id)) {
+        return rootMenu(payload?.contacts[0]);
+      }
+    });
 };
 
 const canal = async (req) => {

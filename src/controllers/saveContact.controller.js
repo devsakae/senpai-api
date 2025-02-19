@@ -3,7 +3,6 @@ const { message_hello } = require('../templates');
 const { checkLastInteraction } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
 const {
-  stickerTutorial,
   freeUserStickerLimit,
 } = require('../templates/sticker');
 const testers = process.env.TESTERS.split(',');
