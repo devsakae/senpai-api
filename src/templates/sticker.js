@@ -42,8 +42,8 @@ const staticSticker = async (req) => {
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   await sharp(localBuffer)
     .resize(512, 512, {
-      fit: "inside",
-      background: { r: 0, g: 0, b: 0, alpha: 0 }
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .toFile(filePath);
 
@@ -64,12 +64,14 @@ const staticSticker = async (req) => {
         link: stickerURL,
       },
     },
-  }).then((response) => {
-    if (response.statusText !== "OK") throw new Error({ message: 'Erro ao enviar sticker' })
-  }).catch((err) => {
-    console.error('error sending sticker!', err.response?.data || err)
-  });
-
+  })
+    .then((response) => {
+      if (response.statusText !== 'OK')
+        throw new Error({ message: 'Erro ao enviar sticker' });
+    })
+    .catch((err) => {
+      console.error('error sending sticker!', err.response?.data || err);
+    });
 };
 
 const getMedia = async (imageId) => {
