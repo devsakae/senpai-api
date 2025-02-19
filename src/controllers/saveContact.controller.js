@@ -2,7 +2,10 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const { checkLastInteraction } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
-const { stickerTutorial, freeUserStickerLimit } = require('../templates/sticker');
+const {
+  stickerTutorial,
+  freeUserStickerLimit,
+} = require('../templates/sticker');
 const testers = process.env.TESTERS.split(',');
 
 const checkContact = async (req) => {
@@ -27,19 +30,28 @@ const checkContact = async (req) => {
 
   if (!sender) return await message_hello(req);
 
-  const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  if (
-    req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image'
-    && sender?.last_sticker instanceof Date
-    && new Date(sender?.last_sticker) > twentyFourHoursAgo
-  ) {
-    return await freeUserStickerLimit(req);
-  }
-
   /* Testing for admin and subadmin */
   if (testers.includes(contact.wa_id)) {
     await markAsRead(req.body.entry[0]?.changes[0]?.value);
     return await checkLastInteraction(sender, req);
+  }
+
+  const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  if (req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image') {
+    console.log('usuário mandou imagem...');
+    if (
+      sender?.last_sticker instanceof Date &&
+      new Date(sender?.last_sticker) > twentyFourHoursAgo
+    ) {
+      console.log('...mas só pode 1 por dia!');
+      return await freeUserStickerLimit(req);
+    }
+    console.log('...e eu gravei esse horário no db:', now);
+    await senpaiMongoDb.collection('customers').findOneAndUpdate(
+      { wa_id: contact.wa_id },
+      { $set: { last_sticker: now } },
+      { upsert: true },
+    );
   }
 
   return;
