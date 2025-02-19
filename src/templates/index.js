@@ -1,7 +1,6 @@
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const axios = require('axios');
 const { randomizeThis } = require('./info');
-const { checkLastInteraction } = require('../controllers/checkCommand.controller');
 const { rootMenu } = require('./list');
 const testers = process.env.TESTERS.split(',');
 
@@ -85,7 +84,7 @@ const canal = async (req) => {
       type: 'text',
       text: {
         preview_url: true,
-        body: 'Acompanhe as últimas atualizações no nosso canal!\n\n‎Follow the Bot Senpai channel on WhatsApp: https://whatsapp.com/channel/0029VatyGWjFcow5imozTp2r',
+        body: 'Acompanhe as últimas atualizações no nosso canal!\n\nBasta seguir Bot Senpai no WhatsApp: https://whatsapp.com/channel/0029VatyGWjFcow5imozTp2r',
       },
     },
   })
@@ -93,11 +92,39 @@ const canal = async (req) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar' });
     })
-    .catch((err) => console.error(err.response));
+    .catch(err => console.error(err.response?.data || err));
 };
+
+const sobre = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'text',
+      text: {
+        preview_url: true,
+        body: 'Somos uma empresa Brasileira 🇧🇷 e estamos aqui para poder ajudar você a criar figurinhas de forma fácil e rápida.\n\nNossos links:\n\n- Site: http://www.botdosenpai.com.br\n- Canal do WhatsApp: https://whatsapp.com/channel/0029VatyGWjFcow5imozTp2r',
+      },
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'Erro ao enviar' });
+    })
+    .catch(err => console.error(err.response?.data || err));
+}
 
 module.exports = {
   template_manutencao,
   message_hello,
   canal,
+  sobre,
 };

@@ -18,28 +18,35 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\nSomos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento! Se tiver dúvidas de como usar o Senpai Bot, selecione uma das opções abaixo:`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\nSomos um Bot gratuito disponível 24 horas para você aproveitar a qualquer momento!\n\nSe é sua primeira vez usando o Senpai Bot, comece selecionando uma das opções abaixo:\n\n- *.sticker*: Ensinamos você a criar sua primeira figurinha :)\n- *.canal*: Acesse o nosso canal no WhatsApp e fique sabendo de dicas, cupons de desconto e sorteios!\n- *.suporte*: Acionamos o nosso suporte técnico para entrar em contato com você.\n- *.sobre*: Saiba quem somos.`,
         },
         action: {
           buttons: [
             {
               type: 'reply',
               reply: {
-                id: 'reply001',
+                id: 'reply010',
+                title: '.sticker',
+              },
+            },
+            {
+              type: 'reply',
+              reply: {
+                id: 'reply020',
                 title: '.canal',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply002',
+                id: 'reply030',
                 title: '.suporte',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply003',
+                id: 'reply040',
                 title: '.sobre',
               },
             },
