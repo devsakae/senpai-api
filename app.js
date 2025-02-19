@@ -62,11 +62,27 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       //   'utf-8',
       //   (err) => err,
       // );
-      if (req.body.entry[0]?.changes[0]?.value?.messages
-          && (new Date(req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000) < (new Date().getTime() - oneDay))) {
-            await markAsRead(req.body.entry[0]?.changes[0]?.value);
-            return console.log('reading old msg from', req.body.entry[0]?.changes[0]?.value?.contacts[0]?.profile?.name, ">", req.body.entry[0]?.changes[0]?.value?.messages[0]?.text?.body);
-          }
+      if (
+        req.body.entry[0]?.changes[0]?.value?.messages &&
+        new Date(
+          req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000,
+        ) <
+          new Date().getTime() - oneDay
+      ) {
+        const payload = req.body.entry[0]?.changes[0]?.value;
+        await markAsRead(payload);
+        return console.log(
+          'reading msg from',
+          payload?.contacts[0]?.profile?.name,
+          '>',
+          payload?.messages[0]?.text?.body,
+          'sent',
+          new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
+            'pt-br',
+            { timeZone: 'America/Sao_Paulo' },
+          ),
+        );
+      }
 
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&

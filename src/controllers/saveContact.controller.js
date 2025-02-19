@@ -8,6 +8,10 @@ const checkContact = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   const now = new Date();
   const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const last_sticker =
+    req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image'
+      ? now
+      : '$last_sticker';
 
   const sender = await senpaiMongoDb.collection('customers').findOneAndUpdate(
     { wa_id: contact.wa_id },
@@ -15,20 +19,9 @@ const checkContact = async (req) => {
       $set: {
         name: contact?.profile?.name,
         contact: contact,
-        last_contact: new Date(),
+        last_contact: now,
         last_type: req.body.entry[0]?.changes[0]?.value?.messages[0]?.type,
-        last_sticker:
-          req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image'
-            ? {
-                $cond: {
-                  if: {
-                    $lt: ['$last_sticker', twentyFourHoursAgo],
-                  },
-                  then: now,
-                  else: '$last_sticker',
-                },
-              }
-            : '$last_sticker',
+        last_sticker: last_sticker,
       },
     },
     { upsert: true },
