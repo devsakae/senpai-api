@@ -2,6 +2,7 @@ const { default: axios } = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const { randomizeThis, msg_sticker } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -19,7 +20,7 @@ const stickerTutorial = async (req) => {
       to: payload?.contacts[0]?.wa_id,
       type: 'text',
       text: {
-        body: 'Para converter uma imagem em figurinha, envie uma imagem que eu me encarrego do resto!',
+        body: randomizeThis(msg_sticker),
       },
     },
   })
