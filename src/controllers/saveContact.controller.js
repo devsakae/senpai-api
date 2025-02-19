@@ -22,10 +22,7 @@ const checkContact = async (req) => {
         last_type: req.body.entry[0]?.changes[0]?.value?.messages[0]?.type,
       },
     },
-    {
-      upsert: true,
-      returnDocument: 'after',
-    },
+    { upsert: true },
   );
 
   if (!sender) return await message_hello(req);
