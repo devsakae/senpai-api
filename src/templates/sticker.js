@@ -2,7 +2,6 @@ const { default: axios } = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const FormData = require('form-data');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
