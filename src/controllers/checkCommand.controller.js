@@ -16,7 +16,7 @@ const checkLastInteraction = async (sender, req) => {
 
 const checkCommand = async (sender, req) => {
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
-  if (user_sent?.type === 'text') {
+  if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     if (user_sent?.text?.body === '.canal' || user_sent?.interactive?.button_reply?.title === '.canal') return await canal(req);
     if (user_sent?.text?.body === '.suporte' || user_sent?.interactive?.button_reply?.title === '.suporte') return await getSuporte(req);
     if (user_sent?.text?.body === '.sobre' || user_sent?.interactive?.button_reply?.title === '.sobre') return await sobre(req);
