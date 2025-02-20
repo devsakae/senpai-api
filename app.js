@@ -86,15 +86,7 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
         // );
         return await checkContact(req);
       }
-      // if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
-      //   const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
-      //   return console.log(
-      //     '[' + st?.status,
-      //     '/',
-      //     st?.pricing?.category + '] ',
-      //     st?.id,
-      //   );
-      // }
+      if (req?.body?.entry[0]?.changes[0]?.value?.statuses) return;
       await checkContact(req);
       return res.sendStatus(200);
     });
