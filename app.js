@@ -68,25 +68,10 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
-      ) {
-        // const payload = req.body.entry[0]?.changes[0]?.value;
-        // const { contacts } = payload;
-        // console.info(
-        //   new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
-        //     'pt-br',
-        //     { timeZone: 'America/Sao_Paulo' },
-        //   ),
-        //   contacts[0]?.profile?.name,
-        //   contacts[0]?.wa_id,
-        //   '>',
-        //   payload?.messages[0]?.type === 'text'
-        //     ? payload?.messages[0]?.text?.body
-        //     : payload?.messages[0]?.type || 'unknown',
-        //   '[' + payload?.messages[0]?.type + ']',
-        // );
-        return await checkContact(req);
-      }
+      ) return await checkContact(req);
+
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) return;
+
       await checkContact(req);
       return res.sendStatus(200);
     });

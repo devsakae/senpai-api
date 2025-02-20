@@ -40,15 +40,12 @@ const checkContact = async (req) => {
   }
   if (payload?.messages[0]?.type === 'image') {
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-    console.log(contact?.profile?.name, 'mandou imagem id');
     if (
       user?.last_sticker instanceof Date &&
       new Date(user?.last_sticker) > twentyFourHoursAgo
     ) {
-      console.log('...mas só pode 1 por dia!');
       return await freeUserStickerLimit(req);
     }
-    console.log('...e eu gravei esse horário no db:', now);
     await senpaiMongoDb
       .collection('customers')
       .findOneAndUpdate(
