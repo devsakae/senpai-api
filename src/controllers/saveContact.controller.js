@@ -8,26 +8,27 @@ const { freeUserStickerLimit } = require('../templates/sticker');
 const testers = process.env.TESTERS.split(',');
 
 const checkContact = async (req) => {
-  const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  const contact = payload?.contacts[0];
   const now = new Date();
 
-  const sender = await senpaiMongoDb.collection('customers').findOneAndUpdate(
+  const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
     { wa_id: contact.wa_id },
     {
       $set: {
         name: contact?.profile?.name,
         contact: contact,
         last_contact: now,
-        last_type: req.body.entry[0]?.changes[0]?.value?.messages[0]?.type,
+        last_type: payload?.messages[0]?.type,
       },
     },
     { upsert: true },
   );
 
-  if (!sender) return await message_hello(req);
+  if (!user) return await message_hello(req);
 
   /* Testing for admin and subadmin */
-  if (testers.includes(contact.wa_id)) {
+  if (testers.includes(contact.wa_id) || user.premium) {
     testData.incoming.push(req.body);
     fs.writeFileSync(
       './data/testers.json',
@@ -35,16 +36,14 @@ const checkContact = async (req) => {
       'utf-8',
       (err) => err,
     );
-    await markAsRead(req.body.entry[0]?.changes[0]?.value);
-    return await checkLastInteraction(sender, req);
+    await markAsRead(payload);
   }
-
-  const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  if (req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'image') {
-    console.log('usuário mandou imagem...');
+  if (payload?.messages[0]?.type === 'image') {
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    console.log(contact?.profile?.name, 'mandou imagem id');
     if (
-      sender?.last_sticker instanceof Date &&
-      new Date(sender?.last_sticker) > twentyFourHoursAgo
+      user?.last_sticker instanceof Date &&
+      new Date(user?.last_sticker) > twentyFourHoursAgo
     ) {
       console.log('...mas só pode 1 por dia!');
       return await freeUserStickerLimit(req);
@@ -58,8 +57,7 @@ const checkContact = async (req) => {
         { upsert: true },
       );
   }
-
-  return;
+  return await checkLastInteraction(user, req);
 };
 
 module.exports = {

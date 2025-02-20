@@ -9,7 +9,6 @@ const checkLastInteraction = async (sender, req) => {
   const today = new Date();
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (today.getTime() - new Date(sender.last_contact).getTime() > 86400000) {
-    console.log('usuário sem contato há 24h+');
     return await rootMenu(payload.contacts[0]);
   }
   await checkCommand(sender, req);
@@ -30,7 +29,7 @@ const checkCommand = async (sender, req) => {
     console.info(sender?.name, 'sent image id', user_sent?.image?.id);
     return await staticSticker(req);
   }
-  return console.log('user sent unknown command');
+  return console.log(sender.name, 'sent command:', user_sent?.text?.body || '[unkown]');
 };
 
 module.exports = {
