@@ -47,12 +47,11 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       const ps = new stream.PassThrough();
       stream.pipeline(r, ps, (err) => {
         if (err) {
-          console.log(err);
-          return res.sendStatus(400);
+          console.error('Erro getting sticker!', err.response?.data || err);
+          return res.sendStatus(500);
         }
       });
       ps.pipe(res);
-      console.log('end');
     });
 
     app.post('/webhook', async (req, res) => {
