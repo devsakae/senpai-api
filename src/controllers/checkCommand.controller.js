@@ -21,6 +21,7 @@ const checkCommand = async (sender, req) => {
     if (user_sent?.text?.body === '.canal') return await canal(req);
     if (user_sent?.text?.body === '.suporte') return await getSuporte(req);
     if (user_sent?.text?.body === '.sobre') return await sobre(req);
+    if (user_sent?.text?.body === '.menu' || user_sent?.text?.body === '.m') return await rootMenu(req.body.entry[0]?.changes[0]?.value?.contacts[0]);
     if (user_sent?.text?.body === '.sticker' || user_sent?.text?.body === '.s')
       return await stickerTutorial(req);
   }

@@ -15,16 +15,16 @@ const msg_welcome = [
 ];
 
 const msg_sticker = [
-  '📢 Ei, você! Quer uma figurinha personalizada? É só me mandar uma mensagem que eu transformo ela em sticker! 😎',
-  '🎨 Sou o Picasso das figurinhas! Manda uma mensagem que eu faço a mágica acontecer! ✨',
-  '🖼️ Quer ser o próximo Van Gogh do WhatsApp? Envie uma mensagem e voilà: figurinha pronta! 🎉',
-  '💬 Mensagem + Bot = Figurinha incrível! Manda algo e veja a arte acontecer! 🎨',
-  '🦸‍♂️ Salvando seu dia com figurinhas personalizadas! É só mandar uma mensagem que eu cuido do resto! 🚀',
-  '🎭 Quer dar um toque especial nas conversas? Manda uma mensagem e eu a transformo em figurinha! 😜',
-  '🖌️ Figurinhas sob encomenda! Envie uma mensagem e receba sua obra-prima em sticker! 🎨',
-  '💡 Ideia genial: você manda uma mensagem, eu transformo em figurinha. Pronto, virou arte! 🖼️',
-  '🎪 O circo da figurinha está aberto! Manda uma mensagem e seja o astro do seu próprio sticker! 🤹‍♂️',
-  '🛠️ Ferramenta de criação de figurinhas ativada! Envie uma mensagem e veja a mágica acontecer! ✨',
+  '📢 Ei, você! Quer uma figurinha personalizada? É só me mandar uma imagem que eu transformo ela em sticker! 😎',
+  '🎨 Sou o Picasso das figurinhas! Me manda uma imagem que eu faço a mágica acontecer! ✨',
+  '🖼️ Quer ser o próximo Van Gogh do WhatsApp? Envie uma imagem e voilà: figurinha pronta! 🎉',
+  '💬 imagem + Bot = Figurinha incrível! Manda algo e veja a arte acontecer! 🎨',
+  '🦸‍♂️ Salvando seu dia com figurinhas personalizadas! É só mandar uma imagem que eu cuido do resto! 🚀',
+  '🎭 Quer dar um toque especial nas conversas? Manda uma imagem e eu a transformo em figurinha! 😜',
+  '🖌️ Figurinhas sob encomenda! Envie uma imagem e receba sua obra-prima em sticker! 🎨',
+  '💡 Ideia genial: você manda uma imagem, eu transformo em figurinha. Pronto, virou arte! 🖼️',
+  '🎪 O circo da figurinha está aberto! Manda uma imagem e seja o astro do seu próprio sticker! 🤹‍♂️',
+  '🛠️ Ferramenta de criação de figurinhas ativada! Envie uma imagem e veja a mágica acontecer! ✨',
 ];
 
 const msg_limitsticker = [
