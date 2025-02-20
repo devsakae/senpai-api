@@ -1,21 +1,16 @@
-const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
-
-const jsonHeaders = {
-  method: 'POST',
-  url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-  headers: {
-    Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-    'Content-Type': 'application/json',
-  },
-};
-
-const metaHeaders = {
-  method: 'POST',
-  url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-  headers: {
-    Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  },
-};
+const checkAndLog = (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  if (payload?.statuses) return console.log(payload?.statuses[0]?.status, 'status for', payload?.statuses[0]?.id);
+  if (payload?.messages) {
+    const { profile: { name }, wa_id } = payload?.contacts[0];
+    const msg_type = payload?.messages[0]?.type || 'unknown';
+    if (msg_type === 'text') return console.info(wa_id, name, 'sent text:', payload?.messages[0]?.text?.body)
+    if (msg_type === 'image') return console.info(wa_id, name, 'sent', payload?.messages[0]?.image?.mime_type, '#id:', payload?.messages[0]?.image?.id);
+    if (msg_type === 'video') return console.info(wa_id, name, 'sent', payload?.messages[0]?.video?.mime_type, '#id:', payload?.messages[0]?.video?.id);
+    if (msg_type === 'interactive') return console.info(wa_id, name, 'reply with', payload?.messages[0]?.interactive?.button_reply?.title)
+    else return console.error(wa_id, name, 'sent something different...')
+  }
+}
 
 // returns true if user last contact was more than 24 hours
 const onGrace = (last_time) => {
@@ -28,8 +23,7 @@ const onProb = (last_time) => {
 }
 
 module.exports = {
-  jsonHeaders,
-  metaHeaders,
+  checkAndLog,
   onGrace,
   onProb,
 };

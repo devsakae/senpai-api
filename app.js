@@ -55,13 +55,6 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
     });
 
     app.post('/webhook', async (req, res) => {
-      // testData.incoming.push(req.body);
-      // fs.writeFileSync(
-      //   './data/data.json',
-      //   JSON.stringify(testData, null, 4),
-      //   'utf-8',
-      //   (err) => err,
-      // );
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         new Date(
