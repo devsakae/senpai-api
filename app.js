@@ -5,6 +5,7 @@ const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 const { checkContact } = require('./src/controllers/saveContact.controller');
 const { senpaiMongoDb } = require('./src/utils/connections');
+const { checkAndLog } = require('./src/utils');
 
 const app = express();
 app.use(express.json());
@@ -55,58 +56,45 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
     });
 
     app.post('/webhook', async (req, res) => {
+      checkAndLog(req); // Log incoming req;
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
-        new Date(
-          req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000,
-        ) <
-          new Date().getTime() - oneDay
+        new Date(req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000) > (new Date().getTime() - oneDay)
       ) {
         const payload = req.body.entry[0]?.changes[0]?.value;
         await markAsRead(payload);
-        return console.log(
-          'reading msg from',
-          payload?.contacts[0]?.profile?.name,
-          '>',
-          payload?.messages[0]?.text?.body,
-          'sent',
-          new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
-            'pt-br',
-            { timeZone: 'America/Sao_Paulo' },
-          ),
-        );
       }
 
       if (
         req.body.entry[0]?.changes[0]?.value?.messages &&
         req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
       ) {
-        const payload = req.body.entry[0]?.changes[0]?.value;
-        const { contacts } = payload;
-        console.info(
-          new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
-            'pt-br',
-            { timeZone: 'America/Sao_Paulo' },
-          ),
-          contacts[0]?.profile?.name,
-          contacts[0]?.wa_id,
-          '>',
-          payload?.messages[0]?.type === 'text'
-            ? payload?.messages[0]?.text?.body
-            : payload?.messages[0]?.type || 'unknown',
-          '[' + payload?.messages[0]?.type + ']',
-        );
+        // const payload = req.body.entry[0]?.changes[0]?.value;
+        // const { contacts } = payload;
+        // console.info(
+        //   new Date(payload?.messages[0]?.timestamp * 1000).toLocaleString(
+        //     'pt-br',
+        //     { timeZone: 'America/Sao_Paulo' },
+        //   ),
+        //   contacts[0]?.profile?.name,
+        //   contacts[0]?.wa_id,
+        //   '>',
+        //   payload?.messages[0]?.type === 'text'
+        //     ? payload?.messages[0]?.text?.body
+        //     : payload?.messages[0]?.type || 'unknown',
+        //   '[' + payload?.messages[0]?.type + ']',
+        // );
         return await checkContact(req);
       }
-      if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
-        const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
-        return console.log(
-          '[' + st?.status,
-          '/',
-          st?.pricing?.category + '] ',
-          st?.id,
-        );
-      }
+      // if (req?.body?.entry[0]?.changes[0]?.value?.statuses) {
+      //   const st = req?.body?.entry[0]?.changes[0]?.value?.statuses[0];
+      //   return console.log(
+      //     '[' + st?.status,
+      //     '/',
+      //     st?.pricing?.category + '] ',
+      //     st?.id,
+      //   );
+      // }
       await checkContact(req);
       return res.sendStatus(200);
     });
