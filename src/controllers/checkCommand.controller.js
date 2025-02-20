@@ -17,6 +17,7 @@ const checkLastInteraction = async (sender, req) => {
 
 const checkCommand = async (sender, req) => {
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
+  console.log(sender.name, 'sent', user_sent.text?.body);
   if (user_sent?.type === 'text') {
     if (user_sent?.text?.body === '.canal') return await canal(req);
     if (user_sent?.text?.body === '.suporte') return await getSuporte(req);
