@@ -54,7 +54,7 @@ const oneDay = 24 * 60 * 60;
 
     app.get('/' + DOWNLOAD_FOLDER, (_, res) => {
       res.setHeader('Content-type','application/zip');
-      res.sendFile('./' + DOWNLOAD_FOLDER + '/file.zip');
+      res.sendFile(__dirname + '/' + DOWNLOAD_FOLDER + '/file.zip');
     })
 
     app.post('/webhook', async (req, res) => {
