@@ -1,5 +1,5 @@
 const fs = require('fs');
-const testData = require('../../data/data.json');
+const testData = require('../../data/testers.json');
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const { checkLastInteraction } = require('./checkCommand.controller');
