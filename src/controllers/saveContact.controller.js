@@ -1,10 +1,10 @@
+const fs = require('fs');
+const testData = require('../../data/data.json');
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const { checkLastInteraction } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
-const {
-  freeUserStickerLimit,
-} = require('../templates/sticker');
+const { freeUserStickerLimit } = require('../templates/sticker');
 const testers = process.env.TESTERS.split(',');
 
 const checkContact = async (req) => {
@@ -28,6 +28,13 @@ const checkContact = async (req) => {
 
   /* Testing for admin and subadmin */
   if (testers.includes(contact.wa_id)) {
+    testData.incoming.push(req.body);
+    fs.writeFileSync(
+      './data/testers.json',
+      JSON.stringify(testData, null, 4),
+      'utf-8',
+      (err) => err,
+    );
     await markAsRead(req.body.entry[0]?.changes[0]?.value);
     return await checkLastInteraction(sender, req);
   }
@@ -43,11 +50,13 @@ const checkContact = async (req) => {
       return await freeUserStickerLimit(req);
     }
     console.log('...e eu gravei esse horário no db:', now);
-    await senpaiMongoDb.collection('customers').findOneAndUpdate(
-      { wa_id: contact.wa_id },
-      { $set: { last_sticker: now } },
-      { upsert: true },
-    );
+    await senpaiMongoDb
+      .collection('customers')
+      .findOneAndUpdate(
+        { wa_id: contact.wa_id },
+        { $set: { last_sticker: now } },
+        { upsert: true },
+      );
   }
 
   return;
