@@ -1,17 +1,15 @@
 const fs = require('fs');
 const stream = require('stream');
 const express = require('express');
-const testData = require('./data/data.json');
 const { markAsRead } = require('./src/controllers/markAsRead.controller');
 const { checkContact } = require('./src/controllers/saveContact.controller');
 const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
+const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
 app.use(express.json());
 const oneDay = 24 * 60 * 60;
-
-const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
 
 (async () => {
   console.log('Senpai, by devsakae (2025)\nInicializando o bot, aguarde...');
@@ -53,6 +51,11 @@ const { WEBHOOK_VERIFY_TOKEN, PORT } = process.env;
       });
       ps.pipe(res);
     });
+
+    app.get('/' + DOWNLOAD_FOLDER, (_, res) => {
+      res.setHeader('Content-type','application/zip');
+      res.sendFile('./' + DOWNLOAD_FOLDER + '/file.zip');
+    })
 
     app.post('/webhook', async (req, res) => {
       checkAndLog(req); // Log incoming req;
