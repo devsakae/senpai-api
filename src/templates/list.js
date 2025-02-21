@@ -85,7 +85,7 @@ const completeMenu = async (req) => {
           text: 'Dúvidas? Acesse nosso site em http://www.botdosenpai.com.br',
         },
         action: {
-          button: '.sticker',
+          button: 'Stickers e Figurinhas :)',
           sections: [
             {
               title: 'Como fazer figurinhas?',
@@ -103,17 +103,42 @@ const completeMenu = async (req) => {
               ],
             },
             {
-              title: '<LIST_SECTION_2_TITLE>',
+              title: 'Utilitários',
               rows: [
                 {
-                  id: '<LIST_SECTION_2_ROW_1_ID>',
-                  title: '<SECTION_2_ROW_1_TITLE>',
-                  description: '<SECTION_2_ROW_1_DESC>',
+                  id: 'util001',
+                  title: '.google [pesquisa]',
+                  description: 'Pesquiso no Google pra você',
                 },
                 {
-                  id: '<LIST_SECTION_2_ROW_2_ID>',
-                  title: '<SECTION_2_ROW_2_TITLE>',
-                  description: '<SECTION_2_ROW_2_DESC>',
+                  id: '.util002',
+                  title: '.piada',
+                  description: 'Conto uma piada sem graça',
+                },
+              ],
+            },
+            {
+              title: 'Exclusivo para PREMIUM!',
+              rows: [
+                {
+                  id: '.premium001',
+                  title: '.stickerai [descrição]',
+                  description: 'Você descreve a figurinha perfeita e eu crio ela. Eu prometo.',
+                },
+                {
+                  id: '.premium002',
+                  title: '.lembrete',
+                  description: 'Te ajudo a não esquecer das coisas',
+                },
+                {
+                  id: '.premium003',
+                  title: '.clima [horário] [localização]',
+                  description: 'Receba a previsão do tempo todo dia no horário definido para a localização que você quiser',
+                },
+                {
+                  id: '.premium004',
+                  title: '.news [palavra-chave]',
+                  description: 'Novidades fresquinhas do que mais te interessa, direto no seu Whats!',
                 },
               ],
             },

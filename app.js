@@ -5,6 +5,7 @@ const { markAsRead } = require('./src/controllers/markAsRead.controller');
 const { checkContact } = require('./src/controllers/saveContact.controller');
 const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
+const { checkType } = require('./src/controllers/checkType.controller');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
@@ -61,11 +62,14 @@ const oneDay = 24 * 60 * 60;
       // Log incoming req;
       checkAndLog(req);
       
-      // Return on status of messages (not important)
-      if (req?.body?.entry[0]?.changes[0]?.value?.statuses) return;
-        
-      await markAsRead(req.body.entry[0]?.changes[0]?.value);
-      await checkContact(req);
+      // Avoid statuses messages
+      if (checkType(req)) return;
+      
+      if (req?.body?.entry[0]?.changes[0]?.value?.messages) {
+        await markAsRead(req.body.entry[0]?.changes[0]?.value);
+        await checkContact(req);
+      }
+
       return res.sendStatus(200);
     });
   }

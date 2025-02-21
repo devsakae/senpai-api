@@ -35,7 +35,7 @@ const template_manutencao = async (req) => {
 
 const message_hello = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const hello_msg = randomizeThis(message_hello) || 'Olá! Obrigado por utilizar o Bot do Senpai! Acesse nosso site em http://www.botdosenpai.com.br';
+  const hello_msg = randomizeThis(message_hello) || 'Olá! Obrigado por utilizar o Bot do Senpai!\n\nAcesse nosso site em http://www.botdosenpai.com.br';
   console.log('>> Novo usuário!', payload?.contacts[0]?.profile?.name, '[' + payload?.contacts[0]?.wa_id + ']');
   await axios({
     method: 'POST',
@@ -60,7 +60,7 @@ const message_hello = async (req) => {
         throw new Error({ response: 'status !== 200' });
     })
     .catch((err) => console.error('Erro ao enviar hello!', err.response?.data || err))
-    .finally(() => rootMenu(payload?.contacts[0]));
+    .finally(async () => await rootMenu(payload?.contacts[0]));
 };
 
 const canal = async (req) => {

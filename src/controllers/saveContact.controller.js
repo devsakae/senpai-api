@@ -6,20 +6,14 @@ const {
   checkLastInteraction,
   checkCommand,
 } = require('./checkCommand.controller');
-const { markAsRead } = require('./markAsRead.controller');
 const { freeUserStickerLimit } = require('../templates/sticker');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const contact = payload?.contacts || payload?.contacts[0];
-  if (!contact) return;
-
+  if (!contact) return console.error('no contact object @', payload);
   const now = new Date();
-
-  const user = await senpaiMongoDb
-    .collection('customers')
-    .findOne({ wa_id: contact.wa_id });
-
+  
   // const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
   //   { wa_id: contact.wa_id },
   //   {
@@ -39,6 +33,10 @@ const checkContact = async (req) => {
   //   },
   //   { upsert: true },
   // );
+
+  const user = await senpaiMongoDb
+    .collection('customers')
+    .findOne({ wa_id: contact.wa_id });
 
   if (!user) {
     return await senpaiMongoDb
@@ -61,14 +59,14 @@ const checkContact = async (req) => {
           },
         },
       )
-      .then(() => message_hello(req))
+      .then(async () => await message_hello(req))
       .catch((err) =>
         console.error('Error saving mongodb', err.response?.data || err),
       );
   }
 
   /* Testing for admin and subadmin */
-  if (user.premium) {
+  if (user && user.premium) {
     testData.incoming.push(req.body);
     fs.writeFileSync(
       './data/testers.json',
@@ -76,7 +74,6 @@ const checkContact = async (req) => {
       'utf-8',
       (err) => err,
     );
-    await markAsRead(payload);
     return await checkCommand(user, req);
   }
 
