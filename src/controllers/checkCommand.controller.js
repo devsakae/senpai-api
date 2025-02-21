@@ -8,7 +8,7 @@ const checkLastInteraction = async (sender, req) => {
   if (sender.premium) return await checkCommand(sender, req);
   const today = new Date();
   const payload = req.body.entry[0]?.changes[0]?.value;
-  if (today.getTime() - new Date(sender.last_time.contact) > 86400) {
+  if (today.getTime() - new Date(sender?.last_time?.contact).getTime() > 86400) {
     return await rootMenu(payload.contacts[0]);
   }
   return await checkCommand(sender, req);
