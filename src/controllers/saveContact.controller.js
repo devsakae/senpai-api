@@ -8,12 +8,12 @@ const {
 } = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
 const { freeUserStickerLimit } = require('../templates/sticker');
-const testers = process.env.TESTERS.split(',');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const contact = payload?.contacts || payload?.contacts[0];
   if (!contact) return;
+
   const now = new Date();
 
   const user = await senpaiMongoDb
@@ -41,7 +41,7 @@ const checkContact = async (req) => {
   // );
 
   if (!user) {
-    await senpaiMongoDb
+    return await senpaiMongoDb
       .collection('customers')
       .insertOne(
         { wa_id: contact.wa_id },
@@ -77,17 +77,20 @@ const checkContact = async (req) => {
       (err) => err,
     );
     await markAsRead(payload);
+    return await checkCommand(user, req);
   }
+
+  // Free user sent image
   if (payload?.messages[0]?.type === 'image') {
-    if (!user.premium) {
-      if (
-        user?.last_time?.image instanceof Date &&
-        now.getTime() - user?.last_time?.image > 86400
-      ) {
-        return await freeUserStickerLimit(req);
-      }
+    if (
+      user?.last_time?.image instanceof Date &&
+      now.getTime() - user?.last_time?.image.getTime() > 86400
+    ) {
+      return await freeUserStickerLimit(req);
     }
   }
+
+  // Free user sent something else
   return await checkLastInteraction(user, req);
 };
 

@@ -58,22 +58,13 @@ const oneDay = 24 * 60 * 60;
     })
 
     app.post('/webhook', async (req, res) => {
-      checkAndLog(req); // Log incoming req;
-      if (
-        req.body.entry[0]?.changes[0]?.value?.messages &&
-        new Date(req.body.entry[0]?.changes[0]?.value?.messages[0]?.timestamp * 1000) > (new Date().getTime() - oneDay)
-      ) {
-        const payload = req.body.entry[0]?.changes[0]?.value;
-        await markAsRead(payload);
-      }
-
-      if (
-        req.body.entry[0]?.changes[0]?.value?.messages &&
-        req.body.entry[0]?.changes[0]?.value?.messages[0]?.type === 'text'
-      ) return await checkContact(req);
-
+      // Log incoming req;
+      checkAndLog(req);
+      
+      // Return on status of messages (not important)
       if (req?.body?.entry[0]?.changes[0]?.value?.statuses) return;
-
+        
+      await markAsRead(req.body.entry[0]?.changes[0]?.value);
       await checkContact(req);
       return res.sendStatus(200);
     });
