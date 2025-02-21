@@ -36,7 +36,9 @@ const checkContact = async (req) => {
 
   const user = await senpaiMongoDb
     .collection('customers')
-    .findOne({ wa_id: contact.wa_id });
+    .findOne({ wa_id: contact?.wa_id });
+
+  console.info(user);
 
   if (!user) {
     return await senpaiMongoDb
