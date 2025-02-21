@@ -10,58 +10,35 @@ const { freeUserStickerLimit } = require('../templates/sticker');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const contact = payload?.contacts[0];
-  if (!contact) return console.error('no contact object @', payload);
+  if (!payload.contacts[0]) return console.error('no contact object @', payload);
+  const contact = payload.contacts[0];
   const now = new Date();
 
-  // const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
-  //   { wa_id: contact.wa_id },
-  //   {
-  //     $set: {
-  //       name: contact?.profile?.name,
-  //       contact: contact,
-  //       last_time: {
-  //         contact: now,
-  //         [payload?.messages[0]?.type]: now,
-  //       },
-  //       premium: false,
-  //       subscription: {
-  //         type: 'free',
-  //         start: now,
-  //       }
-  //     },
-  //   },
-  //   { upsert: true },
-  // );
-
-  const user = await senpaiMongoDb
-    .collection('customers')
-    .findOne({ wa_id: contact?.wa_id });
-
-  console.info(user);
-
-  if (!user) {
-    return await senpaiMongoDb
-      .collection('customers')
-      .insertOne({
-        wa_id: contact?.wa_id,
-        name: contact?.profile?.name,
+  const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
+    { wa_id: contact.wa_id },
+    {
+      $set: {
+        name: contact.profile?.name,
         contact: contact,
         last_time: {
           contact: now,
-          [payload?.messages[0]?.type]: now,
+          [payload.messages[0]?.type]: now,
         },
-        premium: false,
         subscription: {
-          type: 'free',
           start: now,
-        },
-      })
-      .then(async () => await message_hello(req))
-      .catch((err) =>
-        console.error('Error saving mongodb', err.response?.data || err),
-      );
-  }
+        }
+      },
+    },
+    { upsert: true },
+  );
+
+  // const user = await senpaiMongoDb
+  //   .collection('customers')
+  //   .findOne({ wa_id: contact?.wa_id });
+
+  console.info(user);
+
+  if (!user) return await message_hello(req)
 
   /* Testing for admin and subadmin */
   if (user && user.premium) {
@@ -76,7 +53,7 @@ const checkContact = async (req) => {
   }
 
   // Free user sent image
-  if (payload?.messages[0]?.type === 'image') {
+  if (payload.messages[0]?.type === 'image') {
     if (
       user?.last_time?.image instanceof Date &&
       now.getTime() - user?.last_time?.image.getTime() > 86400
