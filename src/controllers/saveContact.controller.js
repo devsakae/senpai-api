@@ -13,7 +13,7 @@ const checkContact = async (req) => {
   const contact = payload?.contacts || payload?.contacts[0];
   if (!contact) return console.error('no contact object @', payload);
   const now = new Date();
-  
+
   // const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
   //   { wa_id: contact.wa_id },
   //   {
@@ -43,24 +43,20 @@ const checkContact = async (req) => {
   if (!user) {
     return await senpaiMongoDb
       .collection('customers')
-      .insertOne(
-        { wa_id: contact.wa_id },
-        {
-          $set: {
-            name: contact?.profile?.name,
-            contact: contact,
-            last_time: {
-              contact: now,
-              [payload?.messages[0]?.type]: now,
-            },
-            premium: false,
-            subscription: {
-              type: 'free',
-              start: now,
-            },
-          },
+      .insertOne({
+        wa_id: contact?.wa_id,
+        name: contact?.profile?.name,
+        contact: contact,
+        last_time: {
+          contact: now,
+          [payload?.messages[0]?.type]: now,
         },
-      )
+        premium: false,
+        subscription: {
+          type: 'free',
+          start: now,
+        },
+      })
       .then(async () => await message_hello(req))
       .catch((err) =>
         console.error('Error saving mongodb', err.response?.data || err),
