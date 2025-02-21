@@ -1,4 +1,4 @@
-const coupons = require('./cupons.json');
+const coupons = require('../../data/cp.json');
 const senpaiMongoDb = require('../utils/connections');
 
 const checkCupom = async (body, user) => {
