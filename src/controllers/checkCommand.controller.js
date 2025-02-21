@@ -59,7 +59,8 @@ const checkCommand = async (sender, req) => {
     return console.log('ignoring (not command)');
   }
   if (user_sent?.type === 'image') {
-    if (sender.last_type === 'image' && !sender.premium)
+    if (today.getTime() - new Date(sender.last_time.image).getTime() < 86400000
+        && !sender.premium)
       return await limitedStickers(req);
     return await staticSticker(req);
   }
