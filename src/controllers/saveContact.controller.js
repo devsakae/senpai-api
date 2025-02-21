@@ -2,7 +2,10 @@ const fs = require('fs');
 const testData = require('../../data/testers.json');
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
-const { checkLastInteraction, checkCommand } = require('./checkCommand.controller');
+const {
+  checkLastInteraction,
+  checkCommand,
+} = require('./checkCommand.controller');
 const { markAsRead } = require('./markAsRead.controller');
 const { freeUserStickerLimit } = require('../templates/sticker');
 const testers = process.env.TESTERS.split(',');
@@ -11,7 +14,6 @@ const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const contact = payload?.contacts || payload?.contacts[0];
   if (!contact) return;
-
   const now = new Date();
 
   const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
@@ -20,8 +22,10 @@ const checkContact = async (req) => {
       $set: {
         name: contact?.profile?.name,
         contact: contact,
-        last_contact: now,
-        last_type: payload?.messages[0]?.type,
+        last_time: {
+          contact: now,
+          [payload?.messages[0]?.type]: now,
+        },
       },
     },
     { upsert: true },
@@ -42,21 +46,13 @@ const checkContact = async (req) => {
   }
   if (payload?.messages[0]?.type === 'image') {
     if (!user.premium) {
-      const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
       if (
-        user?.last_sticker instanceof Date &&
-        new Date(user?.last_sticker) > twentyFourHoursAgo
+        user?.last_time?.image instanceof Date &&
+        now.getTime() - user?.last_time?.image > 86400
       ) {
         return await freeUserStickerLimit(req);
       }
     }
-    await senpaiMongoDb
-      .collection('customers')
-      .findOneAndUpdate(
-        { wa_id: contact.wa_id },
-        { $set: { last_sticker: now } },
-        { upsert: true },
-      );
   }
   return await checkLastInteraction(user, req);
 };

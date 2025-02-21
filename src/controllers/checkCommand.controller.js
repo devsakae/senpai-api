@@ -5,13 +5,13 @@ const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { getSuporte } = require('./suporte.controller');
 
 const checkLastInteraction = async (sender, req) => {
+  if (sender.premium) return await checkCommand(sender, req);
   const today = new Date();
   const payload = req.body.entry[0]?.changes[0]?.value;
-  if (today.getTime() - new Date(sender.last_contact).getTime() > 86400000 &&
-      !sender.premium) {
+  if (today.getTime() - new Date(sender.last_time.contact) > 86400) {
     return await rootMenu(payload.contacts[0]);
   }
-  await checkCommand(sender, req);
+  return await checkCommand(sender, req);
 };
 
 const checkCommand = async (sender, req) => {
@@ -25,7 +25,9 @@ const checkCommand = async (sender, req) => {
       return await stickerTutorial(req);
   }
   if (user_sent?.type === 'image') {
-    if (sender.last_type === 'image') return await limitedStickers(req);
+    if (sender.last_type === 'image'
+        && !sender.premium
+    ) return await limitedStickers(req);
     return await staticSticker(req);
   }
 };
