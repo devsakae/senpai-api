@@ -12,7 +12,6 @@ const checkLastInteraction = async (sender, req) => {
     payload?.messages &&
     today.getTime() - (payload?.messages[0]?.timestamp * 1000) > 86400000
   ) {
-    console.log('sending rootMenu');
     return await rootMenu(payload.contacts[0]);
   }
   if (
@@ -24,7 +23,7 @@ const checkLastInteraction = async (sender, req) => {
 };
 
 const checkCommand = async (sender, req) => {
-  console.log('>> replying to', sender.name)
+  const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     if (
