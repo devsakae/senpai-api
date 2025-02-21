@@ -32,12 +32,6 @@ const checkContact = async (req) => {
     { upsert: true },
   );
 
-  // const user = await senpaiMongoDb
-  //   .collection('customers')
-  //   .findOne({ wa_id: contact?.wa_id });
-
-  console.info(user);
-
   if (!user) return await message_hello(req)
 
   /* Testing for admin and subadmin */
@@ -58,6 +52,7 @@ const checkContact = async (req) => {
       user?.last_time?.image instanceof Date &&
       now.getTime() - user?.last_time?.image.getTime() > 86400
     ) {
+      console.log('⛔️', contact.profile?.name, 'allowed for 1 sticker only.')
       return await freeUserStickerLimit(req);
     }
   }
