@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const { randomizeThis, msg_tutorials } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 // const { dispatchAxios } = require("../utils/sender");
 
@@ -55,69 +56,77 @@ const rootMenu = async (contact) => {
     .catch((err) => console.error('Erro sending rootMenu!', err.response?.data || err));
 };
 
-const replyMessage = async () => {
-  let data = {
-    messaging_product: 'whatsapp',
-    recipient_type: 'individual',
-    to: contact.wa_id,
-    context: {
-      message_id: payload.messages[0].id,
+const completeMenu = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  const contact = payload?.contacts || payload?.contacts[0];
+  const message_body = randomizeThis(msg_tutorials);
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
     },
-    type: 'interactive',
-    interactive: {
-      type: 'list',
-      header: {
-        type: 'text',
-        text: '<HEADER_TEXT>',
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: contact.wa_id,
+      type: 'interactive',
+      interactive: {
+        type: 'list',
+        header: {
+          type: 'text',
+          text: 'Menu de opções do Bot do Senpai',
+        },
+        body: {
+          text: message_body,
+        },
+        footer: {
+          text: 'Dúvidas? Acesse nosso site em http://www.botdosenpai.com.br',
+        },
+        action: {
+          button: '.sticker',
+          sections: [
+            {
+              title: 'Como fazer figurinhas?',
+              rows: [
+                {
+                  id: 'sticker001',
+                  title: 'Tutorial Básico',
+                  description: 'Digite .sticker e aprenda a criar um sticker!',
+                },
+                {
+                  id: 'sticker002',
+                  title: 'Termos de Uso',
+                  description: 'Ao criar um sticker conosco, você está concordando com os termos de uso disponível em http://www.botdosenpai.com.br/politica',
+                },
+              ],
+            },
+            {
+              title: '<LIST_SECTION_2_TITLE>',
+              rows: [
+                {
+                  id: '<LIST_SECTION_2_ROW_1_ID>',
+                  title: '<SECTION_2_ROW_1_TITLE>',
+                  description: '<SECTION_2_ROW_1_DESC>',
+                },
+                {
+                  id: '<LIST_SECTION_2_ROW_2_ID>',
+                  title: '<SECTION_2_ROW_2_TITLE>',
+                  description: '<SECTION_2_ROW_2_DESC>',
+                },
+              ],
+            },
+          ],
+        },
       },
-      body: {
-        text: '<BODY_TEXT>',
-      },
-      footer: {
-        text: 'Acesse nosso site http://www.botdosenpai.com.br',
-      },
-      action: {
-        button: '<BUTTON_TEXT>',
-        sections: [
-          {
-            title: '<LIST_SECTION_1_TITLE>',
-            rows: [
-              {
-                id: '<LIST_SECTION_1_ROW_1_ID>',
-                title: '<SECTION_1_ROW_1_TITLE>',
-                description: '<SECTION_1_ROW_1_DESC>',
-              },
-              {
-                id: '<LIST_SECTION_1_ROW_2_ID>',
-                title: '<SECTION_1_ROW_2_TITLE>',
-                description: '<SECTION_1_ROW_2_DESC>',
-              },
-            ],
-          },
-          {
-            title: '<LIST_SECTION_2_TITLE>',
-            rows: [
-              {
-                id: '<LIST_SECTION_2_ROW_1_ID>',
-                title: '<SECTION_2_ROW_1_TITLE>',
-                description: '<SECTION_2_ROW_1_DESC>',
-              },
-              {
-                id: '<LIST_SECTION_2_ROW_2_ID>',
-                title: '<SECTION_2_ROW_2_TITLE>',
-                description: '<SECTION_2_ROW_2_DESC>',
-              },
-            ],
-          },
-        ],
-      },
-    },
-  };
+    }
+  })
 };
 
 module.exports = {
   rootMenu,
-  replyMessage,
+  completeMenu,
 };
 
 /* ✎ Reconhece qualquer mensagem digitada e logo em seguida enviar o menu. *Funcionar somente 1 vez e não enviar mais o menu novamente.*

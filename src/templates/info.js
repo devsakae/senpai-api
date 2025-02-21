@@ -14,6 +14,19 @@ const msg_welcome = [
   "Oi! Obrigado por conversar com o Bot do Senpai! 😎\n\nEu sou o bot que adora desafios, mas confesso que ainda estou aprendendo a lidar com piadas ruins. Tipo: 'Por que o bot foi para a escola? Para se tornar um bot-mestre!' 🤖\n\nVisite http://www.botdosenpai.com.br e explore tudo que posso fazer por você.",
 ];
 
+const msg_tutorials = [
+  "Obrigado por escolher o Bot do Senpai! 🎉 Vamos criar figurinhas incríveis juntos! Escolha uma opção abaixo e vamos começar! 😎",
+  "Arigatou por escolher o Bot do Senpai! 🙏 Estou pronto para transformar suas ideias em figurinhas épicas! Qual opção você vai escolher? 🤔",
+  "Valeu, meu consagrado! 🫶 O Bot do Senpai tá aqui pra te ajudar a criar figurinhas que vão bombar! Escolha uma opção e bora! �",
+  "Aeeee, você escolheu o Bot do Senpai! 🥳 Tô feliz pra caramba! Escolha uma opção abaixo e vamos fazer umas figurinhas da hora! 🚀",
+  "Obrigado, meu querido! 💖 O Bot do Senpai tá pronto pra te surpreender! Escolha uma opção e vamos criar magia juntos! ✨",
+  "Você é demais por escolher o Bot do Senpai! 🌟 Vamos fazer umas figurinhas que vão deixar todo mundo com inveja! Escolha uma opção e partiu! 🎨",
+  "Muito obrigado por escolher o Bot do Senpai! 🙌 Tô aqui pra te ajudar a criar figurinhas que vão arrasar! Escolha uma opção e vamos nessa! 💪",
+  "Opa, valeu por escolher o Bot do Senpai! 😄 Tô pronto pra te ajudar a criar figurinhas incríveis! Escolha uma opção e bora soltar a criatividade! 🎭",
+  "Obrigado por escolher o Bot do Senpai! 🥰 Você é top! Escolha uma opção abaixo e vamos fazer umas figurinhas que vão deixar todo mundo de queixo caído! 😲",
+  "Agradecido por escolher o Bot do Senpai! 🙏 Vamos criar figurinhas que vão fazer sucesso! Escolha uma opção e vamos começar essa jornada! 🛤️"
+];
+
 const msg_sticker = [
   '📢 Ei, você! Quer uma figurinha personalizada? É só me mandar uma imagem que eu transformo ela em sticker! 😎',
   '🎨 Sou o Picasso das figurinhas! Me manda uma imagem que eu faço a mágica acontecer! ✨',
@@ -40,4 +53,5 @@ module.exports = {
   msg_welcome,
   msg_sticker,
   msg_limitsticker,
+  msg_tutorials,
 };

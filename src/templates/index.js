@@ -36,7 +36,7 @@ const template_manutencao = async (req) => {
 const message_hello = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const hello_msg = randomizeThis(message_hello) || 'Olá! Obrigado por utilizar o Bot do Senpai! Acesse nosso site em http://www.botdosenpai.com.br';
-  console.log('>> usuário não existe no mongoDB:', payload?.contacts[0]?.profile?.name, '[' + payload?.contacts[0]?.wa_id + ']');
+  console.log('>> Novo usuário!', payload?.contacts[0]?.profile?.name, '[' + payload?.contacts[0]?.wa_id + ']');
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,

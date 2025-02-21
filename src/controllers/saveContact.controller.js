@@ -16,25 +16,59 @@ const checkContact = async (req) => {
   if (!contact) return;
   const now = new Date();
 
-  const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
-    { wa_id: contact.wa_id },
-    {
-      $set: {
-        name: contact?.profile?.name,
-        contact: contact,
-        last_time: {
-          contact: now,
-          [payload?.messages[0]?.type]: now,
-        },
-      },
-    },
-    { upsert: true },
-  );
+  const user = await senpaiMongoDb
+    .collection('customers')
+    .findOne({ wa_id: contact.wa_id });
 
-  if (!user) return await message_hello(req);
+  // const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
+  //   { wa_id: contact.wa_id },
+  //   {
+  //     $set: {
+  //       name: contact?.profile?.name,
+  //       contact: contact,
+  //       last_time: {
+  //         contact: now,
+  //         [payload?.messages[0]?.type]: now,
+  //       },
+  //       premium: false,
+  //       subscription: {
+  //         type: 'free',
+  //         start: now,
+  //       }
+  //     },
+  //   },
+  //   { upsert: true },
+  // );
+
+  if (!user) {
+    await senpaiMongoDb
+      .collection('customers')
+      .insertOne(
+        { wa_id: contact.wa_id },
+        {
+          $set: {
+            name: contact?.profile?.name,
+            contact: contact,
+            last_time: {
+              contact: now,
+              [payload?.messages[0]?.type]: now,
+            },
+            premium: false,
+            subscription: {
+              type: 'free',
+              start: now,
+            },
+          },
+        },
+      )
+      .then(() => message_hello(req))
+      .catch((err) =>
+        console.error('Error saving mongodb', err.response?.data || err),
+      );
+  }
 
   /* Testing for admin and subadmin */
-  if (testers.includes(contact.wa_id) || user.premium) {
+  if (user.premium) {
     testData.incoming.push(req.body);
     fs.writeFileSync(
       './data/testers.json',
