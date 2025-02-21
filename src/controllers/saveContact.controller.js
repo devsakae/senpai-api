@@ -10,7 +10,7 @@ const { freeUserStickerLimit } = require('../templates/sticker');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const contact = payload?.contacts || payload?.contacts[0];
+  const contact = payload?.contacts[0];
   if (!contact) return console.error('no contact object @', payload);
   const now = new Date();
 
