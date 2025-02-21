@@ -10,7 +10,7 @@ const checkLastInteraction = async (sender, req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (
     payload?.messages &&
-    today.getTime() - payload?.messages[0]?.timestamp > 86400
+    today.getTime() - (payload?.messages[0]?.timestamp * 1000) > 86400000
   ) {
     console.log('sending rootMenu');
     return await rootMenu(payload.contacts[0]);
