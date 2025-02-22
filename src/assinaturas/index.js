@@ -1,17 +1,13 @@
 const coupons = require('../../data/cp.json');
-const senpaiMongoDb = require('../utils/connections');
+const { senpaiMongoDb } = require('../utils/connections');
 
 const checkCupom = async (body, user) => {
   const userCoupon = body.split(' ')[1].trim();
   if (coupons[userCoupon] && coupons[userCoupon] > 0) {
-    await senpaiMongoDb
-      .collection('customers')
-      .findOneAndUpdate(
+    return await senpaiMongoDb.collection('customers').findOneAndUpdate(
         { wa_id: user.wa_id },
         {
           $set: {
-            name: user?.profile?.name,
-            user: user,
             premium: true,
             subscription: {
               type: 'premium',
@@ -21,7 +17,8 @@ const checkCupom = async (body, user) => {
         },
         { upsert: true },
       )
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         coupons[userCoupon] = coupons[userCoupon] - 1;
         fs.writeFileSync(
           '../../data/cp.json',
@@ -29,7 +26,7 @@ const checkCupom = async (body, user) => {
           'utf-8',
           (err) => err,
         );
-        console.info('🔆 Usuário', user.profile.name,'virou premium!');
+        return console.info('🔆 Usuário', res.profile.name, 'virou premium!');
       })
       .catch((err) =>
         console.error('Erro concedendo cupom', err.response?.data || err),
