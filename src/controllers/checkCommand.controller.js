@@ -1,5 +1,5 @@
 const { checkCupom } = require('../assinaturas');
-const { canal, sobre } = require('../templates');
+const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers } = require('../templates/errors');
 const { rootMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
@@ -27,37 +27,53 @@ const checkCommand = async (user, req) => {
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     if (
+      user_sent?.text?.body === 'Quero ser Premium!' ||
+      user_sent?.interactive?.button_reply?.id === 'getpremium'
+    ) {
+      return console.log('Usuário quer ser premium');
+    }
+
+    if (
       user_sent?.text?.body === '.canal' ||
-      user_sent?.interactive?.button_reply?.title === '.canal'
+      user_sent?.interactive?.button_reply?.id === '.canal'
     )
       return await canal(req);
     if (
       user_sent?.text?.body === '.suporte' ||
-      user_sent?.interactive?.button_reply?.title === '.suporte'
+      user_sent?.interactive?.button_reply?.id === '.suporte'
     )
       return await getSuporte(req);
     if (
       user_sent?.text?.body === '.sobre' ||
-      user_sent?.interactive?.button_reply?.title === '.sobre'
+      user_sent?.interactive?.button_reply?.id === '.sobre'
     )
       return await sobre(req);
+
     if (
       user_sent?.text?.body === '.menu' ||
       user_sent?.text?.body === '.m' ||
-      user_sent?.interactive?.button_reply?.title === '.menu'
+      user_sent?.interactive?.button_reply?.id === '.menu'
     )
       return await rootMenu(req.body.entry[0]?.changes[0]?.value?.contacts[0]);
+
     if (
       user_sent?.text?.body === '.sticker' ||
       user_sent?.text?.body === '.s' ||
-      user_sent?.interactive?.button_reply?.title === '.sticker'
+      user_sent?.interactive?.button_reply?.id === '.sticker'
     )
       return await stickerTutorial(req);
+
     if (user_sent?.text?.body.startsWith('.cupom'))
       return await checkCupom(
         user_sent?.text?.body,
         req.body.entry[0]?.changes[0]?.value?.contacts[0],
       );
+
+    if (
+      user_sent?.text?.body === '.privacy' ||
+      user_sent?.interactive?.button_reply?.id === '.privacy'
+    )
+      return await privacy(req);
 
     if (
       user_sent?.text?.body.startsWith('.') ||

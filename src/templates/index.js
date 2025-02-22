@@ -1,5 +1,6 @@
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const axios = require('axios');
+const senpaicore = require('../utils/senpai.json')
 const { randomizeThis } = require('./info');
 const { rootMenu } = require('./list');
 const { staticSticker } = require('./sticker');
@@ -121,9 +122,38 @@ const sobre = async (req) => {
     .catch(err => console.error(err.response?.data || err));
 }
 
+const privacy = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'text',
+      text: {
+        preview_url: true,
+        body: senpaicore.privacy,
+      },
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'Erro ao enviar privacy' });
+    })
+    .catch(err => console.error(err.response?.data || err));
+}
+
+
 module.exports = {
   template_manutencao,
   message_hello,
   canal,
   sobre,
+  privacy,
 };

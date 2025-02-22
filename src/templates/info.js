@@ -60,6 +60,18 @@ const msg_premium_thankyou = [
   "🥳🎈 *YAY!* Bem-vindo(a) ao clube exclusivo dos Premium do Bot do Senpai! 🎉\n\nAgradecemos muuuito por confiar em nós e nos escolher para ser seu parceiro digital. Sua confiança é o nosso combustível para criar uma experiência cada vez mais incrível! 💪💖 Juntos, vamos fazer mágica acontecer! ✨🚀"
 ]
 
+const msg_premium_wannabe = [
+  "Que tal dar um passo a mais no nosso mundo? Com o plano premium, você tem mais benefícios e uma experiência ainda mais incrível! Estamos te esperando.",
+  "Sabia que ser premium é ter acesso a vantagens exclusivas? Venha fazer parte do nosso time VIP e aproveite ainda mais a nossa plataforma!",
+  "Você já é incrível, mas como cliente premium, você vai se sentir ainda mais especial! Que tal explorar todas as vantagens?",
+  "Agora que você conheceu nossos serviços, imagine tudo o que podemos oferecer como um cliente premium. A experiência fica ainda mais única!",
+  "Transforme sua experiência em algo ainda mais exclusivo e repleto de vantagens. Ser premium é ter o melhor de nós sempre ao seu lado!",
+  "Nós adoramos ter você por aqui! Que tal tornar tudo ainda mais especial se tornando um cliente premium? Vem com a gente, você merece!",
+  "A cada dia que passa, ficamos mais felizes em te ver conosco. Agora, com o plano premium, sua jornada será ainda mais incrível. Vamos nessa?",
+  "A gente já adora você, mas como cliente premium, você vai ter acesso a benefícios exclusivos e uma experiência totalmente personalizada. Não perca!"
+];
+
+
 module.exports = {
   randomizeThis,
   msg_welcome,
@@ -67,4 +79,5 @@ module.exports = {
   msg_limitsticker,
   msg_tutorials,
   msg_premium_thankyou,
+  msg_premium_wannabe,
 };

@@ -26,21 +26,21 @@ const rootMenu = async (contact) => {
             {
               type: 'reply',
               reply: {
-                id: 'reply001',
+                id: '.sticker',
                 title: '.sticker',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply002',
+                id: '.suporte',
                 title: '.suporte',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: 'reply003',
+                id: '.sobre',
                 title: '.sobre',
               },
             },
@@ -91,14 +91,14 @@ const completeMenu = async (req) => {
               title: 'Como fazer figurinhas?',
               rows: [
                 {
-                  id: 'sticker001',
+                  id: '.sticker',
                   title: 'Tutorial Básico',
                   description: 'Digite .sticker e aprenda a criar um sticker!',
                 },
                 {
-                  id: 'sticker002',
+                  id: '.privacy',
                   title: 'Termos de Uso',
-                  description: 'Ao criar um sticker conosco, você está concordando com os termos de uso disponível em http://www.botdosenpai.com.br/politica',
+                  description: 'Ao criar um sticker conosco, você está concordando com os termos de uso disponível em https://botdosenpai.com.br/privacidade',
                 },
               ],
             },
@@ -106,7 +106,7 @@ const completeMenu = async (req) => {
               title: 'Utilitários',
               rows: [
                 {
-                  id: 'util001',
+                  id: '.util001',
                   title: '.google [pesquisa]',
                   description: 'Pesquiso no Google pra você',
                 },
