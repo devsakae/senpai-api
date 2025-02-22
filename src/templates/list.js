@@ -92,7 +92,7 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.sticker',
-                  title: 'Tutorial Básico',
+                  title: '.sticker',
                   description: 'Premium tem figurinhas ilimitadas :)',
                 },
                 {
