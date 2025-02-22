@@ -82,7 +82,7 @@ const checkCommand = async (user, req) => {
       today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
       !user.premium
     ) {
-      console.error('⛔️', user.name, 'allowed for 1 sticker only.');
+      console.error('🚫', user.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
     }
     return await staticSticker(req);
