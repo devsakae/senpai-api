@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { default: axios } = require('axios');
 const coupons = require('../../data/cp.json');
 const { senpaiMongoDb } = require('../utils/connections');
@@ -20,7 +21,7 @@ const checkCupom = async (body, user) => {
         },
         { upsert: true },
       )
-      .then((res) => {
+      .then(async (res) => {
         console.log(res);
         coupons[userCoupon] = coupons[userCoupon] - 1;
         fs.writeFileSync(
@@ -30,7 +31,7 @@ const checkCupom = async (body, user) => {
           (err) => err,
         );
         console.info('🔆 Usuário', res.profile.name, 'virou premium com o cupom', userCoupon);
-        return welcome_premium(res);
+        return await welcome_premium(res);
       })
       .catch((err) =>
         console.error('Erro concedendo cupom', err.response?.data || err),
