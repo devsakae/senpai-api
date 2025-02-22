@@ -14,7 +14,7 @@ const checkCupom = async (body, user) => {
             premium: true,
             subscription: {
               type: 'premium',
-              start: now,
+              start: new Date(),
             },
           },
         },
