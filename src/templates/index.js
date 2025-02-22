@@ -2,6 +2,7 @@ const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const axios = require('axios');
 const { randomizeThis } = require('./info');
 const { rootMenu } = require('./list');
+const { staticSticker } = require('./sticker');
 
 const template_manutencao = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
@@ -60,7 +61,10 @@ const message_hello = async (req) => {
         throw new Error({ response: 'status !== 200' });
     })
     .catch((err) => console.error('Erro ao enviar hello!', err.response?.data || err))
-    .finally(async () => await rootMenu(payload?.contacts[0]));
+    .finally(async () => {
+      if (payload?.messages && payload?.messages[0]?.type === 'image') return await staticSticker(req);
+      return await rootMenu(payload?.contacts[0])
+    });
 };
 
 const canal = async (req) => {
