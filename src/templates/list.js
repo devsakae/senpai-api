@@ -85,7 +85,7 @@ const completeMenu = async (req) => {
           text: 'Sua colaboração é fundamental pra manutenção do nosso Bot',
         },
         action: {
-          button: 'Stickers e Figurinhas :)',
+          button: 'Premium Menu',
           sections: [
             {
               title: 'Como fazer figurinhas?',
@@ -93,12 +93,12 @@ const completeMenu = async (req) => {
                 {
                   id: '.sticker',
                   title: 'Tutorial Básico',
-                  description: 'Digite .sticker e aprenda a criar um sticker!',
+                  description: 'Premium tem figurinhas ilimitadas :)',
                 },
                 {
                   id: '.privacy',
                   title: 'Termos de Uso',
-                  description: 'Ao criar um sticker conosco, você está concordando com os termos de uso disponível em https://botdosenpai.com.br/privacidade',
+                  description: 'Leia os termos antes de prosseguir',
                 },
               ],
             },
@@ -123,22 +123,22 @@ const completeMenu = async (req) => {
                 {
                   id: '.premium001',
                   title: '.stickerai',
-                  description: 'Envie ".stickerai Gatinho lambendo patas" pra receber uma figurinha criada por inteligência artificial.',
+                  description: 'Que tal \".stickerai Gatinho lambendo patas\"?',
                 },
                 {
                   id: '.premium002',
                   title: '.lembrete',
-                  description: 'Te ajudo a não esquecer das coisas',
+                  description: 'Te ajudo a não esquecer das coisas...',
                 },
                 {
                   id: '.premium003',
                   title: '.clima',
-                  description: 'Envie ".clima Florianópolis SC" para receber dados meteorológicos de hoje e dos próximos dias da Ilha da Magia (ou outro lugar que você quiser, é claro)',
+                  description: 'Exemplo: .clima Florianópolis SC',
                 },
                 {
                   id: '.premium004',
                   title: '.news',
-                  description: 'Envie ".news [tema]" para receber as últimas novidades do que mais te interessa, direto no seu Whats!',
+                  description: 'Novidades todos os dias no seu WhatsApp!',
                 },
               ],
             },
