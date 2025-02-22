@@ -28,7 +28,7 @@ const checkCupom = async (body, user) => {
           'utf-8',
           (err) => err,
         );
-        console.info('🔆 Usuário', res.profile.name, 'virou premium com o cupom', userCoupon);
+        console.info('🔆 Usuário', res?.name, 'virou premium com o cupom', userCoupon);
         return await welcome_premium(res);
       })
       .catch((err) =>
