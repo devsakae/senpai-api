@@ -5,7 +5,7 @@ const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { getSuporte } = require('./suporte.controller');
 
-const checkLastInteraction = async (sender, req) => {
+const checkLastInteraction = async (user, req) => {
   const today = new Date();
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (
@@ -18,7 +18,7 @@ const checkLastInteraction = async (sender, req) => {
     payload?.messages &&
     today.getTime() - payload?.messages[0]?.timestamp > 60
   ) {
-    return await checkCommand(sender, req);
+    return await checkCommand(user, req);
   }
 };
 
@@ -92,7 +92,7 @@ const checkCommand = async (user, req) => {
       today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
       !user.premium
     ) {
-      console.error('⛔️', user.profile?.name, 'allowed for 1 sticker only.');
+      console.error('⛔️', user.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
     }
     return await staticSticker(req);
