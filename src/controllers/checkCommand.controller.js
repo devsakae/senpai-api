@@ -25,34 +25,36 @@ const checkLastInteraction = async (sender, req) => {
 const checkCommand = async (user, req) => {
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
+  
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
+    let interactiveType = user_sent?.type === 'interactive' && user_sent?.interactive?.type;
     if (
       user_sent?.text?.body === 'Quero ser Premium!' ||
-      user_sent?.interactive?.button_reply?.id === 'getpremium'
+      user_sent?.interactive[interactiveType].id === 'getpremium'
     ) {
       return console.log('Usuário quer ser premium');
     }
 
     if (
       user_sent?.text?.body === '.canal' ||
-      user_sent?.interactive?.button_reply?.id === '.canal'
+      user_sent?.interactive[interactiveType].id === '.canal'
     )
       return await canal(req);
     if (
       user_sent?.text?.body === '.suporte' ||
-      user_sent?.interactive?.button_reply?.id === '.suporte'
+      user_sent?.interactive[interactiveType].id === '.suporte'
     )
       return await getSuporte(req);
     if (
       user_sent?.text?.body === '.sobre' ||
-      user_sent?.interactive?.button_reply?.id === '.sobre'
+      user_sent?.interactive[interactiveType].id === '.sobre'
     )
       return await sobre(req);
 
     if (
       user_sent?.text?.body === '.menu' ||
       user_sent?.text?.body === '.m' ||
-      user_sent?.interactive?.button_reply?.id === '.menu'
+      user_sent?.interactive[interactiveType].id === '.menu'
     ) {
       if (user.premium) return await completeMenu(req);
       return await rootMenu(req.body.entry[0]?.changes[0]?.value?.contacts[0]);
@@ -61,7 +63,7 @@ const checkCommand = async (user, req) => {
     if (
       user_sent?.text?.body === '.sticker' ||
       user_sent?.text?.body === '.s' ||
-      user_sent?.interactive?.button_reply?.id === '.sticker'
+      user_sent?.interactive[interactiveType].id === '.sticker'
     )
       return await stickerTutorial(req);
 
@@ -73,7 +75,7 @@ const checkCommand = async (user, req) => {
 
     if (
       user_sent?.text?.body === '.privacy' ||
-      user_sent?.interactive?.button_reply?.id === '.privacy'
+      user_sent?.interactive[interactiveType].id === '.privacy'
     )
       return await privacy(req);
 

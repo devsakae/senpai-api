@@ -7,7 +7,10 @@ const checkAndLog = (req) => {
     if (msg_type === 'text') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent text:', payload?.messages[0]?.text?.body)
     if (msg_type === 'image') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent', payload?.messages[0]?.image?.mime_type, '#id:', payload?.messages[0]?.image?.id);
     if (msg_type === 'video') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent', payload?.messages[0]?.video?.mime_type, '#id:', payload?.messages[0]?.video?.id);
-    if (msg_type === 'interactive') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'reply with', payload?.messages[0]?.interactive?.button_reply?.title)
+    if (msg_type === 'interactive') {
+      let interactiveType = user_sent?.type === 'interactive' && user_sent?.interactive?.type;
+      return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'reply with', payload?.messages[0]?.interactive[interactiveType]?.id)
+    }
     else return console.error(wa_id, name, 'sent something different...')
   }
 }
