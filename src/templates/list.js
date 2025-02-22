@@ -76,13 +76,13 @@ const completeMenu = async (req) => {
         type: 'list',
         header: {
           type: 'text',
-          text: 'Menu de opções do Bot do Senpai',
+          text: 'Menu Premium',
         },
         body: {
           text: message_body,
         },
         footer: {
-          text: 'Dúvidas? Acesse nosso site em http://www.botdosenpai.com.br',
+          text: 'Sua colaboração é fundamental pra manutenção do nosso Bot',
         },
         action: {
           button: 'Stickers e Figurinhas :)',

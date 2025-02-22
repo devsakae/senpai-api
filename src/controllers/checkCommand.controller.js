@@ -1,7 +1,7 @@
 const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers } = require('../templates/errors');
-const { rootMenu } = require('../templates/list');
+const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { getSuporte } = require('./suporte.controller');
 
@@ -53,8 +53,10 @@ const checkCommand = async (user, req) => {
       user_sent?.text?.body === '.menu' ||
       user_sent?.text?.body === '.m' ||
       user_sent?.interactive?.button_reply?.id === '.menu'
-    )
+    ) {
+      if (user.premium) return await completeMenu(req);
       return await rootMenu(req.body.entry[0]?.changes[0]?.value?.contacts[0]);
+    }
 
     if (
       user_sent?.text?.body === '.sticker' ||
