@@ -58,7 +58,7 @@ const rootMenu = async (contact) => {
 
 const completeMenu = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const contact = payload?.contacts || payload?.contacts[0];
+  const contact = payload?.contacts[0];
   const message_body = randomizeThis(msg_tutorials);
   await axios({
     method: 'POST',
@@ -146,7 +146,9 @@ const completeMenu = async (req) => {
         },
       },
     }
-  })
+  }).then((res) => {
+    if (res.status !== 200) throw new Error({ response: { data: "Retorno de status diferente de 200" } })
+  }).catch((err) => console.error("Error sending completeMenu", err.response?.data || err))
 };
 
 module.exports = {
