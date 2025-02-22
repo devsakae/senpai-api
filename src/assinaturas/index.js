@@ -5,6 +5,10 @@ const { senpaiMongoDb } = require('../utils/connections');
 const { randomizeThis, msg_premium_thankyou } = require('../templates/info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
+const senpaiCoupons = async () => {
+  return await senpaiMongoDb.collection('coupons').find().toArray();
+}
+
 const checkCupom = async (body, user) => {
   const userCoupon = body.split(' ')[1].trim();
   if (coupons[userCoupon] && coupons[userCoupon] > 0) {

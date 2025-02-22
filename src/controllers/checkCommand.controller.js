@@ -56,7 +56,10 @@ const checkCommand = async (sender, req) => {
     if (user_sent?.text?.body.startsWith('.cupom'))
       return await checkCupom(user_sent?.text?.body, req.body.entry[0]?.changes[0]?.value?.contacts[0]);
 
-    return console.log('ignoring (not command)');
+    if (user_sent?.text?.body.startsWith('.') || user_sent?.text?.body.startsWith('/'))
+      return console.info(sender.name, 'tried command', user_sent?.text?.body)
+    
+    return;
   }
   if (user_sent?.type === 'image') {
     if (today.getTime() - new Date(sender.last_time.image).getTime() < 86400000
