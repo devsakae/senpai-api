@@ -1,6 +1,5 @@
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 const { default: axios } = require('axios');
-const { jsonHeaders } = require('./index');
 
 const dispatchAxios = async (data) => {
   return await axios({
