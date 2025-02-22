@@ -10,7 +10,7 @@ const checkLastInteraction = async (sender, req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (
     payload?.messages &&
-    today.getTime() - (payload?.messages[0]?.timestamp * 1000) > 86400000
+    today.getTime() - payload?.messages[0]?.timestamp * 1000 > 86400000
   ) {
     return await rootMenu(payload.contacts[0]);
   }
@@ -22,7 +22,7 @@ const checkLastInteraction = async (sender, req) => {
   }
 };
 
-const checkCommand = async (sender, req) => {
+const checkCommand = async (user, req) => {
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
@@ -54,17 +54,27 @@ const checkCommand = async (sender, req) => {
     )
       return await stickerTutorial(req);
     if (user_sent?.text?.body.startsWith('.cupom'))
-      return await checkCupom(user_sent?.text?.body, req.body.entry[0]?.changes[0]?.value?.contacts[0]);
+      return await checkCupom(
+        user_sent?.text?.body,
+        req.body.entry[0]?.changes[0]?.value?.contacts[0],
+      );
 
-    if (user_sent?.text?.body.startsWith('.') || user_sent?.text?.body.startsWith('/'))
-      return console.info(sender.name, 'tried command', user_sent?.text?.body)
-    
+    if (
+      user_sent?.text?.body.startsWith('.') ||
+      user_sent?.text?.body.startsWith('/')
+    )
+      return console.info(user.name, 'tried command', user_sent?.text?.body);
+
     return;
   }
   if (user_sent?.type === 'image') {
-    if (today.getTime() - new Date(sender.last_time.image).getTime() < 86400000
-        && !sender.premium)
+    if (
+      today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
+      !user.premium
+    ) {
+      console.error('⛔️', user.profile?.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
+    }
     return await staticSticker(req);
   }
 };
