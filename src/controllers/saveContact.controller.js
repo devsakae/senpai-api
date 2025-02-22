@@ -13,6 +13,7 @@ const checkContact = async (req) => {
   if (!payload.contacts[0]) return console.error('no contact object @', payload);
   const contact = payload.contacts[0];
   const now = new Date();
+  const keyMsgType = "last_time." + payload.messages[0]?.type;
 
   const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
     { wa_id: contact.wa_id },
@@ -20,13 +21,9 @@ const checkContact = async (req) => {
       $set: {
         name: contact.profile?.name,
         contact: contact,
-        last_time: {
-          contact: now,
-          [payload.messages[0]?.type]: now,
-        },
-        subscription: {
-          start: now,
-        }
+        "last_time.contact": now,
+        [`last_time.${payload.messages[0]?.type}`]: now,
+        "subscription.start": now,
       },
     },
     { upsert: true },
