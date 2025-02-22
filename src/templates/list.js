@@ -122,8 +122,8 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.premium001',
-                  title: '.stickerai [descrição]',
-                  description: 'Você descreve a figurinha perfeita e eu crio ela. Eu prometo.',
+                  title: '.stickerai',
+                  description: 'Envie ".stickerai Gatinho lambendo patas" pra receber uma figurinha criada por inteligência artificial.',
                 },
                 {
                   id: '.premium002',
@@ -132,13 +132,13 @@ const completeMenu = async (req) => {
                 },
                 {
                   id: '.premium003',
-                  title: '.clima [horário] [localização]',
-                  description: 'Receba a previsão do tempo todo dia no horário definido para a localização que você quiser',
+                  title: '.clima',
+                  description: 'Envie ".clima Florianópolis SC" para receber dados meteorológicos de hoje e dos próximos dias da Ilha da Magia (ou outro lugar que você quiser, é claro)',
                 },
                 {
                   id: '.premium004',
-                  title: '.news [palavra-chave]',
-                  description: 'Novidades fresquinhas do que mais te interessa, direto no seu Whats!',
+                  title: '.news',
+                  description: 'Envie ".news [tema]" para receber as últimas novidades do que mais te interessa, direto no seu Whats!',
                 },
               ],
             },
