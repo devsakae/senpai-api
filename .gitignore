@@ -3,4 +3,5 @@ node_modules
 data
 data/*
 test/*
+local
 assinaturas/coupons.json
