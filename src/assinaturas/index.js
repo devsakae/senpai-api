@@ -4,6 +4,8 @@ const { randomizeThis, msg_premium_thankyou } = require('../templates/info');
 const { sendAdmin } = require('../utils/sender');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
+let newPremiumUser = '';
+
 const senpaiCoupons = async () => {
   const dbCoupons = await senpaiMongoDb.collection('coupons').find().toArray();
   if (dbCoupons.filter((el) => el.left > 0).length === 0) return false;
@@ -38,7 +40,7 @@ const checkCupom = async (body, user) => {
           .collection('coupons')
           .findOneAndUpdate({ _id: validCoupom._id }, { $inc: { left: -1 } })
           .then((cpres) => {
-            const newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left}`;
+            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left}`;
             console.info(newPremiumUser);
           })
           .catch((err) =>
