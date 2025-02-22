@@ -38,7 +38,7 @@ const checkCupom = async (body, user) => {
           .collection('coupons')
           .findOneAndUpdate({ _id: validCoupom._id }, { $inc: { left: -1 } })
           .then((cpres) => {
-            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left}`;
+            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
             console.info(newPremiumUser);
           })
           .catch((err) =>
