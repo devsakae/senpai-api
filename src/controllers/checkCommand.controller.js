@@ -1,6 +1,6 @@
 const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
-const { limitedStickers } = require('../templates/errors');
+const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { getSuporte } = require('./suporte.controller');
@@ -27,8 +27,8 @@ const checkCommand = async (user, req) => {
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     let interactiveType =
-      user_sent?.type === 'interactive' &&
-      user_sent?.interactive[user_sent?.interactive?.type]?.id ||
+      (user_sent?.type === 'interactive' &&
+        user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
     if (
       user_sent?.text?.body === 'Quero ser Premium!' ||
@@ -60,7 +60,8 @@ const checkCommand = async (user, req) => {
     )
       return await stickerTutorial(req);
 
-    if (user_sent?.text?.body.startsWith('.cupom'))
+    if (user_sent?.text?.body.length > 7 &&
+        user_sent?.text?.body.startsWith('.cupom'))
       return await checkCupom(
         user_sent?.text?.body,
         req.body.entry[0]?.changes[0]?.value?.contacts[0],
@@ -78,6 +79,7 @@ const checkCommand = async (user, req) => {
     return;
   }
   if (user_sent?.type === 'image') {
+    
     if (
       today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
       !user.premium
@@ -85,6 +87,11 @@ const checkCommand = async (user, req) => {
       console.error('🚫', user.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
     }
+
+    if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
+      return await oneStickerAtTime(req);
+    }
+
     return await staticSticker(req);
   }
 };

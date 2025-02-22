@@ -71,6 +71,18 @@ const msg_premium_wannabe = [
   "A gente já adora você, mas como cliente premium, você vai ter acesso a benefícios exclusivos e uma experiência totalmente personalizada. Não perca!"
 ];
 
+const msg_limitonesticker = [
+  "Calma, não precisa enviar o álbum inteiro! Uma imagem de cada vez, por favor.",
+  "Figurinhas são como pipoca: uma de cada vez para não fazer bagunça!",
+  "Só uma imagem, por favor! Não queremos um filme aqui.",
+  "Vamos fazer uma figurinha de cada vez. Priorize a qualidade, não a quantidade!",
+  "Não é um concurso de quem envia mais! Uma imagem por vez, sim?",
+  "A paciência é uma virtude. Envie uma imagem de cada vez para fazer sua figurinha.",
+  "Você não está tentando quebrar um recorde, né? Uma imagem por vez é o suficiente.",
+  "Vamos manter as coisas simples. Uma imagem, uma figurinha. Fácil, né?",
+  "Não precisa ser um especialista em multitarefa aqui! Uma imagem de cada vez é o caminho.",
+  "Respire fundo e envie uma imagem de cada vez. Sua figurinha vai ficar incrível, prometo!"
+]
 
 module.exports = {
   randomizeThis,
@@ -80,4 +92,5 @@ module.exports = {
   msg_tutorials,
   msg_premium_thankyou,
   msg_premium_wannabe,
+  msg_limitonesticker,
 };

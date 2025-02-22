@@ -1,5 +1,5 @@
 const { default: axios } = require('axios');
-const { randomizeThis, msg_limitsticker } = require('./info');
+const { randomizeThis, msg_limitsticker, msg_limitonesticker } = require('./info');
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const limitedStickers = async (req) => {
@@ -30,6 +30,28 @@ const limitedStickers = async (req) => {
   });
 };
 
+const oneStickerAtTime = async (req) => {
+  const error_message = randomizeThis(msg_limitonesticker);
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: req.body?.entry[0]?.changes[0]?.value?.contacts[0]?.wa_id,
+      type: 'text',
+      text: {
+        body: error_message,
+      },
+    },
+  });
+}
+
 module.exports = {
   limitedStickers,
+  oneStickerAtTime
 };
