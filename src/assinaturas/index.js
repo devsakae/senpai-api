@@ -4,7 +4,6 @@ const coupons = require('../../data/cp.json');
 const { senpaiMongoDb } = require('../utils/connections');
 const { randomizeThis, msg_premium_thankyou } = require('../templates/info');
 
-
 const checkCupom = async (body, user) => {
   const userCoupon = body.split(' ')[1].trim();
   if (coupons[userCoupon] && coupons[userCoupon] > 0) {
@@ -22,7 +21,6 @@ const checkCupom = async (body, user) => {
         { upsert: true },
       )
       .then(async (res) => {
-        console.log(res);
         coupons[userCoupon] = coupons[userCoupon] - 1;
         fs.writeFileSync(
           '../../data/cp.json',

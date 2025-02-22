@@ -10,7 +10,6 @@ const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
 app.use(express.json());
-const oneDay = 24 * 60 * 60;
 
 (async () => {
   console.log('Senpai, by devsakae (2025)\nInicializando o bot, aguarde...');

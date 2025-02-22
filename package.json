@@ -3,6 +3,7 @@
     "axios": "^1.7.9",
     "express": "^4.21.2",
     "mongodb": "^6.13.0",
+    "node-cron": "^3.0.3",
     "sharp": "^0.33.5"
   },
   "scripts": {
