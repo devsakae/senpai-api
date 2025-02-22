@@ -23,7 +23,7 @@ const checkCupom = async (body, user) => {
       .then(async (res) => {
         coupons[userCoupon] = coupons[userCoupon] - 1;
         fs.writeFileSync(
-          '../../data/cp.json',
+          './data/cp.json',
           JSON.stringify(coupons, null, 4),
           'utf-8',
           (err) => err,
