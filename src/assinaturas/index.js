@@ -24,12 +24,12 @@ const checkCupom = async (body, user) => {
       .then(() => {
         coupons[userCoupon] = coupons[userCoupon] - 1;
         fs.writeFileSync(
-          './cupons.json',
+          '../../data/cp.json',
           JSON.stringify(coupons, null, 4),
           'utf-8',
           (err) => err,
         );
-        console.info('Usuário virou premium!');
+        console.info('🔆 Usuário', user.profile.name,'virou premium!');
       })
       .catch((err) =>
         console.error('Erro concedendo cupom', err.response?.data || err),
