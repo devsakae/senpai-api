@@ -32,7 +32,7 @@ const checkContact = async (req) => {
 
   /* Testing for admin and subadmin */
   if (user && user.premium) {
-    testData.incoming.push(req.body);
+    testData.log.push(req.body);
     fs.writeFileSync(
       './data/testers.json',
       JSON.stringify(testData, null, 4),
