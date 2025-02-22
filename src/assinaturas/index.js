@@ -15,11 +15,9 @@ const senpaiCoupons = async () => {
 const checkCupom = async (body, user) => {
   const userCoupon = body.split(' ')[1].trim();
   const dbCoupons = await senpaiCoupons();
-  const validCoupom = dbCoupons.find(
-    (el) => el.code === userCoupon && el.left > 0,
-  );
+  const validCoupom = dbCoupons.find((el) => el.code === userCoupon);
 
-  if (validCoupom) {
+  if (validCoupom && validCoupom.left > 0) {
     return await senpaiMongoDb
       .collection('customers')
       .findOneAndUpdate(
@@ -53,6 +51,7 @@ const checkCupom = async (body, user) => {
         console.error('Erro concedendo cupom', err.response?.data || err),
       );
   }
+  if (validCoupom) return await soldOutCoupom()
 };
 
 const welcome_premium = async ({ wa_id }) => {
@@ -76,6 +75,28 @@ const welcome_premium = async ({ wa_id }) => {
     },
   });
 };
+
+const soldOutCoupom = async (user) => {
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: user.wa_id,
+      type: 'text',
+      text: {
+        preview_url: false,
+        body: "Infelizmente o cupom informado não é válido e/ou já se esgotou.\n\nFique ligado no nosso canal para novos cupons!",
+      },
+    },
+  }).then((res) => console.log('informing user', user.name, 'that used a soldout coupon'))
+  .catch((err) => console.error('error informing user about soldout coupon', err.response?.data || err))
+}
 
 module.exports = {
   checkCupom,
