@@ -8,7 +8,7 @@ let newPremiumUser = '';
 
 const senpaiCoupons = async () => {
   const dbCoupons = await senpaiMongoDb.collection('coupons').find().toArray();
-  if (dbCoupons.filter((el) => el.left > 0).length === 0) return false;
+  if (dbCoupons.filter((el) => el.left > 0).length === 0) return [];
   return dbCoupons;
 };
 
@@ -19,6 +19,7 @@ const checkCupom = async (body, user) => {
   const validCoupom = dbCoupons.find((el) => el.code === userCoupon);
 
   if (validCoupom && validCoupom.left > 0) {
+    const today = new Date();
     return await senpaiMongoDb
       .collection('customers')
       .findOneAndUpdate(
@@ -28,7 +29,8 @@ const checkCupom = async (body, user) => {
             premium: true,
             subscription: {
               type: 'premium',
-              start: new Date(),
+              start: today,
+              end: today + validCoupom.days
             },
           },
         },

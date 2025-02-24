@@ -71,6 +71,16 @@ app.use(express.json());
 
       return res.sendStatus(200);
     });
+
+    app.post('/premium', async (req, res) => {
+      const payload = req.body;
+      //   {
+      //     encrypted_flow_data: "<ENCRYPTED FLOW DATA>",
+      //     encrypted_aes_key: "<ENCRYPTED_AES_KEY>",
+      //     initial_vector: "<INITIAL VECTOR>"
+      //  }
+      
+    })
   }
 })();
 
