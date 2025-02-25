@@ -2,6 +2,42 @@ const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, SUPORTE_TECNICO } =
   process.env;
 const axios = require('axios');
 
+const getPremiumSuporte = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'interactive',
+      interactive: {
+        type: 'flow',
+        action: {
+          name: 'flow',
+          parameters: {
+            flow_message_version: '3',
+            flow_id: '647584844413700',
+            flow_cta: 'Registrar',
+            mode: 'published',
+            flow_token: 'feedback',
+            flow_action: 'navigate',
+            flow_action_payload: {
+              screen: 'RECOMMEND'
+            }
+          }
+        }
+      }
+    },
+  }).then((response) => console.log(response.data))
+    .catch((err) => console.error('Erro requisitando premium suporte', err?.response?.data || err));
+}
+
 const getSuporte = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   await axios({
@@ -51,5 +87,6 @@ const contactAdmin = async (payload) => {
 };
 
 module.exports = {
+  getPremiumSuporte,
   getSuporte,
 };

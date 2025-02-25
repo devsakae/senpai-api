@@ -3,7 +3,7 @@ const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
-const { getSuporte } = require('./suporte.controller');
+const { getSuporte, getPremiumSuporte } = require('./suporte.controller');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -39,8 +39,10 @@ const checkCommand = async (user, req) => {
 
     if (user_sent?.text?.body === '.canal' || interactiveType === '.canal')
       return await canal(req);
-    if (user_sent?.text?.body === '.suporte' || interactiveType === '.suporte')
+    if (user_sent?.text?.body === '.suporte' || interactiveType === '.suporte') {
+      if (user.premium) return await getPremiumSuporte(req);
       return await getSuporte(req);
+    }
     if (user_sent?.text?.body === '.sobre' || interactiveType === '.sobre')
       return await sobre(req);
 
