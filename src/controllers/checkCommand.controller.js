@@ -1,6 +1,7 @@
 const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
+const { jokes } = require('../templates/jokes');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
 const { getSuporte } = require('./suporte.controller');
@@ -61,7 +62,7 @@ const checkCommand = async (user, req) => {
       return await stickerTutorial(req);
 
     if (user_sent?.text?.body.length > 7 &&
-        user_sent?.text?.body.startsWith('.cupom'))
+      user_sent?.text?.body.startsWith('.cupom'))
       return await checkCupom(
         user_sent?.text?.body,
         req.body.entry[0]?.changes[0]?.value?.contacts[0],
@@ -78,8 +79,13 @@ const checkCommand = async (user, req) => {
 
     return;
   }
+  if (user_sent?.text?.body.startsWith(".piadas") ||
+    user_sent?.text?.body.startsWith(".p")
+  ) {
+    return await jokes(req)
+  }
   if (user_sent?.type === 'image') {
-    
+
     if (
       today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
       !user.premium
