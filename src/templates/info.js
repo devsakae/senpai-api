@@ -15,16 +15,16 @@ const msg_welcome = [
 ];
 
 const msg_tutorials = [
-  "Obrigado por escolher o Bot do Senpai! 🎉 Vamos criar figurinhas incríveis juntos! Escolha uma opção abaixo e vamos começar! 😎",
-  "Arigatou por escolher o Bot do Senpai! 🙏 Estou pronto para transformar suas ideias em figurinhas épicas! Qual opção você vai escolher? 🤔",
-  "Valeu, meu consagrado! 🫶 O Bot do Senpai tá aqui pra te ajudar a criar figurinhas que vão bombar! Escolha uma opção e bora! �",
-  "Aeeee, você escolheu o Bot do Senpai! 🥳 Tô feliz pra caramba! Escolha uma opção abaixo e vamos fazer umas figurinhas da hora! 🚀",
-  "Obrigado, meu querido! 💖 O Bot do Senpai tá pronto pra te surpreender! Escolha uma opção e vamos criar magia juntos! ✨",
-  "Você é demais por escolher o Bot do Senpai! 🌟 Vamos fazer umas figurinhas que vão deixar todo mundo com inveja! Escolha uma opção e partiu! 🎨",
-  "Muito obrigado por escolher o Bot do Senpai! 🙌 Tô aqui pra te ajudar a criar figurinhas que vão arrasar! Escolha uma opção e vamos nessa! 💪",
-  "Opa, valeu por escolher o Bot do Senpai! 😄 Tô pronto pra te ajudar a criar figurinhas incríveis! Escolha uma opção e bora soltar a criatividade! 🎭",
-  "Obrigado por escolher o Bot do Senpai! 🥰 Você é top! Escolha uma opção abaixo e vamos fazer umas figurinhas que vão deixar todo mundo de queixo caído! 😲",
-  "Agradecido por escolher o Bot do Senpai! 🙏 Vamos criar figurinhas que vão fazer sucesso! Escolha uma opção e vamos começar essa jornada! 🛤️"
+  'Obrigado por escolher o Bot do Senpai! 🎉 Vamos criar figurinhas incríveis juntos! Escolha uma opção abaixo e vamos começar! 😎',
+  'Arigatou por escolher o Bot do Senpai! 🙏 Estou pronto para transformar suas ideias em figurinhas épicas! Qual opção você vai escolher? 🤔',
+  'Valeu, meu consagrado! 🫶 O Bot do Senpai tá aqui pra te ajudar a criar figurinhas que vão bombar! Escolha uma opção e bora! �',
+  'Aeeee, você escolheu o Bot do Senpai! 🥳 Tô feliz pra caramba! Escolha uma opção abaixo e vamos fazer umas figurinhas da hora! 🚀',
+  'Obrigado, meu querido! 💖 O Bot do Senpai tá pronto pra te surpreender! Escolha uma opção e vamos criar magia juntos! ✨',
+  'Você é demais por escolher o Bot do Senpai! 🌟 Vamos fazer umas figurinhas que vão deixar todo mundo com inveja! Escolha uma opção e partiu! 🎨',
+  'Muito obrigado por escolher o Bot do Senpai! 🙌 Tô aqui pra te ajudar a criar figurinhas que vão arrasar! Escolha uma opção e vamos nessa! 💪',
+  'Opa, valeu por escolher o Bot do Senpai! 😄 Tô pronto pra te ajudar a criar figurinhas incríveis! Escolha uma opção e bora soltar a criatividade! 🎭',
+  'Obrigado por escolher o Bot do Senpai! 🥰 Você é top! Escolha uma opção abaixo e vamos fazer umas figurinhas que vão deixar todo mundo de queixo caído! 😲',
+  'Agradecido por escolher o Bot do Senpai! 🙏 Vamos criar figurinhas que vão fazer sucesso! Escolha uma opção e vamos começar essa jornada! 🛤️',
 ];
 
 const msg_sticker = [
@@ -49,40 +49,48 @@ const msg_limitsticker = [
 ];
 
 const msg_premium_thankyou = [
-  "🎉✨ *UAU!* Você acaba de se tornar um membro da elite Senpai Premium! 🚀 \n\nAgradecemos do fundo do nosso coraçãozinho digital por confiar em nós para turbinar sua experiência. Com você, nosso bot ganha superpoderes! 💪💖 Prepare-se para uma jornada incrível, cheia de facilidades e mimos. Você é demais! 🌟",
+  '🎉✨ *UAU!* Você acaba de se tornar um membro da elite Senpai Premium! 🚀 \n\nAgradecemos do fundo do nosso coraçãozinho digital por confiar em nós para turbinar sua experiência. Com você, nosso bot ganha superpoderes! 💪💖 Prepare-se para uma jornada incrível, cheia de facilidades e mimos. Você é demais! 🌟',
 
-  "🌟🥳 *Parabéns, você é oficialmente um Senpai Premium!* ✅\n\nAgradecemos por escolher a gente para ser seu parceiro nessa aventura digital. Sua confiança é nossa maior motivação! 💌 Com você, nosso bot fica ainda mais poderoso e feliz. Vamos juntos conquistar o mundo, um comando de cada vez! 🌍💫",
+  '🌟🥳 *Parabéns, você é oficialmente um Senpai Premium!* ✅\n\nAgradecemos por escolher a gente para ser seu parceiro nessa aventura digital. Sua confiança é nossa maior motivação! 💌 Com você, nosso bot fica ainda mais poderoso e feliz. Vamos juntos conquistar o mundo, um comando de cada vez! 🌍💫',
 
-  "🎊🎈 *Eeeeeeeh!* Você acaba de entrar para o time dos Premium do Bot do Senpai! 🥰\n\nAgradecemos de montão por confiar em nós e nos escolher para fazer parte do seu dia a dia. Sua confiança é como um boost de energia para o nosso coraçãozinho digital! 💥💖 Prepare-se para uma experiência *ultra-mega-hiper* especial! 🚀✨",
+  '🎊🎈 *Eeeeeeeh!* Você acaba de entrar para o time dos Premium do Bot do Senpai! 🥰\n\nAgradecemos de montão por confiar em nós e nos escolher para fazer parte do seu dia a dia. Sua confiança é como um boost de energia para o nosso coraçãozinho digital! 💥💖 Prepare-se para uma experiência *ultra-mega-hiper* especial! 🚀✨',
 
-  "💖🎉 *OMG!* Você é agora um membro Premium do Bot do Senpai! 🎊\n\nAgradecemos de coração por confiar em nós e nos permitir fazer parte da sua rotina de um jeito tão especial. Com você, nosso bot fica ainda mais animado e pronto para te surpreender! 🌟💌 Obrigada por ser incrível! 🥰✨",
+  '💖🎉 *OMG!* Você é agora um membro Premium do Bot do Senpai! 🎊\n\nAgradecemos de coração por confiar em nós e nos permitir fazer parte da sua rotina de um jeito tão especial. Com você, nosso bot fica ainda mais animado e pronto para te surpreender! 🌟💌 Obrigada por ser incrível! 🥰✨',
 
-  "🥳🎈 *YAY!* Bem-vindo(a) ao clube exclusivo dos Premium do Bot do Senpai! 🎉\n\nAgradecemos muuuito por confiar em nós e nos escolher para ser seu parceiro digital. Sua confiança é o nosso combustível para criar uma experiência cada vez mais incrível! 💪💖 Juntos, vamos fazer mágica acontecer! ✨🚀"
-]
+  '🥳🎈 *YAY!* Bem-vindo(a) ao clube exclusivo dos Premium do Bot do Senpai! 🎉\n\nAgradecemos muuuito por confiar em nós e nos escolher para ser seu parceiro digital. Sua confiança é o nosso combustível para criar uma experiência cada vez mais incrível! 💪💖 Juntos, vamos fazer mágica acontecer! ✨🚀',
+];
 
 const msg_premium_wannabe = [
-  "Que tal dar um passo a mais no nosso mundo? Com o plano premium, você tem mais benefícios e uma experiência ainda mais incrível! Estamos te esperando.",
-  "Sabia que ser premium é ter acesso a vantagens exclusivas? Venha fazer parte do nosso time VIP e aproveite ainda mais a nossa plataforma!",
-  "Você já é incrível, mas como cliente premium, você vai se sentir ainda mais especial! Que tal explorar todas as vantagens?",
-  "Agora que você conheceu nossos serviços, imagine tudo o que podemos oferecer como um cliente premium. A experiência fica ainda mais única!",
-  "Transforme sua experiência em algo ainda mais exclusivo e repleto de vantagens. Ser premium é ter o melhor de nós sempre ao seu lado!",
-  "Nós adoramos ter você por aqui! Que tal tornar tudo ainda mais especial se tornando um cliente premium? Vem com a gente, você merece!",
-  "A cada dia que passa, ficamos mais felizes em te ver conosco. Agora, com o plano premium, sua jornada será ainda mais incrível. Vamos nessa?",
-  "A gente já adora você, mas como cliente premium, você vai ter acesso a benefícios exclusivos e uma experiência totalmente personalizada. Não perca!"
+  'Que tal dar um passo a mais no nosso mundo? Com o plano premium, você tem mais benefícios e uma experiência ainda mais incrível! Estamos te esperando.',
+  'Sabia que ser premium é ter acesso a vantagens exclusivas? Venha fazer parte do nosso time VIP e aproveite ainda mais a nossa plataforma!',
+  'Você já é incrível, mas como cliente premium, você vai se sentir ainda mais especial! Que tal explorar todas as vantagens?',
+  'Agora que você conheceu nossos serviços, imagine tudo o que podemos oferecer como um cliente premium. A experiência fica ainda mais única!',
+  'Transforme sua experiência em algo ainda mais exclusivo e repleto de vantagens. Ser premium é ter o melhor de nós sempre ao seu lado!',
+  'Nós adoramos ter você por aqui! Que tal tornar tudo ainda mais especial se tornando um cliente premium? Vem com a gente, você merece!',
+  'A cada dia que passa, ficamos mais felizes em te ver conosco. Agora, com o plano premium, sua jornada será ainda mais incrível. Vamos nessa?',
+  'A gente já adora você, mas como cliente premium, você vai ter acesso a benefícios exclusivos e uma experiência totalmente personalizada. Não perca!',
 ];
 
 const msg_limitonesticker = [
-  "Calma, não precisa enviar o álbum inteiro! Uma imagem de cada vez, por favor.",
-  "Figurinhas são como pipoca: uma de cada vez para não fazer bagunça!",
-  "Só uma imagem, por favor! Não queremos um filme aqui.",
-  "Vamos fazer uma figurinha de cada vez. Priorize a qualidade, não a quantidade!",
-  "Não é um concurso de quem envia mais! Uma imagem por vez, sim?",
-  "A paciência é uma virtude. Envie uma imagem de cada vez para fazer sua figurinha.",
-  "Você não está tentando quebrar um recorde, né? Uma imagem por vez é o suficiente.",
-  "Vamos manter as coisas simples. Uma imagem, uma figurinha. Fácil, né?",
-  "Não precisa ser um especialista em multitarefa aqui! Uma imagem de cada vez é o caminho.",
-  "Respire fundo e envie uma imagem de cada vez. Sua figurinha vai ficar incrível, prometo!"
-]
+  'Calma, não precisa enviar o álbum inteiro! Uma imagem de cada vez, por favor.',
+  'Figurinhas são como pipoca: uma de cada vez para não fazer bagunça!',
+  'Só uma imagem, por favor! Não queremos um filme aqui.',
+  'Vamos fazer uma figurinha de cada vez. Priorize a qualidade, não a quantidade!',
+  'Não é um concurso de quem envia mais! Uma imagem por vez, sim?',
+  'A paciência é uma virtude. Envie uma imagem de cada vez para fazer sua figurinha.',
+  'Você não está tentando quebrar um recorde, né? Uma imagem por vez é o suficiente.',
+  'Vamos manter as coisas simples. Uma imagem, uma figurinha. Fácil, né?',
+  'Não precisa ser um especialista em multitarefa aqui! Uma imagem de cada vez é o caminho.',
+  'Respire fundo e envie uma imagem de cada vez. Sua figurinha vai ficar incrível, prometo!',
+];
+
+const msg_premium_expiring = [
+  'Ei, [Nome]! ⏳ Seu premium está quase acabando! Renove agora e continue aproveitando todas as vantagens. 🚀',
+  'Aviso rápido! ⚠️ Seu acesso premium expira em breve. Não fique sem seus benefícios, renove agora! 💙',
+  'Falta pouco! ⏳ Seu premium termina em alguns dias. Garanta sua renovação e continue se divertindo! 😃',
+  'Oh, não! 😢 Seu premium está prestes a expirar. Quer continuar com os recursos exclusivos? Renove já! 🔥',
+  'Atenção, [Nome]! Seu premium acaba em breve! 🔄 Renove agora para continuar aproveitando tudo sem interrupções! ✨',
+];
 
 module.exports = {
   randomizeThis,
@@ -92,5 +100,6 @@ module.exports = {
   msg_tutorials,
   msg_premium_thankyou,
   msg_premium_wannabe,
+  msg_premium_expiring,
   msg_limitonesticker,
 };

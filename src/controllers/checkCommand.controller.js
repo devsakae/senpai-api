@@ -39,6 +39,7 @@ const checkCommand = async (user, req) => {
 
     if (user_sent?.text?.body === '.canal' || interactiveType === '.canal')
       return await canal(req);
+    
     if (user_sent?.text?.body === '.suporte' || interactiveType === '.suporte') {
       if (user.premium) return await getPremiumSuporte(req);
       return await getSuporte(req);

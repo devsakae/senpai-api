@@ -22,13 +22,13 @@ const getPremiumSuporte = async (req) => {
           name: 'flow',
           parameters: {
             flow_message_version: '3',
-            flow_id: '647584844413700',
-            flow_cta: 'Registrar',
+            flow_id: '1083818146763696',
+            flow_cta: 'Enviar',
             mode: 'published',
             flow_token: 'feedback',
             flow_action: 'navigate',
             flow_action_payload: {
-              screen: 'RECOMMEND'
+              screen: 'QUAIS_ESCOLHAS'
             }
           }
         }
