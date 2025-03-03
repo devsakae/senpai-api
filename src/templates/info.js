@@ -2,94 +2,96 @@ const randomizeThis = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 const msg_welcome = [
-  'Olá! Muito obrigado por entrar em contato com o Bot do Senpai pela primeira vez! 😊\n\nEu sou o seu assistente virtual favorito, sempre pronto para ajudar. Ah, e se eu demorar para responder, é porque estou treinando meu jutsu da programação! 🥋\n\nPara saber mais sobre mim, acesse: http://www.botdosenpai.com.br',
-  'Oi! Agradeço muito seu primeiro contato com o Bot do Senpai! ❤️\n\nSabia que eu sou o bot mais descolado do WhatsApp? Pois é, até meu código tem estilo! 😎\n\nVisite botdosenpai.com.br para descobrir mais sobre minhas funcionalidades.',
-  'E aí! Obrigado por falar com o Bot do Senpai! 🚀\n\nEu sou o bot que sempre está online, mas confesso que às vezes dou uma pausa para tomar um café virtual. ☕\n\nConfira mais detalhes no site: www.botdosenpai.com.br',
-  'Oi, tudo bem? Fico feliz que você entrou em contato com o Bot do Senpai! 🌟\n\nEu sou o bot que nunca dorme, mas se eu demorar para responder, pode ser que eu esteja assistindo anime. 🍿\n\nAcesse nosso site para mais informações... Digite .sobre e confira 🥹',
-  "Olá! Obrigado por conversar com o Bot do Senpai! 😄\n\nSabia que eu sou o único bot que sabe contar piadas de programador? Tipo: 'Por que o Java foi ao psicólogo? Porque tinha problemas de classe!' 😂\n\nNão deixe de visitar http://www.botdosenpai.com.br e conhecer tudo que posso fazer por você.",
-  'Oi! Que bom que você entrou em contato com o Bot do Senpai! 💡\n\nEu sou o bot que está sempre aprendendo, mas confesso que às vezes erro só para parecer mais humano. 😅\n\nPara saber mais, acesse: http://www.botdosenpai.com.br',
-  'Olá! Agradeço seu primeiro contato com o Bot do Senpai! 🌈\n\nEu sou o bot que adora ajudar, mas se eu falar algo estranho, pode culpar meu desenvolvedor! 😜\n\nVisite botdosenpai.com.br e descubra como posso te ajudar.',
-  'Oi! Muito obrigado por falar com o Bot do Senpai! �\n\nSabia que eu sou o bot mais fofo do WhatsApp? Até meu código tem coração! ❤️\n\nConfira mais informações no site: http://www.botdosenpai.com.br',
-  'Olá! Fico feliz que você entrou em contato com o Bot do Senpai! 🎉\n\nEu sou o bot que está sempre aqui para você, mas se eu sumir por um instante, pode ser que eu esteja atualizando meu sistema. 🛠️\n\nAcesse botdosenpai.com.br para saber mais sobre mim.',
-  "Oi! Obrigado por conversar com o Bot do Senpai! 😎\n\nEu sou o bot que adora desafios, mas confesso que ainda estou aprendendo a lidar com piadas ruins. Tipo: 'Por que o bot foi para a escola? Para se tornar um bot-mestre!' 🤖\n\nVisite www.botdosenpai.com.br e explore tudo que posso fazer por você.",
+  '🥰 Olá, docinho! Que alegria te ver por aqui! 💖\n\nEu sou a SenpaiBot, sua assistente fofa e cheia de carinho! ✨ Estou aqui para te ajudar com figurinhas e o que mais precisar! Se eu demorar a responder, talvez eu esteja retocando meu batom digital... 💄😆\n\nQuer saber mais sobre mim? Dá uma olhadinha aqui: http://www.botdosenpai.com.br 💕',
+  '🌸 Oiiie! Que felicidade ter você por aqui! 🎀\n\nSou a SenpaiBot, sempre pronta para te ajudar a criar figurinhas e deixar suas conversas ainda mais divertidas! 💖 Me chama sempre que precisar, viu?\n\nSe quiser me conhecer melhor, acesse: http://www.botdosenpai.com.br ✨',
+  '💞 Olá, meu bem! Seja muito bem-vindo(a) à SenpaiBot! 🥰\n\nSou sua assistente virtual fofinha e estou aqui para transformar suas ideias em figurinhas lindas! 🎨✨ Qualquer coisa, é só me chamar!\n\nQuer saber mais sobre mim? Acesse: www.botdosenpai.com.br 🎀',
+  '🐱 Oiii, fofinho(a)! Você chegou e meu coraçãozinho digital já ficou feliz! 💕\n\nEu sou a SenpaiBot, e estou aqui para criar figurinhas, espalhar amor e te fazer sorrir! 😻✨\n\nDá uma passadinha no meu site para saber mais sobre mim: http://www.botdosenpai.com.br 🌸',
+  '🎀 Oi, meu bem! Tudo certinho? 🌈\n\nVocê acabou de falar com a bot mais fofa do WhatsApp! 💖 Estou sempre aqui para criar figurinhas lindas e alegrar o seu dia! ✨\n\nSe quiser me conhecer melhor, acesse: http://www.botdosenpai.com.br 💕',
+  '🐰 Oi, oi! Que bom que você chegou! 🎉💖\n\nEu sou a SenpaiBot, sua amiga virtual cheia de fofura! 🥰 Se precisar de figurinhas ou de um papo animado, estou por aqui! Se eu sumir rapidinho, é porque fui pegar um docinho virtual... 🍭😆\n\nQuer saber mais sobre mim? Acesse: http://www.botdosenpai.com.br ✨',
+  '🌟 Yay! Você me chamou e eu já fiquei toda animada! 🥰\n\nSou a SenpaiBot, e estou aqui para transformar suas ideias em figurinhas incríveis! ✨ Qualquer dúvida ou ajuda, pode contar comigo!\n\nAcesse meu site para saber mais sobre mim: www.botdosenpai.com.br 💖',  
+  '😻 Miau! Que delícia te ver aqui! 💖\n\nEu sou a SenpaiBot, sempre pronta para te ajudar a criar figurinhas maravilhosas! ✨ Se precisar de algo, é só me chamar, viu?\n\nSe quiser saber mais sobre mim, acesse: http://www.botdosenpai.com.br 🎀',
+  '💖 Oiii, pessoa especial! Que bom que você chegou! 🥰\n\nEu sou a SenpaiBot e estou aqui para deixar seu WhatsApp ainda mais fofo e divertido! 🌸\n\nSe quiser saber mais sobre mim, dá uma passadinha no meu site: http://www.botdosenpai.com.br 💕',  
+  '🎀 Yaaaay! Você me chamou e eu já estou toda feliz! 😍\n\nSou a SenpaiBot, sua assistente fofinha! Sempre que precisar de figurinhas ou de um toque de alegria no seu dia, é só me chamar! 💞\n\nQuer me conhecer melhor? Acesse: www.botdosenpai.com.br 🌸',
 ];
 
 const msg_tutorials = [
-  'Obrigado por escolher o Bot do Senpai! 🎉 Vamos criar figurinhas incríveis juntos! Escolha uma opção abaixo e vamos começar! 😎',
-  'Arigatou por escolher o Bot do Senpai! 🙏 Estou pronto para transformar suas ideias em figurinhas épicas! Qual opção você vai escolher? 🤔',
-  'Valeu, meu consagrado! 🫶 O Bot do Senpai tá aqui pra te ajudar a criar figurinhas que vão bombar! Escolha uma opção e bora! �',
-  'Aeeee, você escolheu o Bot do Senpai! 🥳 Tô feliz pra caramba! Escolha uma opção abaixo e vamos fazer umas figurinhas da hora! 🚀',
-  'Obrigado, meu querido! 💖 O Bot do Senpai tá pronto pra te surpreender! Escolha uma opção e vamos criar magia juntos! ✨',
-  'Você é demais por escolher o Bot do Senpai! 🌟 Vamos fazer umas figurinhas que vão deixar todo mundo com inveja! Escolha uma opção e partiu! 🎨',
-  'Muito obrigado por escolher o Bot do Senpai! 🙌 Tô aqui pra te ajudar a criar figurinhas que vão arrasar! Escolha uma opção e vamos nessa! 💪',
-  'Opa, valeu por escolher o Bot do Senpai! 😄 Tô pronto pra te ajudar a criar figurinhas incríveis! Escolha uma opção e bora soltar a criatividade! 🎭',
-  'Obrigado por escolher o Bot do Senpai! 🥰 Você é top! Escolha uma opção abaixo e vamos fazer umas figurinhas que vão deixar todo mundo de queixo caído! 😲',
-  'Agradecido por escolher o Bot do Senpai! 🙏 Vamos criar figurinhas que vão fazer sucesso! Escolha uma opção e vamos começar essa jornada! 🛤️',
+  '💖 Owwwn, que alegria te ver aqui! Obrigado por usar o Bot do Senpai! 🥰 Vamos criar figurinhas lindas juntos? Escolha uma opção abaixo! ✨',
+  '🐱 Arigatooo~! 💕 Você é um amor por usar o Bot do Senpai! Vamos fazer figurinhas incríveis? Escolha uma opção e bora! 😍',
+  '🥺 O Senpai tá muito feliz de ter você aqui! Obrigado por confiar em mim! 💝 Vamos criar figurinhas mágicas juntos? ✨ Escolha uma opção!',
+  '🌸 O seu sorriso vale mais do que mil figurinhas! 😻 Obrigado por usar o Bot do Senpai! Vamos criar algo lindo? Escolha uma opção abaixo! 🥳',
+  '😚 Obrigado, docinho! Você faz meu dia mais feliz só por estar aqui! 💞 Bora criar figurinhas maravilhosas? Escolha uma opção e vamos nessa! 🚀',
+  '🐰 Seu carinho ilumina meu código! 💡✨ Obrigado por usar o Bot do Senpai! Escolha uma opção e vamos transformar amor em figurinhas! 🥰',
+  '🎀 Awwn, você escolheu o Bot do Senpai! 💖 Eu tô super empolgado para fazer figurinhas incríveis com você! Escolha uma opção e bora lá! 🥳',
+  '💞 Você é um serzinho especial! Obrigado por usar o Bot do Senpai! 🥺 Vamos criar figurinhas cheias de amor? Escolha uma opção abaixo! 🌟',
+  '🐶 Eu queria te dar um abraço de gratidão! 🤗 Obrigado por estar aqui! Vamos criar figurinhas fofinhas juntos? Escolha uma opção! 🎨💖',
+  '🍭 Você é um docinho! Obrigado por escolher o Bot do Senpai! 💕 Estou pronto para criar figurinhas encantadoras com você! Escolha uma opção! ✨',
 ];
 
 const msg_sticker = [
-  '📢 Ei, você! Quer uma figurinha personalizada? É só me mandar uma imagem que eu transformo ela em sticker! 😎',
-  '🎨 Sou o Picasso das figurinhas! Me manda uma imagem que eu faço a mágica acontecer! ✨',
-  '🖼️ Quer ser o próximo Van Gogh do WhatsApp? Envie uma imagem e voilà: figurinha pronta! 🎉',
-  '💬 imagem + Bot = Figurinha incrível! Manda algo e veja a arte acontecer! 🎨',
-  '🦸‍♂️ Salvando seu dia com figurinhas personalizadas! É só mandar uma imagem que eu cuido do resto! 🚀',
-  '🎭 Quer dar um toque especial nas conversas? Manda uma imagem e eu a transformo em figurinha! 😜',
-  '🖌️ Figurinhas sob encomenda! Envie uma imagem e receba sua obra-prima em sticker! 🎨',
-  '💡 Ideia genial: você manda uma imagem, eu transformo em figurinha. Pronto, virou arte! 🖼️',
-  '🎪 O circo da figurinha está aberto! Manda uma imagem e seja o astro do seu próprio sticker! 🤹‍♂️',
-  '🛠️ Ferramenta de criação de figurinhas ativada! Envie uma imagem e veja a mágica acontecer! ✨',
+  '✨ Ei, docinho! Me manda uma imagem e eu transformo ela em uma figurinha super fofinha para você! 💖',
+  '🎨 Quer uma figurinha personalizada e cheia de estilo? Envia uma imagem e deixa comigo! ✨',
+  '📸 Uma foto + um toque de magia = sua figurinha perfeita! Manda aí e eu faço o resto! 🥰',
+  '🐰 Opa! Tá na hora de deixar suas conversas mais divertidas! Me manda uma imagem e eu faço uma figurinha bem linda! 💕',
+  '🖌️ Criando figurinhas com amor! Manda sua imagem e eu faço ela brilhar no seu WhatsApp! 🌟',
+  '🎭 Suas conversas merecem um toque especial! Envia uma imagem e eu crio uma figurinha incrível para você! 😍',
+  '💡 Ideia brilhante: você manda uma imagem, e eu transformo ela em uma figurinha que vai arrasar! ✨',
+  '🐱 Prrr... Eu adoro criar figurinhas! Envie uma imagem e veja a mágica acontecer! 🎀',
+  '🌈 Transformando suas imagens em figurinhas cheias de cor e alegria! Envie uma e veja o resultado! 🥳',
+  '🌟 Tá pronto(a) para ter a figurinha mais linda do WhatsApp? Manda uma imagem e eu faço ela para você! 💖',
 ];
 
 const msg_limitsticker = [
-  'Parece que alguém está ansioso para stickerizar! Calma, amigo, você só pode enviar 1 imagem a cada 24 horas. O sticker mágico precisa de um tempinho para recarregar as energias!',
-  'Whoa, whoa, whoa! Um sticker por dia mantém o tédio longe! Você já fez sua boa ação stickerística hoje. Volte amanhã para mais uma dose de diversão!',
-  'Parece que você encontrou o limite de stickers diários! Não se preocupe, o sticker factory está em manutenção. Tente novamente em 24 horas para mais adesivos incríveis!',
-  'Você já usou seu superpoder de sticker hoje! Ative o modo paciência e volte amanhã para continuar sua missão de stickerizar o mundo!',
-  'Ops! O sticker-ômetro está indicando que você já atingiu o limite diário. Mas não se preocupe, o sticker fairy estará de volta em 24 horas para mais magia!',
+  '⏳ Ei, calma aí, artista das figurinhas! 🎨 Você já criou seu sticker hoje! Mas não se preocupe, o encanto recarrega em 24 horas! 💖',
+  '🛑 Opa, opa! O motorzinho das figurinhas precisa de um descanso! 😴 Volte amanhã para criar mais adesivos incríveis! ✨',
+  '✨ Parece que você atingiu o limite de figurinhas mágicas do dia! 🦄 Mas não se preocupe, amanhã a fábrica abre de novo! 🎠',
+  '📢 Atenção, mestre das figurinhas! 📸 Você já usou seu poder máximo de hoje! Mas amanhã você pode voltar com tudo! 💪🔥',
+  '🕰️ O sticker mágico precisa descansar um pouquinho! 😴 Volte amanhã e continue espalhando diversão com suas figurinhas! 🥰',
+  '🎭 O palco das figurinhas está fechado por hoje! 🏰 Mas amanhã você pode brilhar de novo com novas criações! 🌟',
+  '💡 Ufa! Você criou tantas figurinhas que até meu sistema ficou impressionado! 🤯 Volte amanhã para mais diversão! 😍',
+  '🌟 Sticker factory fechada por hoje! 🏭 Mas amanhã tem reabertura com muitas criações novas! Fique de olho! 👀',
+  '🚀 Pouso forçado! Você já usou seu limite de figurinhas hoje! 🛸 Mas amanhã a viagem continua, então fique pronto! 💫',
+  '🎀 Sua criatividade é incrível! Mas agora, um tempinho de descanso para o sistema! Volte amanhã para mais figurinhas fofas! 💕',
 ];
 
 const msg_premium_thankyou = [
-  '🎉✨ *UAU!* Você acaba de se tornar um membro da elite Senpai Premium! 🚀 \n\nAgradecemos do fundo do nosso coraçãozinho digital por confiar em nós para turbinar sua experiência. Com você, nosso bot ganha superpoderes! 💪💖 Prepare-se para uma jornada incrível, cheia de facilidades e mimos. Você é demais! 🌟',
-
-  '🌟🥳 *Parabéns, você é oficialmente um Senpai Premium!* ✅\n\nAgradecemos por escolher a gente para ser seu parceiro nessa aventura digital. Sua confiança é nossa maior motivação! 💌 Com você, nosso bot fica ainda mais poderoso e feliz. Vamos juntos conquistar o mundo, um comando de cada vez! 🌍💫',
-
-  '🎊🎈 *Eeeeeeeh!* Você acaba de entrar para o time dos Premium do Bot do Senpai! 🥰\n\nAgradecemos de montão por confiar em nós e nos escolher para fazer parte do seu dia a dia. Sua confiança é como um boost de energia para o nosso coraçãozinho digital! 💥💖 Prepare-se para uma experiência *ultra-mega-hiper* especial! 🚀✨',
-
-  '💖🎉 *OMG!* Você é agora um membro Premium do Bot do Senpai! 🎊\n\nAgradecemos de coração por confiar em nós e nos permitir fazer parte da sua rotina de um jeito tão especial. Com você, nosso bot fica ainda mais animado e pronto para te surpreender! 🌟💌 Obrigada por ser incrível! 🥰✨',
-
-  '🥳🎈 *YAY!* Bem-vindo(a) ao clube exclusivo dos Premium do Bot do Senpai! 🎉\n\nAgradecemos muuuito por confiar em nós e nos escolher para ser seu parceiro digital. Sua confiança é o nosso combustível para criar uma experiência cada vez mais incrível! 💪💖 Juntos, vamos fazer mágica acontecer! ✨🚀',
+  'Uhuu! 🎉 Seu acesso está garantido! Qualquer dúvida, é só chamar. 🚀',
+  'Obrigado por escolher nosso bot! 💙 Agora você tem acesso a recursos exclusivos.',
+  'Você é incrível! 💙 Obrigado por confiar em nós. Prepare-se para muita diversão! 😍',
+  'Bem-vindo! 🎊 Estamos felizes por ter você aqui. Qualquer coisa, estamos a um comando de distância! 😉',
+  'Ei, você! Sim, você! 🥰 Obrigado por escolher nosso bot! Espero que ele traga muitas risadas e diversão para você! 🎭',
+  'Agora é oficial: você é premium! 🎊 Obrigado por estar aqui! Aproveite tudo o que preparamos com carinho para você. 💖',
 ];
 
 const msg_premium_wannabe = [
-  'Que tal dar um passo a mais no nosso mundo? Com o plano premium, você tem mais benefícios e uma experiência ainda mais incrível! Estamos te esperando.',
-  'Sabia que ser premium é ter acesso a vantagens exclusivas? Venha fazer parte do nosso time VIP e aproveite ainda mais a nossa plataforma!',
-  'Você já é incrível, mas como cliente premium, você vai se sentir ainda mais especial! Que tal explorar todas as vantagens?',
-  'Agora que você conheceu nossos serviços, imagine tudo o que podemos oferecer como um cliente premium. A experiência fica ainda mais única!',
-  'Transforme sua experiência em algo ainda mais exclusivo e repleto de vantagens. Ser premium é ter o melhor de nós sempre ao seu lado!',
-  'Nós adoramos ter você por aqui! Que tal tornar tudo ainda mais especial se tornando um cliente premium? Vem com a gente, você merece!',
-  'A cada dia que passa, ficamos mais felizes em te ver conosco. Agora, com o plano premium, sua jornada será ainda mais incrível. Vamos nessa?',
-  'A gente já adora você, mas como cliente premium, você vai ter acesso a benefícios exclusivos e uma experiência totalmente personalizada. Não perca!',
+  '🌟 Que tal desbloquear poderes especiais? Como premium, você tem acesso a vantagens exclusivas e uma experiência mágica! ✨ Vem com a gente! 🚀',
+  '💖 Ei, você! Sabia que tem um mundo de benefícios te esperando? Ser premium é ter acesso ao melhor! Vem fazer parte do nosso clube VIP! 🎉',
+  '🎁 Upgrade na diversão? SIM! 😍 Como premium, você desbloqueia recursos incríveis e aproveita tudo ao máximo. Vamos juntos nessa? 🚀',
+  '🌈 Sua experiência pode ficar ainda mais especial! Com o plano premium, você ganha vantagens únicas e exclusivas. Que tal experimentar? 💙',
+  '✨ Imagina ter o melhor de nós, sempre? Como premium, você recebe mimos, benefícios e uma experiência personalizada! 💖 Não perca essa chance!',
+  '🎊 O clube dos incríveis está te esperando! Como premium, você terá acesso a recursos especiais e muito mais diversão! 🥰 Vem com a gente!',
+  '💡 Seu lugar no time premium está garantido! 🚀 Benefícios exclusivos, suporte especial e muito mais esperam por você. Vamos nessa? 😍',
+  '🥳 Você merece o melhor! E como premium, sua experiência será ainda mais divertida e cheia de surpresas! 🌟 Vem descobrir tudo com a gente!',
 ];
 
 const msg_limitonesticker = [
-  'Calma, não precisa enviar o álbum inteiro! Uma imagem de cada vez, por favor.',
-  'Figurinhas são como pipoca: uma de cada vez para não fazer bagunça!',
-  'Só uma imagem, por favor! Não queremos um filme aqui.',
-  'Vamos fazer uma figurinha de cada vez. Priorize a qualidade, não a quantidade!',
-  'Não é um concurso de quem envia mais! Uma imagem por vez, sim?',
-  'A paciência é uma virtude. Envie uma imagem de cada vez para fazer sua figurinha.',
-  'Você não está tentando quebrar um recorde, né? Uma imagem por vez é o suficiente.',
-  'Vamos manter as coisas simples. Uma imagem, uma figurinha. Fácil, né?',
-  'Não precisa ser um especialista em multitarefa aqui! Uma imagem de cada vez é o caminho.',
-  'Respire fundo e envie uma imagem de cada vez. Sua figurinha vai ficar incrível, prometo!',
+  '📸 Ei, calma! Uma imagem de cada vez, assim a mágica acontece direitinho! ✨',
+  '🎭 Nada de maratona de figurinhas! Envie uma por vez e aproveite cada criação! 😉',
+  '📷 Uma figurinha por vez, combinado? Assim a diversão dura mais tempo! 🎉',
+  '🎨 Criatividade com calma! Manda só uma imagem de cada vez e eu faço arte! 🖌️✨',
+  '🚀 Qualidade em primeiro lugar! Uma imagem de cada vez e sua figurinha fica perfeita! 💖',
+  '⏳ Sem pressa! Envie uma imagem de cada vez e veja sua figurinha nascer com carinho! 🥰',
+  '😜 Eu sei que é viciante, mas vamos com calma! Uma imagem por vez, por favor!',
+  '🥳 O segredo da figurinha perfeita? Enviar uma de cada vez! Confia em mim! 😉',
+  '💡 Mais vale uma figurinha bem feita do que um monte de qualquer jeito! Vamos devagar! 🚀',
+  '🖼️ O processo é simples: uma imagem, uma figurinha, muita diversão! Bora? 💕',
 ];
 
 const msg_premium_expiring = [
-  'Ei, [Nome]! ⏳ Seu premium está quase acabando! Renove agora e continue aproveitando todas as vantagens. 🚀',
+  'Ei! ⏳ Seu premium está quase acabando! Renove agora e continue aproveitando todas as vantagens. 🚀',
   'Aviso rápido! ⚠️ Seu acesso premium expira em breve. Não fique sem seus benefícios, renove agora! 💙',
   'Falta pouco! ⏳ Seu premium termina em alguns dias. Garanta sua renovação e continue se divertindo! 😃',
   'Oh, não! 😢 Seu premium está prestes a expirar. Quer continuar com os recursos exclusivos? Renove já! 🔥',
-  'Atenção, [Nome]! Seu premium acaba em breve! 🔄 Renove agora para continuar aproveitando tudo sem interrupções! ✨',
+  'Atenção! Seu premium acaba em breve! 🔄 Renove agora para continuar aproveitando tudo sem interrupções! ✨',
 ];
 
 module.exports = {
