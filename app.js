@@ -25,7 +25,9 @@ app.use(express.json());
       console.log('✔ API escutando na porta', PORT);
     });
     app.get('/', (_req, res) => res.send({ status: 'online' }));
+
     app.get('/coffee', (_req, res) => res.status(418).end());
+
     app.get('/webhook', (req, res) => {
       const mode = req.query['hub.mode'];
       const token = req.query['hub.verify_token'];
@@ -38,6 +40,7 @@ app.use(express.json());
         return res.sendStatus(403).end();
       }
     });
+    
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
         './media/' + req.params.user_id + '/' + req.params.media_id + '.webp',
@@ -74,6 +77,7 @@ app.use(express.json());
 
     app.post('/premium', async (req, res) => {
       const payload = req.body;
+      console.log(payload);
       //   {
       //     encrypted_flow_data: "<ENCRYPTED FLOW DATA>",
       //     encrypted_aes_key: "<ENCRYPTED_AES_KEY>",
