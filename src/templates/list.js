@@ -76,16 +76,16 @@ const completeMenu = async (req) => {
         type: 'list',
         header: {
           type: 'text',
-          text: 'Menu Premium',
+          text: '🌟 Bem-vindo ao Premium! 🌟',
         },
         body: {
           text: message_body,
         },
         footer: {
-          text: 'Sua colaboração é fundamental pra manutenção do nosso Bot',
+          text: 'Sua colaboração mantém nosso bot vivo! 💙 Obrigado pelo apoio!',
         },
         action: {
-          button: 'Premium Menu',
+          button: 'Clique aqui',
           sections: [
             {
               title: 'Como fazer figurinhas?',
@@ -93,7 +93,22 @@ const completeMenu = async (req) => {
                 {
                   id: '.sticker',
                   title: '.sticker',
-                  description: 'Premium tem figurinhas ilimitadas :)',
+                  description: 'Premium tem figurinhas ilimitadas',
+                },
+                {
+                  id: '.remover',
+                  title: '.Remover',
+                  description: 'Remova o fundo branco da sua figurinha',
+                },
+                {
+                  id: '.nome',
+                  title: '.Nome',
+                  description: 'Renomeie suas figurinhas como quiser (PACK e AUTOR)',
+                },
+                {
+                  id: '.atualizacao',
+                  title: '.Atualização',
+                  description: 'Novos recursos e melhorias te esperam',
                 },
                 {
                   id: '.privacy',
@@ -114,6 +129,7 @@ const completeMenu = async (req) => {
                   id: '.util002',
                   title: '.piada',
                   description: 'Conto uma piada sem graça',
+                  
                 },
               ],
             },
@@ -126,17 +142,27 @@ const completeMenu = async (req) => {
                   description: 'Que tal \".stickerai Gatinho lambendo patas\"?',
                 },
                 {
-                  id: '.premium002',
+                  id: 'premium002',
+                  title: '.IA',
+                  description: 'Para ajudar em tudo o que você precisar',
+                },
+                {
+                  id: '.premium003',
                   title: '.lembrete',
                   description: 'Te ajudo a não esquecer das coisas...',
                 },
                 {
-                  id: '.premium003',
+                  id: '.premium004',
                   title: '.clima',
                   description: 'Exemplo: .clima Florianópolis SC',
                 },
                 {
-                  id: '.premium004',
+                  id: '.premium005',
+                  title: '.Suporte',
+                  description: 'Suporte dedicado, sempre pronto para ajudar',
+                },
+                {
+                  id: '.premium006',
                   title: '.news',
                   description: 'Novidades todos os dias no seu WhatsApp!',
                 },
