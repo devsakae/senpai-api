@@ -3,7 +3,7 @@ const { randomizeThis, msg_limitsticker, msg_limitonesticker } = require('./info
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const limitedStickers = async (req) => {
-  const period = (req.body?.entry[0].changes[0]?.value?.messages[0]?.timestamp + 86400) * 1000
+  const period = (req.body?.entry[0].changes[0]?.value?.messages[0]?.timestamp * 1000) + 86400000
   const grace_period =
     '\n\nVocê pode tentar novamente a partir de: ' +
     (req.body?.entry[0]?.changes[0]?.value?.contacts[0]?.wa_id.startsWith('55')
