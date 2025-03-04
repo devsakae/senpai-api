@@ -2,7 +2,7 @@ const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, SUPORTE_TECNICO } =
   process.env;
 const axios = require('axios');
 
-const getPremiumSuporte = async (req) => {
+const flow_feedback = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   await axios({
     method: 'POST',
@@ -18,24 +18,40 @@ const getPremiumSuporte = async (req) => {
       type: 'interactive',
       interactive: {
         type: 'flow',
+        header: {
+          type: 'text',
+          text: '🌸 Deixe o bot ainda melhor!',
+        },
+        body: {
+          text: 'Conta pra gente como podemos melhorar e tornar tudo mais incrível para você.',
+        },
+        footer: {
+          text: '💖 Sua sugestão faz toda a diferença!',
+        },
         action: {
           name: 'flow',
           parameters: {
             flow_message_version: '3',
             flow_id: '1083818146763696',
-            flow_cta: 'Enviar',
+            flow_cta: 'Abrir Questionário',
             mode: 'published',
-            flow_token: 'feedback',
+            flow_token: 'questionario',
             flow_action: 'navigate',
             flow_action_payload: {
-              screen: 'QUAIS_ESCOLHAS'
-            }
-          }
-        }
-      }
+              screen: 'QUAIS_ESCOLHAS',
+            },
+          },
+        },
+      },
     },
-  }).then((response) => console.log(response.data))
-    .catch((err) => console.error('Erro requisitando premium suporte', err?.response?.data || err));
+  })
+    .then((response) => console.log(response.data))
+    .catch((err) =>
+      console.error(
+        'Erro requisitando premium suporte',
+        err?.response?.data || err,
+      ),
+    );
 }
 
 const getSuporte = async (req) => {
@@ -87,6 +103,6 @@ const contactAdmin = async (payload) => {
 };
 
 module.exports = {
-  getPremiumSuporte,
+  flow_feedback,
   getSuporte,
 };

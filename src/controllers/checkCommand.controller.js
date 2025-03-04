@@ -3,7 +3,7 @@ const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
-const { getSuporte, getPremiumSuporte } = require('./suporte.controller');
+const { getSuporte, getPremiumSuporte, flow_feedback } = require('./suporte.controller');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -34,8 +34,12 @@ const checkCommand = async (user, req) => {
       user_sent?.text?.body === 'Quero ser Premium!' ||
       interactiveType === 'getpremium'
     ) {
-      return console.log('Usuário quer ser premium');
+      console.log('Usuário quer ser premium');
+      return 
     }
+
+    if (interactiveType === '.feedback')
+      return await flow_feedback(req);
 
     if (user_sent?.text?.body === '.canal' || interactiveType === '.canal')
       return await canal(req);

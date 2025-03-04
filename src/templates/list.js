@@ -166,6 +166,11 @@ const completeMenu = async (req) => {
                   title: '.news',
                   description: 'Novidades todos os dias no seu WhatsApp!',
                 },
+                {
+                  id: '.feedback',
+                  title: '.feedback',
+                  description: 'Responda nosso questionário e nos ajude a melhorar!',
+                },
               ],
             },
           ],
