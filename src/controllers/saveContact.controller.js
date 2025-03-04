@@ -48,7 +48,7 @@ const checkContact = async (req) => {
     return console.error('⛔️ Avoiding SPAM from', user?.name) */
 
   // Free user sent image
-  if (payload.messages[0]?.type === 'image') {
+  /* if (payload.messages[0]?.type === 'image') {
     console.log(user?.last_time?.image.getTime());
     console.log(now.getTime());
     if (
@@ -58,7 +58,7 @@ const checkContact = async (req) => {
       console.error('🚫', user?.name, 'allowed for 1 sticker only (last sticker:', new Date(user.last_time.image).toISOString() + ')')
       return await freeUserStickerLimit(req);
     }
-  }
+  } */
 
   // Free user sent something else
   return await checkLastInteraction(user, req);
