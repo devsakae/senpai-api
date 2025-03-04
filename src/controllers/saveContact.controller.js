@@ -53,7 +53,7 @@ const checkContact = async (req) => {
       user?.last_time?.image instanceof Date &&
       now.getTime() - user?.last_time?.image.getTime() > 86400
     ) {
-      console.error('🚫', user?.name, 'allowed for 1 sticker only.')
+      console.error('🚫', user?.name, 'allowed for 1 sticker only (last sticker:', new Date(user.last_time.image).toISOString() + ')')
       return await freeUserStickerLimit(req);
     }
   }

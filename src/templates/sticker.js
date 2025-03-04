@@ -79,7 +79,8 @@ const staticSticker = async (req) => {
 
 const freeUserStickerLimit = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const limited_sticker = randomizeThis(msg_limitsticker);
+  let limited_sticker = randomizeThis(msg_limitsticker);
+  limited_sticker = limited_sticker + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000) 
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
