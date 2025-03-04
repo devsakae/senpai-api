@@ -49,6 +49,8 @@ const checkContact = async (req) => {
 
   // Free user sent image
   if (payload.messages[0]?.type === 'image') {
+    console.log(user?.last_time?.image);
+    console.log(now.getTime());
     if (
       user?.last_time?.image instanceof Date &&
       now.getTime() - user?.last_time?.image.getTime() > 86400
