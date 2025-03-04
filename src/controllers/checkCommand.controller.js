@@ -3,6 +3,7 @@ const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial } = require('../templates/sticker');
+const { getFeedbackResponse } = require('./flow.controller');
 const { getSuporte, getPremiumSuporte, flow_feedback } = require('./suporte.controller');
 
 const checkLastInteraction = async (user, req) => {
@@ -32,7 +33,7 @@ const checkCommand = async (user, req) => {
       '';
 
     if (interactiveType === 'nfm_reply')
-      return;
+      return await getFeedbackResponse(req);
 
     if (
       user_sent?.text?.body === 'Quero ser Premium!' ||
