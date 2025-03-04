@@ -9,7 +9,7 @@ const checkAndLog = (req) => {
     if (msg_type === 'video') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent', payload?.messages[0]?.video?.mime_type, '#id:', payload?.messages[0]?.video?.id);
     if (msg_type === 'interactive') {
       let interactiveType = payload?.messages[0]?.type === 'interactive' && payload?.messages[0]?.interactive?.type;
-      return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'reply with', payload?.messages[0]?.interactive[interactiveType]?.id)
+      return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'reply with', payload?.messages[0]?.interactive[interactiveType]?.id || payload?.messages[0]?.id)
     }
     else return console.error(wa_id, name, 'sent something different...')
   }

@@ -32,7 +32,7 @@ const checkCommand = async (user, req) => {
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
 
-    if (interactiveType === 'nfm_reply')
+    if (user_sent?.interactive?.type === 'nfm_reply')
       return await getFeedbackResponse(req);
 
     if (
