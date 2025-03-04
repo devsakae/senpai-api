@@ -101,35 +101,9 @@ const completeMenu = async (req) => {
                   description: 'Remova o fundo branco da sua figurinha',
                 },
                 {
-                  id: '.nome',
-                  title: '.Nome',
-                  description: 'Renomeie suas figurinhas como quiser (PACK e AUTOR)',
-                },
-                {
-                  id: '.atualizacao',
-                  title: '.Atualização',
-                  description: 'Novos recursos e melhorias te esperam',
-                },
-                {
                   id: '.privacy',
                   title: 'Termos de Uso',
                   description: 'Leia os termos antes de prosseguir',
-                },
-              ],
-            },
-            {
-              title: 'Utilitários',
-              rows: [
-                {
-                  id: '.util001',
-                  title: '.google [pesquisa]',
-                  description: 'Pesquiso no Google pra você',
-                },
-                {
-                  id: '.util002',
-                  title: '.piada',
-                  description: 'Conto uma piada sem graça',
-                  
                 },
               ],
             },
@@ -160,11 +134,6 @@ const completeMenu = async (req) => {
                   id: '.premium005',
                   title: '.Suporte',
                   description: 'Suporte dedicado, sempre pronto para ajudar',
-                },
-                {
-                  id: '.premium006',
-                  title: '.news',
-                  description: 'Novidades todos os dias no seu WhatsApp!',
                 },
                 {
                   id: '.feedback',
