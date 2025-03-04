@@ -82,7 +82,7 @@ const completeMenu = async (req) => {
           text: message_body,
         },
         footer: {
-          text: 'Sua colaboração mantém nosso bot vivo! 💙 Obrigado pelo apoio!',
+          text: 'Sua colaboração mantém nosso bot vivo. Obrigado pelo apoio!',
         },
         action: {
           button: 'Clique aqui',
