@@ -30,6 +30,10 @@ const checkCommand = async (user, req) => {
       (user_sent?.type === 'interactive' &&
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
+
+    if (interactiveType === 'nfm_reply')
+      return;
+
     if (
       user_sent?.text?.body === 'Quero ser Premium!' ||
       interactiveType === 'getpremium'
