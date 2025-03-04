@@ -44,8 +44,8 @@ const checkContact = async (req) => {
   }
 
   // Check if last_contact was at least 3 seconds older
-  if (payload?.messages[0]?.timestamp - 3 > user?.last_time?.timestamp)
-    return console.error('⛔️ Avoiding SPAM from', user?.name)
+  /* if (payload?.messages[0]?.timestamp - 3 > user?.last_time?.timestamp)
+    return console.error('⛔️ Avoiding SPAM from', user?.name) */
 
   // Free user sent image
   if (payload.messages[0]?.type === 'image') {
