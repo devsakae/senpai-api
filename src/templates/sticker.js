@@ -86,8 +86,10 @@ const dynamicSticker = async (req) => {
   const localBuffer = Buffer.from(mediaBuffer, "base64");
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
+  const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
-  await ffmpeg(localBuffer)
+  fs.writeFileSync(tempFile, localBuffer)
+  await ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
@@ -121,13 +123,13 @@ const dynamicSticker = async (req) => {
           },
         },
       })
-    })
-    .then((response) => {
-      if (response.statusText !== 'OK')
-        throw new Error({ message: 'Erro ao enviar sticker animado.' });
-    })
-    .catch((err) => {
-      console.error('error sending sticker!', err.response?.data || err);
+        .then((response) => {
+          if (response.statusText !== 'OK')
+            throw new Error({ message: 'Erro ao enviar sticker animado.' });
+        })
+        .catch((err) => {
+          console.error('error sending sticker!', err.response?.data || err);
+        })
     })
     .run()
 }
