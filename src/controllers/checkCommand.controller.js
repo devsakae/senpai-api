@@ -108,7 +108,7 @@ const checkCommand = async (user, req) => {
 
   if (user_sent?.type === 'video') {
     const userLastVideoSentDatetime = new Date(user.last_time.video);
-    if (today.getTime() = userLastVideoSentDatetime.getTime() < 86400000 &&
+    if (today.getTime() - userLastVideoSentDatetime.getTime() < 86400000 &&
       !user.premium
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last video sent @', userLastVideoSentDatetime.toISOString());
