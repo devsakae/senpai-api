@@ -90,36 +90,26 @@ const checkCommand = async (user, req) => {
 
     return;
   }
-  if (user_sent?.type === 'image') {
+
+  if (user_sent?.type === 'image' || user_sent?.type === 'video') {
     const userLastImageSentDatetime = new Date(user.last_time.image);
+    const userLastVideoSentDatetime = new Date(user.last_time.video);
     if (
-      today.getTime() - userLastImageSentDatetime.getTime() < 86400000 &&
-      !user.premium
+      ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000
+      || today.getTime() - userLastVideoSentDatetime.getTime() < 86400000)
+      && !user.premium)
     ) {
-      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last image sent @', userLastImageSentDatetime.toISOString());
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
-      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last image sent @', userLastImageSentDatetime.toISOString())
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
       return await oneStickerAtTime(req);
     }
-    return await staticSticker(req);
+    if (user_sent?.type === 'image') return await staticSticker(req);
+    if (user_sent?.type === 'video') return await dynamicSticker(req)
   }
 
-  if (user_sent?.type === 'video') {
-    const userLastVideoSentDatetime = new Date(user.last_time.video);
-    if (today.getTime() - userLastVideoSentDatetime.getTime() < 86400000 &&
-      !user.premium
-    ) {
-      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last video sent @', userLastVideoSentDatetime.toISOString());
-      return await limitedStickers(req);
-    }
-    if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
-      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last video sent @', userLastVideoSentDatetime.toISOString())
-      return await oneStickerAtTime(req);
-    }
-    return await dynamicSticker(req)
-  }
 };
 
 module.exports = {

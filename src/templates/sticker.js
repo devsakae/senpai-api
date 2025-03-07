@@ -98,12 +98,6 @@ const dynamicSticker = async (req) => {
     .size("512x512")
     .fps(10)
     .noAudio()
-    .on("start", () => {
-      console.log("Criando Sticker animado")
-    })
-    .on("progress", (progress) => {
-      console.log('Processing: ' + progress.percent + '% done');
-    })
     .on('end', async () => {
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
@@ -132,7 +126,7 @@ const dynamicSticker = async (req) => {
         })
     })
     .run()
-    return console.log('creating dynamic sticker...')
+    return console.info('sticker animado enviado!')
 }
 
 const freeUserStickerLimit = async (req) => {
