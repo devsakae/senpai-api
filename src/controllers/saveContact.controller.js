@@ -31,7 +31,7 @@ const checkContact = async (req) => {
 
   if (!user) return await message_hello(req)
 
-  // Testing for admin and subadmin
+  // Premium bypass
   if (user && user.premium) {
     testData.log.push(req.body);
     fs.writeFileSync(
@@ -42,23 +42,6 @@ const checkContact = async (req) => {
     );
     return await checkCommand(user, req);
   }
-
-  // Check if last_contact was at least 3 seconds older
-  /* if (payload?.messages[0]?.timestamp - 3 > user?.last_time?.timestamp)
-    return console.error('⛔️ Avoiding SPAM from', user?.name) */
-
-  // Free user sent image
-  /* if (payload.messages[0]?.type === 'image') {
-    console.log(user?.last_time?.image.getTime());
-    console.log(now.getTime());
-    if (
-      user?.last_time?.image instanceof Date &&
-      now.getTime() - user?.last_time?.image.getTime() > 86400
-    ) {
-      console.error('🚫', user?.name, 'allowed for 1 sticker only (last sticker:', new Date(user.last_time.image).toISOString() + ')')
-      return await freeUserStickerLimit(req);
-    }
-  } */
 
   // Free user sent something else
   return await checkLastInteraction(user, req);

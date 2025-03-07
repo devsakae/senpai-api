@@ -89,7 +89,7 @@ const dynamicSticker = async (req) => {
   const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-  await ffmpeg(tempFile)
+  ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
@@ -132,6 +132,7 @@ const dynamicSticker = async (req) => {
         })
     })
     .run()
+    return console.log('creating dynamic sticker...')
 }
 
 const freeUserStickerLimit = async (req) => {

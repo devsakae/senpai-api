@@ -91,25 +91,32 @@ const checkCommand = async (user, req) => {
     return;
   }
   if (user_sent?.type === 'image') {
+    const userLastImageSentDatetime = new Date(user.last_time.image);
     if (
-      today.getTime() - new Date(user.last_time.image).getTime() < 86400000 &&
+      today.getTime() - userLastImageSentDatetime.getTime() < 86400000 &&
       !user.premium
     ) {
-      console.error('🚫', user.name, 'allowed for 1 sticker only.');
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last image sent @', userLastImageSentDatetime.toISOString());
       return await limitedStickers(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last image sent @', userLastImageSentDatetime.toISOString())
       return await oneStickerAtTime(req);
     }
     return await staticSticker(req);
   }
 
   if (user_sent?.type === 'video') {
-    if (today.getTime() = new Date(user.last_time.image).getTime() < 86400000 &&
+    const userLastVideoSentDatetime = new Date(user.last_time.video);
+    if (today.getTime() = userLastVideoSentDatetime.getTime() < 86400000 &&
       !user.premium
     ) {
-      console.error('🚫', user.name, 'allowed for 1 sticker only.');
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last video sent @', userLastVideoSentDatetime.toISOString());
       return await limitedStickers(req);
+    }
+    if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only. last video sent @', userLastVideoSentDatetime.toISOString())
+      return await oneStickerAtTime(req);
     }
     return await dynamicSticker(req)
   }
