@@ -122,8 +122,14 @@ const dynamicSticker = async (req) => {
         },
       })
     })
+    .then((response) => {
+      if (response.statusText !== 'OK')
+        throw new Error({ message: 'Erro ao enviar sticker animado.' });
+    })
+    .catch((err) => {
+      console.error('error sending sticker!', err.response?.data || err);
+    })
     .run()
-
 }
 
 const freeUserStickerLimit = async (req) => {
