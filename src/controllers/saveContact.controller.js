@@ -6,7 +6,6 @@ const {
   checkLastInteraction,
   checkCommand,
 } = require('./checkCommand.controller');
-const { freeUserStickerLimit } = require('../templates/sticker');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;

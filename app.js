@@ -6,6 +6,7 @@ const { checkContact } = require('./src/controllers/saveContact.controller');
 const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
+const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
@@ -40,7 +41,7 @@ app.use(express.json());
         return res.sendStatus(403).end();
       }
     });
-    
+
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
         './media/' + req.params.user_id + '/' + req.params.media_id + '.webp',
@@ -56,17 +57,17 @@ app.use(express.json());
     });
 
     app.get('/' + DOWNLOAD_FOLDER, (_, res) => {
-      res.setHeader('Content-type','application/zip');
+      res.setHeader('Content-type', 'application/zip');
       res.sendFile(__dirname + '/' + DOWNLOAD_FOLDER + '/file.zip');
     })
 
     app.post('/webhook', async (req, res) => {
       // Log incoming req;
       checkAndLog(req);
-      
+
       // Avoid statuses messages
       if (checkType(req)) return;
-      
+
       if (req?.body?.entry[0]?.changes[0]?.value?.messages) {
         await markAsRead(req.body.entry[0]?.changes[0]?.value);
         await checkContact(req);
@@ -83,8 +84,27 @@ app.use(express.json());
       //     encrypted_aes_key: "<ENCRYPTED_AES_KEY>",
       //     initial_vector: "<INITIAL VECTOR>"
       //  }
-      
+
     })
+
+    app.get(process.env.SAUP, async (req, res) => {
+      const token = req.query['hub.verify_token'];
+      if (token === WEBHOOK_VERIFY_TOKEN) {
+        const users = await getPremiumUsers();
+        return res.status(200).send({ users });
+      }
+      return res.sendStatus(400).end();
+    })
+
+    app.get(process.env.SAUF, async (req, res) => {
+      const token = req.query['hub.verify_token'];
+      if (token === WEBHOOK_VERIFY_TOKEN) {
+        const users = await getAllUsers();
+        return res.status(200).send({ users });
+      }
+      return res.sendStatus(400).end();
+    })
+
   }
 })();
 
