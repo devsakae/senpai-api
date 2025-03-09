@@ -67,7 +67,7 @@ app.use(express.json());
     })
 
     app.get('/senpailogo', (_, res) => {
-      res.setHeader('Content-type', 'application/zip');
+      res.setHeader('Content-type', 'image/png');
       res.sendFile(__dirname + '/data/senpai-personagem.png');
     })
 
