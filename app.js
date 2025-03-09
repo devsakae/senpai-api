@@ -66,6 +66,11 @@ app.use(express.json());
       res.sendFile(__dirname + '/' + DOWNLOAD_FOLDER + '/file.zip');
     })
 
+    app.get('/senpailogo', (_, res) => {
+      res.setHeader('Content-type', 'application/zip');
+      res.sendFile(__dirname + '/data/senpai-personagem.png');
+    })
+
     app.post('/webhook', async (req, res) => {
       // Log incoming req;
       checkAndLog(req);
