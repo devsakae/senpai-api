@@ -99,7 +99,7 @@ const soldOutCoupom = async (user) => {
       },
     },
   }).then((res) => console.log('informing user', user.name, 'that used a soldout coupon'))
-  .catch((err) => console.error('error informing user about soldout coupon', err.response?.data || err))
+    .catch((err) => console.error('error informing user about soldout coupon', err.response?.data || err))
 }
 
 module.exports = {

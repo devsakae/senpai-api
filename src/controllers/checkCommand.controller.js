@@ -3,8 +3,9 @@ const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates/sticker');
-const { getFeedbackResponse } = require('./flow.controller');
-const { getSuporte, getPremiumSuporte, flow_feedback } = require('./suporte.controller');
+const { getFeedbackResponse, flow_feedback, flow_getpremium } = require('./flow.controller');
+const { premiumPlans } = require('./premium.controller');
+const { getSuporte } = require('./suporte.controller');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -32,19 +33,20 @@ const checkCommand = async (user, req) => {
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
 
-    if (user_sent?.interactive?.type === 'nfm_reply')
-      return await getFeedbackResponse(req);
-
-    if (
-      user_sent?.text?.body === 'Quero ser Premium!' ||
-      interactiveType === 'getpremium'
-    ) {
-      console.log('Usuário quer ser premium');
-      return
-    }
-
+    // premium:start   
+    if (interactiveType === '.getpremium')
+      return await premiumPlans(req);
+    // premium:end
+      
+    // flows:start
     if (interactiveType === '.feedback')
       return await flow_feedback(req);
+
+    if (user_sent?.interactive?.type === 'nfm_reply') {
+      const responseJson = JSON.parse(user_sent?.interactive?.nfm_reply?.response_json);
+      if (responseJson.flow_token === 'questionario') return await getFeedbackResponse(req);
+    }
+    // flows:end
 
     if (user_sent?.text?.body === '.canal' || interactiveType === '.canal')
       return await canal(req);
