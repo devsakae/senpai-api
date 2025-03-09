@@ -76,7 +76,7 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
-    app.post('/premium', async (req, res) => {
+    app.post('/getpremium', async (req, res) => {
       const payload = req.body;
       console.log(payload);
       //   {
