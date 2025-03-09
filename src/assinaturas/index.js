@@ -19,6 +19,7 @@ const checkCupom = async (body, user) => {
   const validCoupom = dbCoupons.find((el) => el.code === userCoupon);
 
   if (validCoupom && validCoupom.left > 0) {
+    if (user.premium) return console.log('usuário premium', user.profile.name, 'tentou utilizar cupom de ativação premium')
     const today = new Date();
     return await senpaiMongoDb
       .collection('customers')
