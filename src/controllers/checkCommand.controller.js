@@ -27,7 +27,12 @@ const checkLastInteraction = async (user, req) => {
 const checkCommand = async (user, req) => {
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
-  if (user_sent?.type === 'text' || user_sent?.type === 'interactive' || user_sent?.type === 'button') {
+  
+  if (user_sent?.type === 'button'  && user_sent?.button?.payload === 'Possuo um Código') {
+    return await flow_premium_activation(req);
+  }
+
+  if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     let interactiveType =
       (user_sent?.type === 'interactive' &&
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
@@ -36,9 +41,6 @@ const checkCommand = async (user, req) => {
     // premium:start   
     if (interactiveType === '.getpremium' || user_sent?.text?.body === '.getpremium')
       return await premiumPlans(req);
-
-    if (interactiveType === 'button' && user_sent?.button?.payload === 'Possuo um Código')
-      return await flow_premium_activation(req);
     // premium:end
       
     // flows:start
