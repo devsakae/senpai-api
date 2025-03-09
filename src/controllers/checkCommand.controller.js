@@ -3,7 +3,7 @@ const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates/sticker');
-const { getFeedbackResponse, flow_feedback, flow_getpremium } = require('./flow.controller');
+const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
 const { premiumPlans } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 
@@ -36,6 +36,9 @@ const checkCommand = async (user, req) => {
     // premium:start   
     if (interactiveType === '.getpremium' || user_sent?.text?.body === '.getpremium')
       return await premiumPlans(req);
+
+    if (interactiveType === 'button' && user_sent?.button?.payload === 'Possuo um Código')
+      return await flow_premium_activation(req);
     // premium:end
       
     // flows:start
@@ -45,6 +48,7 @@ const checkCommand = async (user, req) => {
     if (user_sent?.interactive?.type === 'nfm_reply') {
       const responseJson = JSON.parse(user_sent?.interactive?.nfm_reply?.response_json);
       if (responseJson.flow_token === 'questionario') return await getFeedbackResponse(req);
+      if (responseJson.flow_token === 'premiumactivation') return await getPremiumActivationPayload(req);
     }
     // flows:end
 

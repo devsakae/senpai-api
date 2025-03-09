@@ -31,7 +31,14 @@ const premiumPlans = async (req) => {
         language: {
           code: 'pt_br',
         },
-        components: [],
+        components: [
+          {
+            type: "image",
+            image: {
+              link: "https://api.botdosenpai.com/senpailogo"
+            }
+          }
+        ],
       },
     },
   })
