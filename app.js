@@ -7,6 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
+const { premiumCheck } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
@@ -22,6 +23,10 @@ app.use(express.json());
   } catch (err) {
     return console.error(err.code);
   } finally {
+    
+    console.log('Agendando premiumcheck...')
+    premiumCheck();
+
     app.listen(PORT, () => {
       console.log('✔ API escutando na porta', PORT);
     });
