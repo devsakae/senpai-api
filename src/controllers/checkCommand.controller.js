@@ -34,7 +34,7 @@ const checkCommand = async (user, req) => {
       '';
 
     // premium:start   
-    if (interactiveType === '.getpremium')
+    if (interactiveType === '.getpremium' || user_sent?.text?.body === '.getpremium')
       return await premiumPlans(req);
     // premium:end
       
