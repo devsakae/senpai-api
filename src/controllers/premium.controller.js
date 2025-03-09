@@ -1,4 +1,6 @@
+const { default: axios } = require("axios");
 const { senpaiMongoDb } = require("../utils/connections")
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const getPremiumUsers = async () => {
   const premiumUsers = await senpaiMongoDb.collection('premium').find().toArray();
