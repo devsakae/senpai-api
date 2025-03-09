@@ -27,7 +27,7 @@ const checkLastInteraction = async (user, req) => {
 const checkCommand = async (user, req) => {
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
-  if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
+  if (user_sent?.type === 'text' || user_sent?.type === 'interactive' || user_sent?.type === 'button') {
     let interactiveType =
       (user_sent?.type === 'interactive' &&
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
