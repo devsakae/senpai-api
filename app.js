@@ -79,12 +79,11 @@ app.use(express.json());
     app.post('/getpremium', async (req, res) => {
       const payload = req.body;
       console.log(payload);
-      //   {
-      //     encrypted_flow_data: "<ENCRYPTED FLOW DATA>",
-      //     encrypted_aes_key: "<ENCRYPTED_AES_KEY>",
-      //     initial_vector: "<INITIAL VECTOR>"
-      //  }
+    })
 
+    app.post(process.env.MERCADOPAGO, async (req, res) => {
+      console.log(req);
+      res.sendStatus(200).end();
     })
 
     app.get(process.env.SAUP, async (req, res) => {
