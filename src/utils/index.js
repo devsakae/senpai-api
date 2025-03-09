@@ -12,8 +12,8 @@ const checkAndLog = (req) => {
       return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'reply with', payload?.messages[0]?.interactive[interactiveType]?.id || payload?.messages[0]?.id)
     }
     if (msg_type === 'button') {
-      let interactiveType = payload?.messages[0]?.type === 'interactive' && payload?.messages[0]?.interactive?.type;
-      return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'clicked on button', payload?.messages[0]?.interactive[interactiveType]?.payload);
+      let interactiveType = payload?.messages[0]?.type === 'button' && payload?.messages[0]?.button?.type;
+      return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'clicked on button', payload?.messages[0]?.button[interactiveType]?.payload);
     }
     else return console.error(wa_id, name, 'sent something different...')
   }
