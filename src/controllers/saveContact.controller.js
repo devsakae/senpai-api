@@ -6,12 +6,19 @@ const {
   checkLastInteraction,
   checkCommand,
 } = require('./checkCommand.controller');
+const { adminCommand } = require('./admin.controller');
+const { ADMIN_WAID } = process.env;
+const admin_group = ADMIN_WAID.split(',');
 
 const checkContact = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   if (!payload.contacts[0]) return console.error('no contact object @', payload);
   const contact = payload.contacts[0];
   const now = new Date();
+
+  if (admin_group.includes(contact.wa_id)) {
+    return await adminCommand(req);
+  }
 
   const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
     { wa_id: contact.wa_id },

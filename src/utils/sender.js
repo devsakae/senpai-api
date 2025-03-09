@@ -35,7 +35,7 @@ const sendAdmin = async (payload) => {
       },
     },
   })
-    .then((response) => console.log('send admin', response.statusText))
+    .then((response) => console.log('send admin', response?.statusText))
     .catch((error) =>
       console.error('send admin/error', error.response?.data || error),
     );

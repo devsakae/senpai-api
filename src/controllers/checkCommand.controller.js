@@ -100,8 +100,8 @@ const checkCommand = async (user, req) => {
   }
 
   if (user_sent?.type === 'image' || user_sent?.type === 'video') {
-    const userLastImageSentDatetime = new Date(user.last_time.image);
-    const userLastVideoSentDatetime = new Date(user.last_time.video);
+    const userLastImageSentDatetime = new Date(user?.last_time.image);
+    const userLastVideoSentDatetime = new Date(user?.last_time.video);
     if (
       ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000
       || today.getTime() - userLastVideoSentDatetime.getTime() < 86400000)
