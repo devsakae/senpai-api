@@ -1,9 +1,9 @@
-import axios from "axios";
-import {
+const { default: axios } = require('axios');
+const {
   search,
   OrganicResult,
   DictionaryResult,
-} from "google-sr";
+} = require("google-sr");
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
 const googleThis = async (req) => {

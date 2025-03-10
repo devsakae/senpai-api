@@ -6,6 +6,7 @@ const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
 const { premiumPlans } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
+const { googleThis } = require('../premium/google');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
