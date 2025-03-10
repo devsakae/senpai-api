@@ -40,8 +40,8 @@ const rootMenu = async (contact) => {
             {
               type: 'reply',
               reply: {
-                id: '.sobre',
-                title: '.sobre',
+                id: '.getpremium',
+                title: 'Quero ser Premium!',
               },
             },
           ],
@@ -76,7 +76,7 @@ const completeMenu = async (req) => {
         type: 'list',
         header: {
           type: 'text',
-          text: '🌟 Bem-vindo ao Premium! 🌟',
+          text: '🌟 Menu Premium 🌟',
         },
         body: {
           text: message_body,
@@ -93,12 +93,7 @@ const completeMenu = async (req) => {
                 {
                   id: '.sticker',
                   title: '.sticker',
-                  description: 'Premium tem figurinhas ilimitadas',
-                },
-                {
-                  id: '.remover',
-                  title: '.Remover',
-                  description: 'Remova o fundo branco da sua figurinha',
+                  description: 'Aprenda a fazer figurinhas!',
                 },
                 {
                   id: '.privacy',
@@ -111,27 +106,12 @@ const completeMenu = async (req) => {
               title: 'Exclusivo para PREMIUM!',
               rows: [
                 {
-                  id: '.premium001',
-                  title: '.stickerai',
-                  description: 'Que tal \".stickerai Gatinho lambendo patas\"?',
+                  id: '.google',
+                  title: '.google [pesquisa]',
+                  description: 'Eu faço uma pesquisa no Google pra você',
                 },
                 {
-                  id: 'premium002',
-                  title: '.IA',
-                  description: 'Para ajudar em tudo o que você precisar',
-                },
-                {
-                  id: '.premium003',
-                  title: '.lembrete',
-                  description: 'Te ajudo a não esquecer das coisas...',
-                },
-                {
-                  id: '.premium004',
-                  title: '.clima',
-                  description: 'Exemplo: .clima Florianópolis SC',
-                },
-                {
-                  id: '.premium005',
+                  id: '.suporte',
                   title: '.Suporte',
                   description: 'Suporte dedicado, sempre pronto para ajudar',
                 },

@@ -39,7 +39,9 @@ const checkCommand = async (user, req) => {
       '';
 
     // premium:start   
-    if (interactiveType === '.getpremium' || user_sent?.text?.body === '.getpremium')
+    if (interactiveType === '.getpremium'
+        || user_sent?.text?.body === '.getpremium'
+        || user_sent?.text?.body === 'Quero ser Premium!')
       return await premiumPlans(req);
     // premium:end
       
@@ -89,6 +91,10 @@ const checkCommand = async (user, req) => {
 
     if (user_sent?.text?.body === '.privacy' || interactiveType === '.privacy')
       return await privacy(req);
+
+    if (user_sent?.text?.body.startsWith('.google')) {
+      return await googleThis(req);
+    }
 
     if (
       user_sent?.text?.body.startsWith('.') ||
