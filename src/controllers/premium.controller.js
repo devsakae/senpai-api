@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const { senpaiMongoDb } = require("../utils/connections");
 const { sendAdmin } = require("../utils/sender");
-const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN,  } = process.env;
 
 const getPremiumUsers = async () => {
   const premiumUsers = await senpaiMongoDb.collection('premium').find().toArray();
@@ -53,11 +53,11 @@ const premiumPlans = async (req) => {
 const manualPremiumActivation = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const commands = payload?.messages[0]?.text?.body.split(' ');
-  if (commands.length !== 3) return sendAdmin('Erro: Comando enviado não foi corretamente especificado.')
+  if (commands.length !== 4 || (commands[2] !== 'premium' && commands[2] !== 'basico')) return sendAdmin('Erro: Utilize o comando', ADMIN_CMD_ADDPREMIUM, '[wa_id] [premium/basico] [dias], como no exemplo: ', ADMIN_CMD_ADDPREMIUM, '554899787078 basico 30')
   const today = new Date();
   const expirationDate = today;
-  expirationDate.setDate(today.getDate() + commands[2])
-  await senpaiMongoDb
+  expirationDate.setDate(today.getDate() + commands[3])
+  const newPremiumUser = await senpaiMongoDb
         .collection('customers')
         .findOneAndUpdate({
           wa_id: commands[1]
@@ -65,10 +65,18 @@ const manualPremiumActivation = async (req) => {
         {
           $set: {
             premium: true,
-            start: today,
-            end: expirationDate
+            subscription: {
+              type: commands[2],
+              start: today,
+              end: expirationDate
+            }
           }
         })
+  if (!newPremiumUser) return sendAdmin('Erro: Usuário não existe no banco de dados. Verificar wa_id.');
+  await senpaiMongoDb.collection('premium').insertOne(newPremiumUser)
+    .then(() => sendAdmin('Conta premium concedida!'))
+    .catch((err) => console.error('Erro salvando usuário premium na collection premium'));
+  return;
 }
 
 module.exports = {
