@@ -1,7 +1,6 @@
 const { default: axios } = require('axios');
 const { randomizeThis, msg_tutorials } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
-// const { dispatchAxios } = require("../utils/sender");
 
 const rootMenu = async (contact) => {
   await axios({

@@ -1,4 +1,5 @@
 const { ADMIN_CMD_ADDPREMIUM } = process.env;
+const { checkCommand } = require('./checkCommand.controller');
 const { manualPremiumActivation } = require('./premium.controller')
 
 const adminCommand = async (req) => {
@@ -6,6 +7,7 @@ const adminCommand = async (req) => {
   if (commands.startsWith(ADMIN_CMD_ADDPREMIUM)) {
     return await manualPremiumActivation(req);
   }
+  return await checkCommand({ premium: true }, req);
 }
 
 module.exports = {
