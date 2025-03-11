@@ -3,6 +3,7 @@ const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
+const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
@@ -99,6 +100,14 @@ const dynamicSticker = async (req) => {
     .fps(10)
     .noAudio()
     .on('end', async () => {
+      const sticker = new Sticker(filePath, {
+        pack: "🇯🇵 Acesse",
+        author: "BotDoSenpai.com.br",
+        type: StickerTypes.FULL,
+        quality: 100,
+      });
+
+      await sticker.toFile(filePath)
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
         method: 'POST',
@@ -126,7 +135,7 @@ const dynamicSticker = async (req) => {
         })
     })
     .run()
-    return console.info('sticker animado enviado!')
+  return console.info('sticker animado enviado!')
 }
 
 const freeUserStickerLimit = async (req) => {
