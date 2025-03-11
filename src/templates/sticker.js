@@ -51,6 +51,14 @@ const staticSticker = async (req) => {
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .toFile(filePath);
+  const sticker = new Sticker(filePath, {
+    pack: "🇯🇵 Acesse",
+    author: "BotDoSenpai.com.br",
+    type: StickerTypes.FULL,
+    quality: 100,
+  });
+
+  await sticker.toFile(filePath)
 
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
   await axios({
