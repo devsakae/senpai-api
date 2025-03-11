@@ -1,7 +1,8 @@
 const { default: axios } = require("axios");
 const { senpaiMongoDb } = require("../utils/connections");
 const { sendAdmin } = require("../utils/sender");
-const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN,  } = process.env;
+const { msg_limitsticker, msg_premium_wannabe, randomizeThis } = require("../templates/info");
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, } = process.env;
 
 const getPremiumUsers = async () => {
   const premiumUsers = await senpaiMongoDb.collection('premium').find().toArray();
@@ -11,6 +12,51 @@ const getPremiumUsers = async () => {
 const getAllUsers = async () => {
   const allUsers = await senpaiMongoDb.collection('customers').find().toArray();
   return allUsers;
+}
+
+const limitedStickerPremiumPlan = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe)  + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000)
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'interactive',
+      interactive: {
+        type: 'button',
+        header: {
+          type: 'text',
+          text: 'Oh-oh!',
+        },
+        body: {
+          text: response,
+        },
+        action: {
+          buttons: [
+            {
+              type: 'reply',
+              reply: {
+                id: '.getpremium',
+                title: 'Quero ser Premium!',
+              },
+            },
+          ],
+        },
+      },
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'Erro ao enviar' });
+    })
+    .catch((err) => console.error(err.code));
 }
 
 const premiumPlans = async (req) => {
@@ -58,20 +104,20 @@ const manualPremiumActivation = async (req) => {
   const expirationDate = today;
   expirationDate.setDate(today.getDate() + commands[3])
   const newPremiumUser = await senpaiMongoDb
-        .collection('customers')
-        .findOneAndUpdate({
-          wa_id: commands[1]
-        },
-        {
-          $set: {
-            premium: true,
-            subscription: {
-              type: commands[2],
-              start: today,
-              end: expirationDate
-            }
+    .collection('customers')
+    .findOneAndUpdate({
+      wa_id: commands[1]
+    },
+      {
+        $set: {
+          premium: true,
+          subscription: {
+            type: commands[2],
+            start: today,
+            end: expirationDate
           }
-        })
+        }
+      })
   if (!newPremiumUser) return sendAdmin('Erro: Usuário não existe no banco de dados. Verificar wa_id.');
   await senpaiMongoDb.collection('premium').insertOne(newPremiumUser)
     .then(() => sendAdmin('Conta premium concedida!'))
@@ -82,6 +128,7 @@ const manualPremiumActivation = async (req) => {
 module.exports = {
   getPremiumUsers,
   getAllUsers,
+  limitedStickerPremiumPlan,
   premiumPlans,
   manualPremiumActivation,
 }
