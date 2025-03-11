@@ -3,6 +3,9 @@ const { checkCommand } = require('./checkCommand.controller');
 const { manualPremiumActivation } = require('./premium.controller')
 
 const adminCommand = async (req) => {
+  console.log(commands);
+  console.log(commands.startsWith(ADMIN_CMD_ADDPREMIUM));
+  return;
   const commands = req.body.entry[0]?.changes[0]?.value?.messages[0]?.text?.body
   if (commands.startsWith(ADMIN_CMD_ADDPREMIUM)) {
     return await manualPremiumActivation(req);
