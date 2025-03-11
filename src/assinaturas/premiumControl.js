@@ -9,7 +9,7 @@ const organizePremium = async () => {
     .find({ 'subscription.end': { $lt: calculateDate(today, 1) } })
     .toArray();
 
-  await Promise(endingPremiums.map(async (ep) => {
+  await Promise.all(endingPremiums.map(async (ep) => {
     console.log('sending premium message expiration to', ep.wa_id, ep.wa_name);
     await axios({
       method: 'POST',

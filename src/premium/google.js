@@ -9,6 +9,7 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 const googleThis = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const searchStr = payload?.messages[0]?.text?.body.split(".google ")[1];
+  if (searchStr.length === 0) return
   const queryResult = await search({
     query: searchStr,
     resultTypes: [OrganicResult, DictionaryResult],
