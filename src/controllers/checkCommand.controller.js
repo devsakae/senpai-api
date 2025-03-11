@@ -26,8 +26,10 @@ const checkLastInteraction = async (user, req) => {
 };
 
 const checkCommand = async (user, req) => {
+  
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
+  if (user.name.includes("Rodrigo Sakae")) console.log(payload);
   
   if (user_sent?.type === 'button'  && user_sent?.button?.payload === 'Possuo um Código') {
     return await flow_premium_activation(req);
