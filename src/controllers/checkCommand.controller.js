@@ -4,7 +4,7 @@ const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
-const { premiumPlans } = require('./premium.controller');
+const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 
@@ -115,7 +115,7 @@ const checkCommand = async (user, req) => {
       && !user.premium)
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
-      return await limitedStickers(req);
+      return await limitedStickerPremiumPlan(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
