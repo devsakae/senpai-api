@@ -17,6 +17,7 @@ const googleThis = async (req) => {
         safe: "active",
         gl: "br",
       },
+      responseEncoding: "latin1"
     },
   });
   const result = queryResult[Math.floor(Math.random() * 3)];
