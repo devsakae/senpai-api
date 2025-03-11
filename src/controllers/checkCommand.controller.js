@@ -29,7 +29,7 @@ const checkCommand = async (user, req) => {
   
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
-  if (user.name.includes("Rodrigo Sakae")) console.log(user_sent);
+  if (user?.name?.includes("Rodrigo Sakae")) console.log(user_sent);
   
   if (user_sent?.type === 'button'  && user_sent?.button?.payload === 'Possuo um Código') {
     return await flow_premium_activation(req);
@@ -41,10 +41,12 @@ const checkCommand = async (user, req) => {
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
 
+    console.log("interactiveType:", interactiveType);
+
     // premium:start   
-    if (interactiveType === '.getpremium'
-        || user_sent?.text?.body === '.getpremium'
-        || user_sent?.text?.body === 'Quero ser Premium!')
+    if (interactiveType.startsWith('.getpremium')
+        || user_sent?.text?.body.startsWith('.getpremium')
+        || user_sent?.text?.body.includes('Quero ser Premium!'))
       return await premiumPlans(req);
     // premium:end
       
