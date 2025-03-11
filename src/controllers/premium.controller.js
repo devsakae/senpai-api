@@ -16,7 +16,8 @@ const getAllUsers = async () => {
 
 const limitedStickerPremiumPlan = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000)
+  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000).toISOString();
+  console.log(response);
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
