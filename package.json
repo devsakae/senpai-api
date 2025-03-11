@@ -6,7 +6,8 @@
     "google-sr": "^5.0.0",
     "mongodb": "^6.13.0",
     "node-cron": "^3.0.3",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "wa-sticker-formatter": "^4.4.4"
   },
   "scripts": {
     "start": "node --env-file=.env app.js",
