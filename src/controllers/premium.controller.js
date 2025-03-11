@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const limitedStickerPremiumPlan = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe)  + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000)
+  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000)
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -80,9 +80,9 @@ const premiumPlans = async (req) => {
         },
         components: [
           {
-            type: "image",
+            type: 'image',
             image: {
-              link: "https://api.botdosenpai.com/senpailogo"
+              link: 'https://api.botdosenpai.com/senpailogo'
             }
           }
         ],
@@ -93,7 +93,7 @@ const premiumPlans = async (req) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar' });
     })
-    .catch((err) => console.error(err.code));
+    .catch((err) => console.error('Erro enviando premiumPlans', err?.data || err));
 }
 
 const manualPremiumActivation = async (req) => {
