@@ -4,16 +4,15 @@ const { DOTY_APIKEY } = process.env
 const getDoty = async () => {
   return await axios({
     method: 'GET',
-    url: 'https://www.daysoftheyear.com/api/v1/today/',
+    url: 'https://www.daysoftheyear.com/api/v1/today/?timezone_offset=-3',
     headers: {
-      'X-Api-Key': DOTY_APIKEY,
-      'Content-Type': 'application/json',
+      'X-Api-Key': DOTY_APIKEY
     },
   }).then((res) => {
     if (res.code === 200) return res.data;
     else throw new Error({ data: 'Erro ao buscar Days of the Year' })
   }).catch((err) => {
-    console.error('Erro getting DOTY', err.data || err)
+    console.error('Erro getting DOTY', err)
     return err.data || err;
   })
 }
