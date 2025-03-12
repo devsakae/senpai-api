@@ -19,7 +19,8 @@ const getDoty = async () => {
 
 const bomDia = async () => {
   const doty = await getDoty();
-  console.log(doty);
+  const filteredDoty = doty.filter((days) => days.type === 'day' && days.next_date === new Date().toISOString().substring(0,10))
+  console.log(filteredDoty);
 }
 
 module.exports = {
