@@ -19,7 +19,7 @@ const getDoty = async () => {
 
 const bomDia = async () => {
   const doty = await getDoty();
-  const filteredDoty = doty.filter((days) => days.type === 'day' && days.next_date.substring(4,10) === new Date().toISOString().substring(4,10))
+  const filteredDoty = doty.filter((days) => days.type === 'day')
   console.log(filteredDoty);
 }
 
