@@ -9,7 +9,7 @@ const getDoty = async () => {
       'X-Api-Key': DOTY_APIKEY
     },
   }).then((res) => {
-    if (res.code === 200) return res.data;
+    if (res.data.code === 200) return res.data.data;
     else throw new Error({ data: 'Erro ao buscar Days of the Year' })
   }).catch((err) => {
     console.error('Erro getting DOTY', err)
