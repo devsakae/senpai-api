@@ -39,6 +39,8 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
+  const userName = payload?.contacts[0]?.profile?.name;
+  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.image?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
@@ -52,8 +54,8 @@ const staticSticker = async (req) => {
     })
     .toFile(filePath);
   const sticker = new Sticker(filePath, {
-    pack: "🇯🇵 Acesse",
-    author: "BotDoSenpai.com.br",
+    pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+    author: "Senpai Bot",
     type: StickerTypes.FULL,
     quality: 100,
   });
@@ -90,6 +92,8 @@ const staticSticker = async (req) => {
 const dynamicSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
+  const userName = payload?.contacts[0]?.profile?.name;
+  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, "base64");
@@ -109,8 +113,8 @@ const dynamicSticker = async (req) => {
     .noAudio()
     .on('end', async () => {
       const sticker = new Sticker(filePath, {
-        pack: "🇯🇵 Acesse",
-        author: "BotDoSenpai.com.br",
+        pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+        author: "Senpai Bot",
         type: StickerTypes.FULL,
         quality: 100,
       });
