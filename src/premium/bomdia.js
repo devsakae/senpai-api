@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const { randomizeThis, msg_bom_dia } = require('../templates/info');
+const { googleTranslate } = require('../utils/googletranslate');
 const { DOTY_APIKEY } = process.env
 
 const bomDia = async () => {
