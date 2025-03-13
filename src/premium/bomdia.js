@@ -1,7 +1,7 @@
 const { default: axios } = require('axios');
 const { randomizeThis, msg_bom_dia } = require('../templates/info');
 const { googleTranslate } = require('../utils/googletranslate');
-const { DOTY_APIKEY } = process.env
+const { DOTY_APIKEY, VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env
 
 const bomDia = async () => {
   const today = new Date();
@@ -45,7 +45,31 @@ const bomDia = async () => {
   const msg_aniversariante = await getWishiy();
 
   const msg_final = msg_bomdia + " " + msg_positividade + "\n\n" + doty + "\n\n" + msg_aniversariante;
-  return msg_final;
+
+  /* return msg_final; */
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: process.env.BOT_ADMIN_WAID,
+      type: 'text',
+      text: {
+        preview_url: false,
+        body: msg_final,
+      },
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'Erro ao enviar' });
+    })
+    .catch(err => console.error(err.response?.data || err));
 }
 
 const getDoty = async () => {
@@ -89,8 +113,8 @@ const getWishiy = async () => {
   const wishiyes = await allWishiyes();
   const wishiy = randomizeThis(wishiyes);
   const jobTranslated = await googleTranslate({ query: wishiy?.occupation, target: 'pt-br', source: 'en' }) || "pessoa";
-  const g1 = wishiy?.gender === 'male' ? 'e' : 'a' || 'e'; 
-  const g2 = wishiy?.gender === 'male' ? 'o' : 'a' || 'o'; 
+  const g1 = wishiy?.gender === 'male' ? 'e' : 'a' || 'e';
+  const g2 = wishiy?.gender === 'male' ? 'o' : 'a' || 'o';
   const hojeAniversario = [
     `???????? Quem apaga as velinhas hoje é ${wishiy.name} (${jobTranslated}) ???????`,
     `Aniversário de nascimento de ${wishiy.name}, ${jobTranslated}. Fica aí nossa lembrança: ??`,
