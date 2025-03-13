@@ -24,9 +24,9 @@ app.use(express.json());
     return console.error(err.code);
   } finally {
     
-    console.log('Agendando premiumcheck...')
+    console.log('✔ Agendando premiumcheck...')
     premiumCheck();
-    console.log('Agendando callBomDia...');
+    console.log('✔ Agendando callBomDia...');
     callBomDia();
 
     app.listen(PORT, () => {
