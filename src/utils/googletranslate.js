@@ -9,7 +9,7 @@ const googleTranslate = async (params) => {
       target: params.target,
       q: params.query,
     }
-  }).then((res) => res.data)
+  }).then((res) => res.data?.data?.translations[0]?.translatedText)
     .catch((err) => err.data);
 }
 
