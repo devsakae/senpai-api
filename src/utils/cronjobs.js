@@ -17,5 +17,4 @@ const premiumCheck = () => {
 
 module.exports = {
   premiumCheck,
-  callBomDia,
 }
