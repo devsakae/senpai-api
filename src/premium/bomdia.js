@@ -73,18 +73,21 @@ const dayOfTheYear = async () => {
   return translated;
 }
 
-const getWishiy = async () => {
-  const allWishiyes = await axios({
+const allWishiyes = async () => {
+  return await axios({
     method: 'POST',
     url: 'https://wishiy.com/api/today',
     data: {
       limit: 7,
       response: "json"
     }
-  }).then((res) => res)
+  }).then((res) => res.data)
     .catch((err) => console.error(err.data || err));
-  
-  const wishiy = randomizeThis(allWishiyes);
+}
+
+const getWishiy = async () => {
+  const wishiyes = await allWishiyes();
+  const wishiy = randomizeThis(wishiyes);
   const jobTranslated = await googleTranslate({ query: wishiy?.occupation, target: 'pt-br', source: 'en' }) || "pessoa";
   const g1 = wishiy?.gender === 'male' ? 'e' : 'a' || 'e'; 
   const g2 = wishiy?.gender === 'male' ? 'o' : 'a' || 'o'; 
