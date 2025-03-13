@@ -8,12 +8,12 @@ const premiumCheck = () => {
   });
 }
 
-const callBomDia = () => {
+/* const callBomDia = () => {
   cron.schedule('20 7 * * *', () => {
     console.info('(CRONJOB) calling bom dia...')
 
   });
-}
+} */
 
 module.exports = {
   premiumCheck,

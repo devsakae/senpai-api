@@ -9,7 +9,10 @@ const adminCommand = async (req) => {
   if (commands.startsWith(ADMIN_CMD_ADDPREMIUM)) {
     return await manualPremiumActivation(req);
   }
-  if (commands.startsWith('.bomdia')) return await bomDia();
+  if (commands.startsWith('.bomdia')) {
+    const bomDiaRes = await bomDia();
+    console.log(bomDiaRes);
+  }
   return await checkCommand({ premium: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate } }, req);
 }
 
