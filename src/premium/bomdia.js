@@ -85,9 +85,9 @@ const getWishiy = async () => {
     .catch((err) => console.error(err.data || err));
   
   const wishiy = randomizeThis(allWishiyes);
-  const jobTranslated = await googleTranslate({ query: wishiy.occupation, target: 'pt-br', source: 'en' })
-  const g1 = wishiy.gender === 'male' ? 'e' : 'a'; 
-  const g2 = wishiy.gender === 'male' ? 'o' : 'a'; 
+  const jobTranslated = await googleTranslate({ query: wishiy?.occupation, target: 'pt-br', source: 'en' }) || "pessoa";
+  const g1 = wishiy?.gender === 'male' ? 'e' : 'a' || 'e'; 
+  const g2 = wishiy?.gender === 'male' ? 'o' : 'a' || 'o'; 
   const hojeAniversario = [
     `???????? Quem apaga as velinhas hoje é ${wishiy.name} (${jobTranslated}) ???????`,
     `Aniversário de nascimento de ${wishiy.name}, ${jobTranslated}. Fica aí nossa lembrança: ??`,
