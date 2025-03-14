@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
 const { sendAdmin } = require("../utils/sender");
+const { senpaiMongoDb } = require("../utils/connections");
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const flow_feedback = async (req) => {
@@ -59,7 +60,6 @@ const getFeedbackResponse = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   let response = 'Flow *' + payload?.flow_token + '* enviado por ' + contact.profile.name + ' (' + contact.wa_id + '):\n\n';
   Object.entries(payload).forEach((k) => response = response + '\n- ' + k[0] + ': ' + k[1]);
-  console.log(response);
   await sendAdmin(response);
 }
 
@@ -117,8 +117,18 @@ const getPremiumActivationPayload = async (req) => {
   const contact = req.body.entry[0]?.changes[0]?.value?.contacts[0];
   let response = 'Flow *' + payload?.flow_token + '* enviado por ' + contact.profile.name + ' (' + contact.wa_id + '):\n\n';
   Object.entries(payload).forEach((k) => response = response + '\n- ' + k[0] + ': ' + k[1]);
-  console.log(response);
   await sendAdmin(response);
+  if (payload?.receber_newsletter.startsWith('0')) {
+    await senpaiMongoDb.collection('customers').findOneAndUpdate(
+      { wa_id: contact.wa_id },
+      { 
+        $set: {
+          "subscription.newsletter": true
+        }
+      }
+    )
+  }
+  return console.info("*** Premium activation!", response);
 }
 
 module.exports = {
