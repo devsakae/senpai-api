@@ -3,7 +3,7 @@ const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
-const { Sticker, StickerTypes } = require('wa-sticker-formatter');
+// const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
