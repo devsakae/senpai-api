@@ -1,7 +1,8 @@
 const checkAndLog = (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  if (payload?.statuses) return console.log(payload?.statuses[0]?.status, 'status for', payload?.statuses[0]?.id);
+  if (payload?.statuses) return;;
   if (payload?.messages) {
+    if (payload?.contacts.length === 0) return console.error('erro de contato:', payload);
     const { profile: { name }, wa_id } = payload?.contacts[0];
     const msg_type = payload?.messages[0]?.type || 'unknown';
     if (msg_type === 'text') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent text:', payload?.messages[0]?.text?.body)
