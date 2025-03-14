@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "axios": "^1.7.9",
     "express": "^4.21.2",
     "fluent-ffmpeg": "^2.1.3",
