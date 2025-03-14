@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const limitedStickerPremiumPlan = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000).toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" });
+  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPrÃ³ximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000).toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" });
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -87,7 +87,7 @@ const premiumPlans = async (req) => {
                 image: {
                   link: 'https://api.botdosenpai.com/senpailogo'
                 }
-              }              
+              }
             ]
           }
         ],
@@ -110,9 +110,8 @@ const manualPremiumActivation = async (req) => {
   expirationDate.setDate(today.getDate() + commands[3])
   const newPremiumUser = await senpaiMongoDb
     .collection('customers')
-    .findOneAndUpdate({
-      wa_id: commands[1]
-    },
+    .findOneAndUpdate(
+      { wa_id: commands[1] },
       {
         $set: {
           premium: true,
@@ -124,7 +123,15 @@ const manualPremiumActivation = async (req) => {
         }
       })
   if (!newPremiumUser) return sendAdmin('Erro: Usuário não existe no banco de dados. Verificar wa_id.');
-  await senpaiMongoDb.collection('premium').insertOne(newPremiumUser)
+  await senpaiMongoDb.collection('premium').insertOne({
+    ...newPremiumUser,
+    premium: true,
+    subscription: {
+      type: commands[2],
+      start: today,
+      end: expirationDate
+    }
+  })
     .then(() => sendAdmin('Conta premium concedida!'))
     .catch((err) => console.error('Erro salvando usuário premium na collection premium'));
   return;
