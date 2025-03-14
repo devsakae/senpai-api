@@ -26,16 +26,16 @@ const bomDia = async () => {
     `Olá! Hoje é ${hojeYear}.`,
     `Bom dia. Hoje é ${hojeYear}.`,
     `Preparado para encarar esta ${hojeWeekday}?`,
-    `Chegamos na ${hojeYear}`,
+    `Chegamos na ${hojeYear}...`,
     `Pronto para enfrentar esta ${hojeWeekday}?`,
     `Segure minha mão e vamos juntos encarar esta ${hojeMonth}.`,
-    `Marque no seu calendário! Hoje é ${hojeYear}`,
+    `Marque no seu calendário! Hoje é ${hojeYear}.`,
     `Nessa ${hojeWeekday}, desejamos o melhor pra você!`,
-    `Hoje é dia do abraço!! (mentira, hoje é ${hojeWeekday})`,
+    `Hoje é dia do abraço!! (mentira, hoje é ${hojeWeekday}).`,
     `Pois olha ela, a ${hojeMonth}!`,
     `Quem diria que chegaríamos inteiros na ${hojeYear}?`,
-    `Muito mais que bom dia para esta ${hojeYear}`,
-    `Aquele nosso bom dia especial pra você nessa ${hojeMonth}`,
+    `Muito mais que bom dia para esta ${hojeYear}.`,
+    `Aquele nosso bom dia especial pra você nessa ${hojeMonth}.`,
     `Desejamos tudo de bom pra você nessa ${hojeMonth}.`
   ];
 
@@ -116,16 +116,16 @@ const getWishiy = async () => {
   const g1 = wishiy?.gender === 'male' ? 'e' : 'a' || 'e';
   const g2 = wishiy?.gender === 'male' ? 'o' : 'a' || 'o';
   const hojeAniversario = [
-    `???????? Quem apaga as velinhas hoje é ${wishiy.name} (${jobTranslated}) ???????`,
-    `Aniversário de nascimento de ${wishiy.name}, ${jobTranslated}. Fica aí nossa lembrança: ??`,
-    `?????? Mais um ano de vida para ${g2} ${jobTranslated} ${wishiy.name}! Parabéns pra você, nessa data querida!`,
+    `?????? Quem apaga as velinhas hoje é ${wishiy.name} (${jobTranslated}) ??????`,
+    `Aniversário de nascimento de ${wishiy.name}, ${jobTranslated}. Fica aí nossa lembrança: ??????`,
+    `?? Mais um ano de vida para ${g2} ${jobTranslated} ${wishiy.name}! Parabéns pra você, nessa data querida!`,
     `É um dia especial para ${wishiy.name}, excelente ${jobTranslated} que comemora mais um ano de vida hoje.`,
-    `Os parabéns de hoje vão para ${wishiy.name}, ${jobTranslated} que apaga as velinhas por mais um ano.`,
-    `${wishiy.name}, renomad${g2} ${jobTranslated} faz aniversário hoje. ????? Conhece mais alguém que faz?`,
-    `Lembrança especial para ${g2} maior ${jobTranslated} chamad${g2} ${wishiy.name}, que faz aniversário hoje.`,
+    `Os parabéns de hoje vão para ${wishiy.name}, ${jobTranslated} que apaga as velinhas ?????? por mais um ano.`,
+    `${wishiy.name}, renomad${g2} ${jobTranslated} faz aniversário hoje. ?????? Conhece mais alguém que faz?`,
+    `Lembrança especial para ${g2} maior ${jobTranslated} chamad${g2} ${wishiy.name}, que faz aniversário hoje. ??????`,
     `Parabéns pra você, nessa data querida! Muitas felicidades, muitos anos de vida! ${g2.toUpperCase()} ${wishiy.name} faz anos, que el${g1} seja feliz! Parabéns para ${g2} ${wishiy.name}, que el${g1} seja feliz!`,
-    `?????????? É dia de festa para ${g2} memorável ${jobTranslated} *${wishiy.name}*, que comemora mais uma volta ao sol hoje!`,
-    `Sabia que ${g2} ${jobTranslated} ${g1} comemora aniversário hoje? Os nossos parabéns especiais a el${1} e a todos que ficam mais velhos hoje.`
+    `?????? É dia de festa para ${g2} memorável ${jobTranslated} *${wishiy.name}*, que comemora mais uma volta ao sol hoje!`,
+    `Sabia que ${g2} ${jobTranslated} ${g1} comemora aniversário hoje? ?????? Os nossos parabéns especiais a el${1} e a todos que ficam mais velhos hoje.`
   ]
   return randomizeThis(hojeAniversario);
 }
