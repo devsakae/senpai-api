@@ -3,6 +3,7 @@ const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
+const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
@@ -38,6 +39,8 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
+  const userName = payload?.contacts[0]?.profile?.name;
+  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.image?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
@@ -50,6 +53,14 @@ const staticSticker = async (req) => {
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .toFile(filePath);
+  const sticker = new Sticker(filePath, {
+    pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+    author: "Senpai Bot",
+    type: StickerTypes.FULL,
+    quality: 100,
+  });
+
+  await sticker.toFile(filePath)
 
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
   await axios({
@@ -81,6 +92,8 @@ const staticSticker = async (req) => {
 const dynamicSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
+  const userName = payload?.contacts[0]?.profile?.name;
+  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, "base64");
@@ -99,6 +112,14 @@ const dynamicSticker = async (req) => {
     .fps(10)
     .noAudio()
     .on('end', async () => {
+      const sticker = new Sticker(filePath, {
+        pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+        author: "Senpai Bot",
+        type: StickerTypes.FULL,
+        quality: 100,
+      });
+
+      await sticker.toFile(filePath)
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
         method: 'POST',
@@ -126,7 +147,7 @@ const dynamicSticker = async (req) => {
         })
     })
     .run()
-    return console.info('sticker animado enviado!')
+  return console.info('sticker animado enviado!')
 }
 
 const freeUserStickerLimit = async (req) => {
