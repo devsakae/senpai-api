@@ -2,7 +2,7 @@ const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
 const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
-const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates/sticker');
+const { staticSticker, stickerTutorial, dynamicSticker, freeUserStickerLimit } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
 const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
@@ -116,7 +116,7 @@ const checkCommand = async (user, req) => {
       && !user.premium)
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
-      return await limitedStickerPremiumPlan(req);
+      return await freeUserStickerLimit(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
