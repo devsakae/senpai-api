@@ -53,14 +53,15 @@ const staticSticker = async (req) => {
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .toFile(filePath);
-  const sticker = new Sticker(filePath, {
-    pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
-    author: "Senpai Bot",
-    type: StickerTypes.FULL,
-    quality: 100,
-  });
 
-  await sticker.toFile(filePath)
+  // const sticker = new Sticker(filePath, {
+  //   pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+  //   author: "Senpai Bot",
+  //   type: StickerTypes.FULL,
+  //   quality: 100,
+  // });
+
+  // await sticker.toFile(filePath)
 
   const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
   await axios({
@@ -112,14 +113,14 @@ const dynamicSticker = async (req) => {
     .fps(10)
     .noAudio()
     .on('end', async () => {
-      const sticker = new Sticker(filePath, {
-        pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
-        author: "Senpai Bot",
-        type: StickerTypes.FULL,
-        quality: 100,
-      });
+      // const sticker = new Sticker(filePath, {
+      //   pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
+      //   author: "Senpai Bot",
+      //   type: StickerTypes.FULL,
+      //   quality: 100,
+      // });
 
-      await sticker.toFile(filePath)
+      // await sticker.toFile(filePath)
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
         method: 'POST',
