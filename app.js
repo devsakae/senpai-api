@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
-const { premiumCheck } = require('./src/utils/cronjobs');
+const { premiumCheck, callBomDia } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 
 const app = express();
@@ -24,8 +24,10 @@ app.use(express.json());
     return console.error(err.code);
   } finally {
     
-    console.log('Agendando premiumcheck...')
+    console.log('✔ Agendando premiumcheck...')
     premiumCheck();
+    console.log('✔ Agendando callBomDia...');
+    callBomDia();
 
     app.listen(PORT, () => {
       console.log('✔ API escutando na porta', PORT);
@@ -86,33 +88,33 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
-    app.post('/getpremium', async (req, res) => {
-      const payload = req.body;
-      console.log(payload);
-    })
+    // app.post('/getpremium', async (req, res) => {
+    //   const payload = req.body;
+    //   console.log(payload);
+    // })
 
-    app.post(process.env.MERCADOPAGO, async (req, res) => {
-      console.log(req);
-      res.sendStatus(200).end();
-    })
+    // app.post(process.env.MERCADOPAGO, async (req, res) => {
+    //   console.log(req);
+    //   res.sendStatus(200).end();
+    // })
 
-    app.get(process.env.SAUP, async (req, res) => {
-      const token = req.query['hub.verify_token'];
-      if (token === WEBHOOK_VERIFY_TOKEN) {
-        const users = await getPremiumUsers();
-        return res.status(200).send({ users });
-      }
-      return res.sendStatus(400).end();
-    })
+    // app.get(process.env.SAUP, async (req, res) => {
+    //   const token = req.query['hub.verify_token'];
+    //   if (token === WEBHOOK_VERIFY_TOKEN) {
+    //     const users = await getPremiumUsers();
+    //     return res.status(200).send({ users });
+    //   }
+    //   return res.sendStatus(400).end();
+    // })
 
-    app.get(process.env.SAUF, async (req, res) => {
-      const token = req.query['hub.verify_token'];
-      if (token === WEBHOOK_VERIFY_TOKEN) {
-        const users = await getAllUsers();
-        return res.status(200).send({ users });
-      }
-      return res.sendStatus(400).end();
-    })
+    // app.get(process.env.SAUF, async (req, res) => {
+    //   const token = req.query['hub.verify_token'];
+    //   if (token === WEBHOOK_VERIFY_TOKEN) {
+    //     const users = await getAllUsers();
+    //     return res.status(200).send({ users });
+    //   }
+    //   return res.sendStatus(400).end();
+    // })
 
   }
 })();

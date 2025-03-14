@@ -4,7 +4,7 @@ const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
-const { premiumPlans } = require('./premium.controller');
+const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 
@@ -26,6 +26,7 @@ const checkLastInteraction = async (user, req) => {
 };
 
 const checkCommand = async (user, req) => {
+  
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
   
@@ -40,9 +41,9 @@ const checkCommand = async (user, req) => {
       '';
 
     // premium:start   
-    if (interactiveType === '.getpremium'
-        || user_sent?.text?.body === '.getpremium'
-        || user_sent?.text?.body === 'Quero ser Premium!')
+    if (interactiveType.startsWith('.getpremium')
+        || user_sent?.text?.body.startsWith('.getpremium')
+        || user_sent?.text?.body.includes('Quero ser Premium!'))
       return await premiumPlans(req);
     // premium:end
       
@@ -115,7 +116,7 @@ const checkCommand = async (user, req) => {
       && !user.premium)
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
-      return await limitedStickers(req);
+      return await limitedStickerPremiumPlan(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
