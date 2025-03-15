@@ -6,7 +6,7 @@ const { DOTY_APIKEY, VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = p
 const admins = ADMIN_WAID.split(',');
 
 const bomDia = async () => {
-  console.log('*** Iniciando bom dia...');
+  console.info("*** Iniciando processo da newsletter...")
   const today = new Date();
   let imgURL = "";
   const hojeYear = today.toLocaleDateString('pt-br', {
@@ -43,17 +43,21 @@ const bomDia = async () => {
     `Desejamos tudo de bom pra você nessa ${hojeMonth}.`
   ];
 
-  console.log("[x] doty...");
+  console.info("🔜 daysOfTheYear...");
   const doty = await dayOfTheYear() || '';
+  console.info("✔️ daysOfTheYear");
   const msg_positividade = randomizeThis(msg_bom_dia);
   const msg_bomdia = randomizeThis(hojePreface);
-  console.log("[x] wishiy...");
+  console.info("🔜 wishiy...");
   const msg_aniversariante = await getWishiy();
+  console.info("✔️ wishiy!");
   
-  let msg_final = "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 *Hoje*: " + doty;
+  let msg_final = msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 *Hoje*: " + doty;
   
-  console.log("[x] randomTopic...");
+  console.info("🔜 randomTopic...");
   const msg_topic_news = await getRandomTopic();
+  console.info("✔️ randomTopic!");
+
   const topic = msg_topic_news.topic;
   const topicPreface = [
     `As mais recentes novidades de ${topic} hoje são as seguintes:`,
@@ -64,14 +68,15 @@ const bomDia = async () => {
     `As headlines do mundo inteiro no tema ${topic}`
   ]
   if (msg_topic_news.length > 0) {
-    msg_final += randomizeThis(topicPreface);
-    msg_final += `*${msg_topic_news[0].title}*\n${msg_topic_news[0].excerpt} (${msg_topic_news[0].publisher.name})\n\n`
+    msg_final = msg_final + randomizeThis(topicPreface);
+    msg_final = msg_final + `*${msg_topic_news[0].title}*\n${msg_topic_news[0].excerpt} (${msg_topic_news[0].publisher.name})\n\n`
     const randomHeadlines = msg_topic_news.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
-    randomHeadlines.forEach((headline) => msg_final += `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
+    randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
   }
 
-  console.log("[x] randomSubtopic...");
+  console.info("🔜 randomSubtopic...");
   const msg_subtopic_news = await getRandomSubtopic();
+  console.info("✔️ randomSubtopic!");
   const subtopic = msg_topic_news.topic;
   const subtopicPreface = [
     `Já que ninguém me perguntou sobre ${subtopic}, eu te atualizo mesmo assim: `,
@@ -93,14 +98,14 @@ const bomDia = async () => {
     `Falando especialmente de ${subtopic}: `
   ]
   if (msg_subtopic_news.length > 0) {
-    msg_final += randomizeThis(subtopicPreface);
+    msg_final = msg_final + randomizeThis(subtopicPreface);
     const subheadline = randomizeThis(msg_subtopic_news);
     imgURL = subheadline?.thumbnail;
-    msg_final += `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
+    msg_final = msg_final + `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
   }
 
-  console.log('*** enviando bom dia para admins/premium...', msg_final);
-  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: msg_final, image: imgURL })))
+  console.log('*** 👁‍🗨 enviando bom dia para admins/premium...');
+  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_final, image: imgURL })))
 
 }
 
