@@ -57,7 +57,7 @@ const getRandomSubtopic = async () => {
 }
 
 const getNewsApi = async (topic) => {
-  let response = "";
+  let response = [];
   response = await axios({
     method: 'GET',
     url: 'https://news-api14.p.rapidapi.com/v2/trendings',
@@ -71,7 +71,7 @@ const getNewsApi = async (topic) => {
       'x-rapidapi-key': process.env.RAPIDAPI_KEY,
       'x-rapidapi-host': process.env.RAPIDAPI_HOST
     }
-  }).then((res) => res.success && res.data)
+  }).then((res) => res.data.success && res.data.data)
   .catch((err) => console.error(err.data || err));
   
   return response;
