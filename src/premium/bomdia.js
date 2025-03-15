@@ -66,9 +66,9 @@ const bomDia = async () => {
   ]
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + "\n\n" + randomizeThis(topicPreface);
-    msg_final = msg_final + `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
+    msg_final = msg_final + "\n\n" + `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
     const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
-    randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
+    randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - ${headline.excerpt}\n📰 ${headline.title}\n📌 ${headline.url}\n\n`);
   }
 
   const msg_subtopic_news = await getRandomSubtopic();
@@ -83,7 +83,7 @@ const bomDia = async () => {
     `Uma vez me perguntaram sobre ${subtopic}, e eu dei uma aula. Sei de tudo, e você também vai saber agora: `,
     `${subtopic.toUpperCase()}! Se liga nessa: `,
     `Hoje quero falar com você sobre ${subtopic}. `,
-    `Sou muito conectado no assunto ${subtopic}. Por isso te trago que a última novidade sobre o tema é a seguinte: `,
+    `Sou muito conectado no assunto ${subtopic}. Por isso te trago a última novidade sobre esse tema: `,
     `O tópico ${subtopic} é minha paixão secreta 👀. Pois fique você sabendo: `,
     `Acabei de pegar as últimas notícias do tema ${subtopic}: `,
     `${subtopic.toUpperCase}: `,
@@ -101,8 +101,8 @@ const bomDia = async () => {
   }
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
-  await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
-  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_final, image: imgURL })))
+  // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
+  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n" + msg_final, image: imgURL })))
 
 }
 
