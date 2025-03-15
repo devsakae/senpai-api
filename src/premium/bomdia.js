@@ -72,7 +72,7 @@ const bomDia = async () => {
     `Sou o bot mais culto da cidade (é pequena, mas é uma cidade). Olha o que encontrei sobre ${topic} nos jornais de hoje.`,
     `(põe os óculos) ..VE..VEJA AS ÚL....TIMAS NOTÍCIAS S-SOBRE.. ${topic.toUpperCase()}.. 🤓`,
     `Vou salvar os seus 15 minutos matinais sagrados no banheiro hoje. Trago uma lista de notícias sobre ${topic} pra você ler no trono:`,
-    ``
+    `Comece seu dia com as notícias mais recentes do tema ${topic}:`
   ]
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + "\n\n" + randomizeThis(topicPreface);
