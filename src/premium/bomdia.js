@@ -43,18 +43,15 @@ const bomDia = async () => {
     `Desejamos tudo de bom pra você nessa ${hojeMonth}.`
   ];
 
-  console.info("🔜 daysOfTheYear...");
   const doty = await dayOfTheYear() || '';
   console.info("✔️ daysOfTheYear");
   const msg_positividade = randomizeThis(msg_bom_dia);
   const msg_bomdia = randomizeThis(hojePreface);
-  console.info("🔜 wishiy...");
   const msg_aniversariante = await getWishiy();
   console.info("✔️ wishiy!");
   
   let msg_final = msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 *Hoje*: " + doty;
   
-  console.info("🔜 randomTopic...");
   const msg_topic_news = await getRandomTopic();
   console.info("✔️ randomTopic!");
 
@@ -67,17 +64,16 @@ const bomDia = async () => {
     `Manchetes sobre ${topic} nos jornais do Brasil e do Mundo hoje:`,
     `As headlines do mundo inteiro no tema ${topic}`
   ]
-  if (msg_topic_news.length > 0) {
+  if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + randomizeThis(topicPreface);
-    msg_final = msg_final + `*${msg_topic_news[0].title}*\n${msg_topic_news[0].excerpt} (${msg_topic_news[0].publisher.name})\n\n`
+    msg_final = msg_final + `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
     const randomHeadlines = msg_topic_news.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
   }
 
-  console.info("🔜 randomSubtopic...");
   const msg_subtopic_news = await getRandomSubtopic();
   console.info("✔️ randomSubtopic!");
-  const subtopic = msg_topic_news.topic;
+  const subtopic = msg_subtopic_news.topic;
   const subtopicPreface = [
     `Já que ninguém me perguntou sobre ${subtopic}, eu te atualizo mesmo assim: `,
     `E no tema ${subtopic}, fique sabendo: `,
@@ -97,15 +93,16 @@ const bomDia = async () => {
     `Acabei de ler num famoso Bot do WhatsApp sobre ${subtopic}: `,
     `Falando especialmente de ${subtopic}: `
   ]
-  if (msg_subtopic_news.length > 0) {
+  if (msg_subtopic_news.data.length > 0) {
     msg_final = msg_final + randomizeThis(subtopicPreface);
-    const subheadline = randomizeThis(msg_subtopic_news);
+    const subheadline = randomizeThis(msg_subtopic_news.data);
     imgURL = subheadline?.thumbnail;
     msg_final = msg_final + `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
   }
 
-  console.log('*** 👁‍🗨 enviando bom dia para admins/premium...');
-  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_final, image: imgURL })))
+  console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
+  await sendBomDia({ to: process.env.ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
+  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_final, image: imgURL })))
 
 }
 
