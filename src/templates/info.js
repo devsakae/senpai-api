@@ -8,9 +8,9 @@ const msg_welcome = [
   '🐱 Oiii, fofinho(a)! Você chegou e meu coraçãozinho digital já ficou feliz! 💕\n\nEu sou a SenpaiBot, e estou aqui para criar figurinhas, espalhar amor e te fazer sorrir! 😻✨\n\nDá uma passadinha no meu site para saber mais sobre mim: http://www.botdosenpai.com.br 🌸',
   '🎀 Oi, meu bem! Tudo certinho? 🌈\n\nVocê acabou de falar com a bot mais fofa do WhatsApp! 💖 Estou sempre aqui para criar figurinhas lindas e alegrar o seu dia! ✨\n\nSe quiser me conhecer melhor, acesse: http://www.botdosenpai.com.br 💕',
   '🐰 Oi, oi! Que bom que você chegou! 🎉💖\n\nEu sou a SenpaiBot, sua amiga virtual cheia de fofura! 🥰 Se precisar de figurinhas ou de um papo animado, estou por aqui! Se eu sumir rapidinho, é porque fui pegar um docinho virtual... 🍭😆\n\nQuer saber mais sobre mim? Acesse: http://www.botdosenpai.com.br ✨',
-  '🌟 Yay! Você me chamou e eu já fiquei toda animada! 🥰\n\nSou a SenpaiBot, e estou aqui para transformar suas ideias em figurinhas incríveis! ✨ Qualquer dúvida ou ajuda, pode contar comigo!\n\nAcesse meu site para saber mais sobre mim: www.botdosenpai.com.br 💖',  
+  '🌟 Yay! Você me chamou e eu já fiquei toda animada! 🥰\n\nSou a SenpaiBot, e estou aqui para transformar suas ideias em figurinhas incríveis! ✨ Qualquer dúvida ou ajuda, pode contar comigo!\n\nAcesse meu site para saber mais sobre mim: www.botdosenpai.com.br 💖',
   '😻 Miau! Que delícia te ver aqui! 💖\n\nEu sou a SenpaiBot, sempre pronta para te ajudar a criar figurinhas maravilhosas! ✨ Se precisar de algo, é só me chamar, viu?\n\nSe quiser saber mais sobre mim, acesse: http://www.botdosenpai.com.br 🎀',
-  '💖 Oiii, pessoa especial! Que bom que você chegou! 🥰\n\nEu sou a SenpaiBot e estou aqui para deixar seu WhatsApp ainda mais fofo e divertido! 🌸\n\nSe quiser saber mais sobre mim, dá uma passadinha no meu site: http://www.botdosenpai.com.br 💕',  
+  '💖 Oiii, pessoa especial! Que bom que você chegou! 🥰\n\nEu sou a SenpaiBot e estou aqui para deixar seu WhatsApp ainda mais fofo e divertido! 🌸\n\nSe quiser saber mais sobre mim, dá uma passadinha no meu site: http://www.botdosenpai.com.br 💕',
   '🎀 Yaaaay! Você me chamou e eu já estou toda feliz! 😍\n\nSou a SenpaiBot, sua assistente fofinha! Sempre que precisar de figurinhas ou de um toque de alegria no seu dia, é só me chamar! 💞\n\nQuer me conhecer melhor? Acesse: www.botdosenpai.com.br 🌸',
 ];
 
@@ -147,6 +147,18 @@ const msg_bom_dia = [
   "Que seu dia seja cheio de boas surpresas! 🎁"
 ];
 
+const msg_size_errors = [
+  "✨ Oops! O arquivo está um pouquinho grande demais. Tente reduzir o tamanho para 500 KB e envie novamente. 😊",
+  "⚠️ Atenção! O vídeo ou GIF ultrapassou o limite de 500 KB. Que tal tentar reduzir o tamanho do arquivo para continuar? 🎥✨",
+  "🚫 Ops! Não conseguimos transformar o arquivo em figurinha. O arquivo está grande demais! Tente reduzir para 500 KB e envie de novo. 💡",
+  "🔥 Ei, seu vídeo está muito grande! Para criar a figurinha, reduza o tamanho para 500 KB e tente novamente. 😉💥",
+  "⛔ Erro ao gerar a figurinha. O arquivo está acima do limite de 500 KB. Reduza o tamanho para que funcione direitinho. 🎬🔧",
+  "❗ Atenção! O arquivo não está no tamanho certo. Reduza para 500 KB e tente novamente! 🎥💖",
+  "🚀 Seu vídeo ou GIF está pesadinho! Reduza o tamanho para 500 KB e tente enviar de novo! 🚀💫",
+  "⚡ Não conseguimos gerar a figurinha. O arquivo está grande demais! Reduza para 500 KB e tente novamente. ✂️🔽"
+];
+
+
 module.exports = {
   randomizeThis,
   msg_welcome,
@@ -158,4 +170,5 @@ module.exports = {
   msg_premium_expiring,
   msg_limitonesticker,
   msg_bom_dia,
+  msg_size_errors
 };
