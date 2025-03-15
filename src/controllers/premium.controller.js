@@ -106,8 +106,8 @@ const manualPremiumActivation = async (req) => {
   const commands = payload?.messages[0]?.text?.body.split(' ');
   if (commands.length !== 4 || (commands[2] !== 'premium' && commands[2] !== 'basico')) return sendAdmin('Erro: Utilize o comando', ADMIN_CMD_ADDPREMIUM, '[wa_id] [premium/basico] [dias], como no exemplo: ', ADMIN_CMD_ADDPREMIUM, '554899787078 basico 30')
   const today = new Date();
-  const expirationDate = today;
-  expirationDate.setDate(today.getDate() + Number(commands[3]))
+  let expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + Number(commands[3]))
   const newPremiumUser = await senpaiMongoDb
     .collection('customers')
     .findOneAndUpdate(
