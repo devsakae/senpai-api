@@ -1,7 +1,13 @@
 const { randomizeThis } = require("../templates/info");
 const { default: axios } = require("axios");
 
-const topics = ["Lifestyle", "Business", "Entertainment", "General", "Health", "Science", "Technology", "World"]
+const topics = [
+  { id: "gaming", name: "Jogos" },
+  { id: "music", name: "Música" },
+  { id: "climate", name: "Clima" },
+  { id: "movies", name: "Filmes" }
+];
+
 const subtopics = [
   { id: "entertainment", name: "Entretenimento" },
   { id: "arts", name: "Artes" },
@@ -27,10 +33,10 @@ const subtopics = [
   { id: "space", name: "Espaço" },
   { id: "wildlife", name: "Vida Selvagem" },
   { id: "technology", name: "Tecnologia" },
-  { id: "esports", name: "Esportes Eletrônicos" },
+  { id: "esports", name: "e-Sports" },
   { id: "ai", name: "Inteligência Artificial" },
   { id: "computing", name: "Computação" },
-  { id: "cybersec", name: "Cibersegurança" },
+  { id: "cybersec", name: "Cybersegurança" },
   { id: "gadgets", name: "Dispositivos" },
   { id: "internet", name: "Internet" },
   { id: "mobile", name: "Celulares" },
@@ -45,8 +51,8 @@ const subtopics = [
 const getRandomTopic = async () => {
   let randomTopic = ""
   randomTopic = randomizeThis(topics);
-  response = await getNewsApi(randomTopic);
-  return { topic: randomTopic, data: response };
+  response = await getNewsApi(randomTopic.id);
+  return { topic: randomTopic.name, data: response };
 }
 
 const getRandomSubtopic = async () => {
