@@ -43,13 +43,16 @@ const bomDia = async () => {
     `Desejamos tudo de bom pra você nessa ${hojeMonth}.`
   ];
 
+  console.log("[x] doty...");
   const doty = await dayOfTheYear() || '';
   const msg_positividade = randomizeThis(msg_bom_dia);
   const msg_bomdia = randomizeThis(hojePreface);
+  console.log("[x] wishiy...");
   const msg_aniversariante = await getWishiy();
   
   let msg_final = "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 *Hoje*: " + doty;
   
+  console.log("[x] randomTopic...");
   const msg_topic_news = await getRandomTopic();
   const topic = msg_topic_news.topic;
   const topicPreface = [
@@ -66,6 +69,8 @@ const bomDia = async () => {
     const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final += `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
   }
+
+  console.log("[x] randomSubtopic...");
   const msg_subtopic_news = await getRandomSubtopic();
   const subtopic = msg_topic_news.topic;
   const subtopicPreface = [

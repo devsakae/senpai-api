@@ -1,4 +1,5 @@
-const { randomizeThis } = require("../templates/info")
+const { randomizeThis } = require("../templates/info");
+const { default: axios } = require("axios");
 
 const topics = ["Lifestyle", "Business", "Entertainment", "General", "Health", "Science", "Technology", "World"]
 const subtopics = [
