@@ -3,7 +3,7 @@ const { default: axios } = require("axios");
 
 const topics = [
   { id: "gaming", name: "Jogos" },
-  { id: "music", name: "Música" },
+  { id: "music", name: "MÃºsica" },
   { id: "climate", name: "Clima" },
   { id: "movies", name: "Filmes" }
 ];
@@ -15,36 +15,36 @@ const subtopics = [
   { id: "celebrities", name: "Celebridades" },
   { id: "gaming", name: "Jogos" },
   { id: "movies", name: "Filmes" },
-  { id: "music", name: "Música" },
-  { id: "tv", name: "Televisão" },
+  { id: "music", name: "MÃºsica" },
+  { id: "tv", name: "TelevisÃ£o" },
   { id: "general", name: "Geral" },
   { id: "fitness", name: "Fitness" },
   { id: "lifestyle", name: "Estilo de Vida" },
   { id: "beauty", name: "Beleza" },
-  { id: "cooking", name: "Culinária" },
+  { id: "cooking", name: "CulinÃ¡ria" },
   { id: "fashion", name: "Moda" },
   { id: "tourism", name: "Turismo" },
-  { id: "science", name: "Ciência" },
+  { id: "science", name: "CiÃªncia" },
   { id: "climate", name: "Clima" },
   { id: "environment", name: "Meio Ambiente" },
-  { id: "genetics", name: "Genética" },
+  { id: "genetics", name: "GenÃ©tica" },
   { id: "geology", name: "Geologia" },
-  { id: "physics", name: "Física" },
-  { id: "space", name: "Espaço" },
+  { id: "physics", name: "FÃ­sica" },
+  { id: "space", name: "EspaÃ§o" },
   { id: "wildlife", name: "Vida Selvagem" },
   { id: "technology", name: "Tecnologia" },
   { id: "esports", name: "e-Sports" },
-  { id: "ai", name: "Inteligência Artificial" },
-  { id: "computing", name: "Computação" },
-  { id: "cybersec", name: "Cybersegurança" },
+  { id: "ai", name: "InteligÃªncia Artificial" },
+  { id: "computing", name: "ComputaÃ§Ã£o" },
+  { id: "cybersec", name: "CyberseguranÃ§a" },
   { id: "gadgets", name: "Dispositivos" },
   { id: "internet", name: "Internet" },
   { id: "mobile", name: "Celulares" },
-  { id: "robot", name: "Robótica" },
+  { id: "robot", name: "RobÃ³tica" },
   { id: "vr", name: "Realidade Virtual" },
   { id: "world", name: "Mundo" },
   { id: "culture", name: "Cultura" },
-  { id: "history", name: "História" }
+  { id: "history", name: "HistÃ³ria" }
 ];
 
 

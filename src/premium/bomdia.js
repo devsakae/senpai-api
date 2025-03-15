@@ -59,10 +59,20 @@ const bomDia = async () => {
   const topicPreface = [
     `As mais recentes novidades de ${topic} hoje são as seguintes:`,
     `Se atualize sobre ${topic} conosco!`,
-    `Pra começar o dia bem informado, saiu no jornal, no tópico ${topic}:`,
+    `Notícias fresquinhassssss sobre ${topic}, logo abaixo:`,
     `No tema ${topic}, as notícias mais recentes são as seguintes:`,
     `Manchetes sobre ${topic} nos jornais do Brasil e do Mundo hoje:`,
-    `As headlines do mundo inteiro no tema ${topic}`
+    `Acompanhe as headlines do mundo inteiro hoje do tema ${topic}.`,
+    `Pra começar bem nosso dia, que tal um giro de notícias sobre ${topic}?`,
+    `Aquela passada rápida sobre as manchetes do tema ${topic} hoje:`,
+    `As últimas notícias sobre ${topic} estão aqui:`,
+    `Rodando os jornais de hoje no tema ${topic}, encontramos:`,
+    `A mídia do Brasil e do mundo repercutem sobre ${topic} na data de hoje:`,
+    `Não vá até o jornal! Trazemos tudo sobre ${topic} aqui mesmo no Whats pra você!`,
+    `Sou o bot mais culto da cidade (é pequena, mas é uma cidade). Olha o que encontrei sobre ${topic} nos jornais de hoje.`,
+    `(põe os óculos) ..VE..VEJA AS ÚL....TIMAS NOTÍCIAS S-SOBRE.. ${topic.toUpperCase()}.. 🤓`,
+    `Vou salvar os seus 15 minutos matinais sagrados no banheiro hoje. Trago uma lista de notícias sobre ${topic} pra você ler no trono:`,
+    ``
   ]
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + "\n\n" + randomizeThis(topicPreface);
