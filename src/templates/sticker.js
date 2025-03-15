@@ -4,7 +4,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
 // const { Sticker, StickerTypes } = require('wa-sticker-formatter');
-const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
+const { randomizeThis, msg_sticker, msg_limitsticker, msg_size_errors } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -121,6 +121,30 @@ const dynamicSticker = async (req) => {
       // });
 
       // await sticker.toFile(filePath)
+
+      const stats = fs.statfsSync(filePath)
+      const sizeInKb = stats.size / 1024
+
+      if (sizeInKb >= 500) {
+        const errorMessage = randomizeThis(msg_size_errors);
+        return await axios({
+          method: 'POST',
+          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+          headers: {
+            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          data: {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: user,
+            type: 'text',
+            text: {
+              body: errorMessage
+            },
+          },
+        })
+      }
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
         method: 'POST',
