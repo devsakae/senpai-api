@@ -67,7 +67,7 @@ const bomDia = async () => {
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + randomizeThis(topicPreface);
     msg_final = msg_final + `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
-    const randomHeadlines = msg_topic_news.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
+    const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
   }
 
