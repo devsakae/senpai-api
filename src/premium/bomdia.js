@@ -6,6 +6,7 @@ const { DOTY_APIKEY, VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = p
 const admins = ADMIN_WAID.split(',');
 
 const bomDia = async () => {
+  console.log('*** Iniciando bom dia...');
   const today = new Date();
   let imgURL = "";
   const hojeYear = today.toLocaleDateString('pt-br', {
@@ -93,7 +94,8 @@ const bomDia = async () => {
     msg_final += `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
   }
 
-  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: msg_final, image: imgURL })))
+  console.log('*** enviando bom dia para admins/premium...', msg_final);
+  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: msg_final, image: imgURL })))
 
 }
 
