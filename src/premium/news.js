@@ -60,17 +60,21 @@ const getNewsApi = async (topic) => {
   let response = "";
   response = await axios({
     method: 'GET',
-    hostname: 'news-api14.p.rapidapi.com',
-    port: null,
-    path: `/v2/trendings?topic=${topic}&language=pt&country=br&limit=5`,
+    url: 'https://news-api14.p.rapidapi.com/v2/trendings',
+    params: {
+      topic: topic,
+      language: "pt",
+      country: "br",
+      limit: 5
+    },
     headers: {
       'x-rapidapi-key': process.env.RAPIDAPI_KEY,
       'x-rapidapi-host': process.env.RAPIDAPI_HOST
     }
   }).then((res) => res.success && res.data)
   .catch((err) => console.error(err.data || err));
+  
   return response;
-
 }
 
 module.exports = {
