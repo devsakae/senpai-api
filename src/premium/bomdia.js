@@ -63,10 +63,10 @@ const bomDia = async () => {
     `Manchetes sobre ${topic} nos jornais do Brasil e do Mundo hoje:`,
     `As headlines do mundo inteiro no tema ${topic}`
   ]
-  if (msg_topic_news.data.length > 0) {
+  if (msg_topic_news.length > 0) {
     msg_final += randomizeThis(topicPreface);
-    msg_final += `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
-    const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
+    msg_final += `*${msg_topic_news[0].title}*\n${msg_topic_news[0].excerpt} (${msg_topic_news[0].publisher.name})\n\n`
+    const randomHeadlines = msg_topic_news.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final += `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
   }
 
@@ -92,7 +92,7 @@ const bomDia = async () => {
     `Acabei de ler num famoso Bot do WhatsApp sobre ${subtopic}: `,
     `Falando especialmente de ${subtopic}: `
   ]
-  if (msg_subtopic_news.data.length > 0) {
+  if (msg_subtopic_news.length > 0) {
     msg_final += randomizeThis(subtopicPreface);
     const subheadline = randomizeThis(msg_subtopic_news);
     imgURL = subheadline?.thumbnail;
