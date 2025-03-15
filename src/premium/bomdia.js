@@ -1,10 +1,13 @@
 const { default: axios } = require('axios');
 const { randomizeThis, msg_bom_dia } = require('../templates/info');
 const { googleTranslate } = require('../utils/googletranslate');
-const { DOTY_APIKEY, VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env
+const { getRandomTopic, getRandomSubtopic } = require('./news');
+const { DOTY_APIKEY, VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
+const admins = ADMIN_WAID.split(',');
 
 const bomDia = async () => {
   const today = new Date();
+  let imgURL = "";
   const hojeYear = today.toLocaleDateString('pt-br', {
     weekday: "long",
     year: "numeric",
@@ -43,10 +46,58 @@ const bomDia = async () => {
   const msg_positividade = randomizeThis(msg_bom_dia);
   const msg_bomdia = randomizeThis(hojePreface);
   const msg_aniversariante = await getWishiy();
+  
+  let msg_final = "[ADMIN ONLY --- MODO DE TESTE]\n" + msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 *Hoje*: " + doty;
+  
+  const msg_topic_news = await getRandomTopic();
+  const topic = msg_topic_news.topic;
+  const topicPreface = [
+    `As mais recentes novidades de ${topic} hoje são as seguintes:`,
+    `Se atualize sobre ${topic} conosco!`,
+    `Pra começar o dia bem informado, saiu no jornal, no tópico ${topic}:`,
+    `No tema ${topic}, as notícias mais recentes são as seguintes:`,
+    `Manchetes sobre ${topic} nos jornais do Brasil e do Mundo hoje:`,
+    `As headlines do mundo inteiro no tema ${topic}`
+  ]
+  if (msg_topic_news.data.length > 0) {
+    msg_final += randomizeThis(topicPreface);
+    msg_final += `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
+    const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
+    randomHeadlines.forEach((headline) => msg_final += `*${headline.publisher.name.toUpperCase()}* - *${headline.title}*\n${headline.excerpt}\n👉 ${headline.url}\n\n`);
+  }
+  const msg_subtopic_news = await getRandomSubtopic();
+  const subtopic = msg_topic_news.topic;
+  const subtopicPreface = [
+    `Já que ninguém me perguntou sobre ${subtopic}, eu te atualizo mesmo assim: `,
+    `E no tema ${subtopic}, fique sabendo: `,
+    `Eu sei que você está doido pra saber novidades da categoria ${subtopic}, né? Né?? Pois então: `,
+    `Adentrando no tópico que eu sou EXPERT (${subtopic}), se liga nessa: `,
+    `Se tem algo que eu domino é falar sobre ${subtopic.toUpperCase()}. Escuta só essa: `,
+    `Uma vez me perguntaram sobre ${subtopic}, e eu dei uma aula. Sei de tudo, e você também vai saber agora: `,
+    `${subtopic.toUpperCase()}! Se liga nessa: `,
+    `Hoje quero falar com você sobre ${subtopic}. `,
+    `Sou muito conectado no assunto ${subtopic}. Por isso te trago que a última novidade sobre o tema é a seguinte: `,
+    `O tópico ${subtopic} é minha paixão secreta 👀. Pois fique você sabendo: `,
+    `Acabei de pegar as últimas notícias do tema ${subtopic}: `,
+    `${subtopic.toUpperCase}: `,
+    `Falaria horas de ${subtopic}, mas falarei apenas uma frase hoje: `,
+    `Deu na mídia sobre ${subtopic} - `,
+    `O assunto ${subtopic} nunca vai se esgotar! `,
+    `Acabei de ler num famoso Bot do WhatsApp sobre ${subtopic}: `,
+    `Falando especialmente de ${subtopic}: `
+  ]
+  if (msg_subtopic_news.data.length > 0) {
+    msg_final += randomizeThis(subtopicPreface);
+    const subheadline = randomizeThis(msg_subtopic_news);
+    imgURL = subheadline?.thumbnail;
+    msg_final += `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
+  }
 
-  const msg_final = msg_bomdia + " " + msg_positividade + "\n\n" + doty + "\n\n" + msg_aniversariante;
+  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: msg_final, image: imgURL })))
 
-  /* return msg_final; */
+}
+
+const sendBomDia = async (payload) => {
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -57,11 +108,11 @@ const bomDia = async () => {
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
-      to: process.env.BOT_ADMIN_WAID,
+      to: payload.to,
       type: 'text',
       text: {
         preview_url: false,
-        body: msg_final,
+        body: payload.text,
       },
     },
   })

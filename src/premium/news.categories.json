@@ -1,0 +1,316 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "business",
+      "name": "Business",
+      "subtopics": [
+        {
+          "id": "cryptocurrency",
+          "name": "cryptocurrency"
+        },
+        {
+          "id": "economy",
+          "name": "economy"
+        },
+        {
+          "id": "finance",
+          "name": "finance"
+        },
+        {
+          "id": "forex",
+          "name": "forex"
+        },
+        {
+          "id": "markets",
+          "name": "markets"
+        },
+        {
+          "id": "property",
+          "name": "property"
+        },
+        {
+          "id": "startup",
+          "name": "startup"
+        }
+      ]
+    },
+    {
+      "id": "entertainment",
+      "name": "Entertainment",
+      "subtopics": [
+        {
+          "id": "arts",
+          "name": "arts"
+        },
+        {
+          "id": "books",
+          "name": "books"
+        },
+        {
+          "id": "celebrities",
+          "name": "celebrities"
+        },
+        {
+          "id": "gaming",
+          "name": "gaming"
+        },
+        {
+          "id": "movies",
+          "name": "movies"
+        },
+        {
+          "id": "music",
+          "name": "music"
+        },
+        {
+          "id": "tv",
+          "name": "tv"
+        }
+      ]
+    },
+    {
+      "id": "general",
+      "name": "General",
+      "subtopics": []
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "subtopics": [
+        {
+          "id": "disease",
+          "name": "disease"
+        },
+        {
+          "id": "fitness",
+          "name": "fitness"
+        },
+        {
+          "id": "medication",
+          "name": "medication"
+        },
+        {
+          "id": "publichealth",
+          "name": "publichealth"
+        }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "name": "Lifestyle",
+      "subtopics": [
+        {
+          "id": "autos",
+          "name": "autos"
+        },
+        {
+          "id": "beauty",
+          "name": "beauty"
+        },
+        {
+          "id": "cooking",
+          "name": "cooking"
+        },
+        {
+          "id": "fashion",
+          "name": "fashion"
+        },
+        {
+          "id": "religion",
+          "name": "religion"
+        },
+        {
+          "id": "tourism",
+          "name": "tourism"
+        },
+        {
+          "id": "transportation",
+          "name": "transportation"
+        },
+        {
+          "id": "travel",
+          "name": "travel"
+        }
+      ]
+    },
+    {
+      "id": "politics",
+      "name": "Politics",
+      "subtopics": [
+        {
+          "id": "government",
+          "name": "government"
+        },
+        {
+          "id": "humanrights",
+          "name": "humanrights"
+        },
+        {
+          "id": "infrastructure",
+          "name": "infrastructure"
+        },
+        {
+          "id": "policy",
+          "name": "policy"
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "subtopics": [
+        {
+          "id": "climate",
+          "name": "climate"
+        },
+        {
+          "id": "education",
+          "name": "education"
+        },
+        {
+          "id": "energy",
+          "name": "energy"
+        },
+        {
+          "id": "environment",
+          "name": "environment"
+        },
+        {
+          "id": "genetics",
+          "name": "genetics"
+        },
+        {
+          "id": "geology",
+          "name": "geology"
+        },
+        {
+          "id": "physics",
+          "name": "physics"
+        },
+        {
+          "id": "space",
+          "name": "space"
+        },
+        {
+          "id": "wildlife",
+          "name": "wildlife"
+        }
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "Sports",
+      "subtopics": [
+        {
+          "id": "baseball",
+          "name": "baseball"
+        },
+        {
+          "id": "basketball",
+          "name": "basketball"
+        },
+        {
+          "id": "boxing",
+          "name": "boxing"
+        },
+        {
+          "id": "cricket",
+          "name": "cricket"
+        },
+        {
+          "id": "esports",
+          "name": "esports"
+        },
+        {
+          "id": "f1",
+          "name": "f1"
+        },
+        {
+          "id": "football",
+          "name": "football"
+        },
+        {
+          "id": "golf",
+          "name": "golf"
+        },
+        {
+          "id": "hockey",
+          "name": "hockey"
+        },
+        {
+          "id": "nascar",
+          "name": "nascar"
+        },
+        {
+          "id": "rugby",
+          "name": "rugby"
+        },
+        {
+          "id": "soccer",
+          "name": "soccer"
+        },
+        {
+          "id": "tennis",
+          "name": "tennis"
+        },
+        {
+          "id": "volleyball",
+          "name": "volleyball"
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "name": "Technology",
+      "subtopics": [
+        {
+          "id": "ai",
+          "name": "ai"
+        },
+        {
+          "id": "computing",
+          "name": "computing"
+        },
+        {
+          "id": "cybersec",
+          "name": "cybersec"
+        },
+        {
+          "id": "gadgets",
+          "name": "gadgets"
+        },
+        {
+          "id": "internet",
+          "name": "internet"
+        },
+        {
+          "id": "mobile",
+          "name": "mobile"
+        },
+        {
+          "id": "robot",
+          "name": "robot"
+        },
+        {
+          "id": "vr",
+          "name": "vr"
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "name": "World",
+      "subtopics": [
+        {
+          "id": "culture",
+          "name": "culture"
+        },
+        {
+          "id": "history",
+          "name": "history"
+        }
+      ]
+    }
+  ]
+}
