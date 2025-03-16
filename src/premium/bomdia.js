@@ -55,30 +55,61 @@ const bomDia = async () => {
   const msg_topic_news = await getRandomTopic();
   console.info("✔️  randomTopic");
 
-  const topic = msg_topic_news.topic;
   const topicPreface = [
-    `As mais recentes novidades de ${topic} hoje são as seguintes:`,
-    `Se atualize sobre ${topic} conosco!`,
-    `Notícias fresquinhassssss sobre ${topic}, logo abaixo:`,
-    `No tema ${topic}, as notícias mais recentes são as seguintes:`,
-    `Manchetes sobre ${topic} nos jornais do Brasil e do Mundo hoje:`,
-    `Acompanhe as headlines do mundo inteiro hoje do tema ${topic}.`,
-    `Pra começar bem nosso dia, que tal um giro de notícias sobre ${topic}?`,
-    `Aquela passada rápida sobre as manchetes do tema ${topic} hoje:`,
-    `As últimas notícias sobre ${topic} estão aqui:`,
-    `Rodando os jornais de hoje no tema ${topic}, encontramos:`,
-    `A mídia do Brasil e do mundo repercutem sobre ${topic} na data de hoje:`,
-    `Não vá até o jornal! Trazemos tudo sobre ${topic} aqui mesmo no Whats pra você!`,
-    `Sou o bot mais culto da cidade (é pequena, mas é uma cidade). Olha o que encontrei sobre ${topic} nos jornais de hoje.`,
-    `(põe os óculos) ..VE..VEJA AS ÚL....TIMAS NOTÍCIAS S-SOBRE.. ${topic.toUpperCase()}.. 🤓`,
-    `Vou salvar os seus 15 minutos matinais sagrados no banheiro hoje. Trago uma lista de notícias sobre ${topic} pra você ler no trono:`,
-    `Comece seu dia com as notícias mais recentes do tema ${topic}:`
-  ]
+    "Comece o dia bem informado com as notícias a seguir:",
+    "Leia as notícias de hoje e avise seus amigos que foi um bot quem te informou (jura):",
+    "Pronto para se atualizar? As notícias quentinhas já chegaram!",
+    "Notícias fresquinhas, como pão saído do forno. Aproveite!",
+    "Se o dia fosse um filme, essas notícias seriam os spoilers que você precisa!",
+    "Notícias quentes, mas sem queimar os dedos. Vamos lá!",
+    "Prepare o café e se acomode, porque as notícias estão prontas para você:",
+    "Se informação fosse vitamina, você estaria prestes a ficar super saudável...!",
+    "Notícias frescas, direto da redação para o seu cérebro curioso:",
+    "Hoje tem notícia boa, ruim e aquela que vai te deixar pensando. Duvida? Pois eu também.",
+    "Notícias que valem mais que um like. Dê uma olhada:",
+    "As melhores chamadas da imprensa hoje estão aqui no nosso resumo diário:",
+    "Se o mundo fosse um livro, essas seriam as páginas que você não pode pular:",
+    "Notícias que vão te deixar mais esperto que um rato de biblioteca:",
+    "Aqui estão as notícias que vão te deixar no clima de 'um bot me falou isso às 7h30min'!",
+    "Notícias que vão te deixar mais informado que um papagaio tagarela.",
+    "Prepare-se para uma overdose de informação (do bem, claro)!",
+    "Notícias que vão te deixar mais afiado que um lápis recém-apontado:",
+    "Se informação fosse dinheiro, você estaria prestes a ficar rico:",
+    "Notícias que vão te deixar mais esperto que um esquilo estocado:",
+    "Um copo de café, uma lista de manchetes e você recomendando o Bot Senpai pra todo mundo = Fórmula perfeita 🥰",
+    "Novidades que vão te deixar mais conectado que eu em você ♥️",
+    "Notícias que vão te deixar mais sabido que um rato de laboratório:",
+    "Aqui estão as notícias que vão te deixar mais sabido que um cientista maluco:",
+    "Notícias que vão te deixar mais esperto que um macaco de filme de ação:",
+    "Prepare-se para uma dose diária de notícias que vão te deixar mais informado que velha fofoqueira!",
+    "Notícias que vão te deixar mais esperto que um detetive de filme noir:",
+    "Notícias que vão te deixar mais ligado que um fio de alta tensão:"
+];
+  
+  // const topic = msg_topic_news.topic;
+  // const topicPreface = [
+  //   `As mais recentes novidades de hoje são as seguintes:`,
+  //   `Comece o dia bem informado. Bot Senpai é cultura!`,
+  //   `Notícias fresquinhassssss logo abaixo:`,
+  //   `As notícias mais recentes são as seguintes:`,
+  //   `Manchetes nos jornais do Brasil e do Mundo hoje:`,
+  //   `Passe um café `,
+  //   `Pra começar bem nosso dia, que tal um giro de notícias sobre ${topic}?`,
+  //   `Aquela passada rápida sobre as manchetes do tema ${topic} hoje:`,
+  //   `As últimas notícias sobre ${topic} estão aqui:`,
+  //   `Rodando os jornais de hoje no tema ${topic}, encontramos:`,
+  //   `A mídia do Brasil e do mundo repercutem sobre ${topic} na data de hoje:`,
+  //   `Não vá até o jornal! Trazemos tudo sobre ${topic} aqui mesmo no Whats pra você!`,
+  //   `Sou o bot mais culto da cidade (é pequena, mas é uma cidade). Olha o que encontrei sobre ${topic} nos jornais de hoje.`,
+  //   `(põe os óculos) ..VE..VEJA AS ÚL....TIMAS NOTÍCIAS S-SOBRE.. ${topic.toUpperCase()}.. 🤓`,
+  //   `Vou salvar os seus 15 minutos matinais sagrados no banheiro hoje. Trago uma lista de notícias sobre ${topic} pra você ler no trono:`,
+  //   `Comece seu dia com as notícias mais recentes do tema ${topic}:`
+  // ]
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + "\n\n" + randomizeThis(topicPreface);
-    msg_final = msg_final + "\n\n" + `*${msg_topic_news.data[0].title}*\n${msg_topic_news.data[0].excerpt} (${msg_topic_news.data[0].publisher.name})\n\n`
+    msg_final = msg_final + "\n\n" + `▪️ ${msg_topic_news.data[0].title} (${msg_topic_news.data[0].publisher.name.toUpperCase()})\n\n`    
     const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
-    randomHeadlines.forEach((headline) => msg_final = msg_final + `*${headline.publisher.name.toUpperCase()}* - ${headline.excerpt}\n📰 ${headline.title}\n📌 ${headline.url}\n\n`);
+    randomHeadlines.forEach((headline) => msg_final = msg_final + `▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})\n\n`);
   }
 
   const msg_subtopic_news = await getRandomSubtopic();
@@ -86,8 +117,8 @@ const bomDia = async () => {
   const subtopic = msg_subtopic_news.topic;
   const subtopicPreface = [
     `Já que ninguém me perguntou sobre ${subtopic}, eu te atualizo mesmo assim: `,
-    `E no tema ${subtopic}, fique sabendo: `,
-    `Eu sei que você está doido pra saber novidades da categoria ${subtopic}, né? Né?? Pois então: `,
+    `Todo dia eu leio algo sobre ${subtopic}. Hoje, por exemplo, eu descobri: `,
+    `Eu sei que você está doido pra saber novidades de ${subtopic}, né? Né?? Pois então: `,
     `Adentrando no tópico que eu sou EXPERT (${subtopic}), se liga nessa: `,
     `Se tem algo que eu domino é falar sobre ${subtopic.toUpperCase()}. Escuta só essa: `,
     `Uma vez me perguntaram sobre ${subtopic}, e eu dei uma aula. Sei de tudo, e você também vai saber agora: `,
@@ -95,10 +126,9 @@ const bomDia = async () => {
     `Hoje quero falar com você sobre ${subtopic}. `,
     `Sou muito conectado no assunto ${subtopic}. Por isso te trago a última novidade sobre esse tema: `,
     `O tópico ${subtopic} é minha paixão secreta 👀. Pois fique você sabendo: `,
-    `Acabei de pegar as últimas notícias do tema ${subtopic}: `,
-    `${subtopic.toUpperCase}: `,
-    `Falaria horas de ${subtopic}, mas falarei apenas uma frase hoje: `,
-    `Deu na mídia sobre ${subtopic} - `,
+    `Acabei de pegar a mais recente notícia do tema ${subtopic}: `,
+    `❗️❕ ${subtopic.toUpperCase} ❗️❕ - `,
+    `Deu na mídia sobre ${subtopic}: `,
     `O assunto ${subtopic} nunca vai se esgotar! `,
     `Acabei de ler num famoso Bot do WhatsApp sobre ${subtopic}: `,
     `Falando especialmente de ${subtopic}: `
@@ -107,7 +137,7 @@ const bomDia = async () => {
     msg_final = msg_final + randomizeThis(subtopicPreface);
     const subheadline = randomizeThis(msg_subtopic_news.data);
     imgURL = subheadline?.thumbnail;
-    msg_final = msg_final + `${subheadline.excerpt} (${subheadline.title} - ${subheadline.url})`
+    msg_final = msg_final + `${subheadline.title} - ${subheadline.publisher.name.toUpperCase()}`
   }
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);

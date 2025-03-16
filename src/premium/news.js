@@ -2,10 +2,10 @@ const { randomizeThis } = require("../templates/info");
 const { default: axios } = require("axios");
 
 const topics = [
-  { id: "gaming", name: "Jogos" },
-  { id: "music", name: "Música" },
-  { id: "climate", name: "Clima" },
-  { id: "movies", name: "Filmes" }
+  { id: "entertainment", name: "Entretenimento" },
+  { id: "technology", name: "Tecnologia" },
+  { id: "general", name: "Notícias" },
+  { id: "world", name: "Notícias" }
 ];
 
 const subtopics = [
