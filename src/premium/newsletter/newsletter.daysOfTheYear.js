@@ -12,4 +12,6 @@ const daysOfTheYearApi = async () => {
   return translated;
 }
 
-export default daysOfTheYearApi;
+module.exports = { 
+  daysOfTheYearApi,
+}
