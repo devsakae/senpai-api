@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 const { msg_bom_dia } = require('../templates/newsletter');
-const { daysOfTheYearApi, getWishiy, getRandomTopic } = require('./newsletter');
+const { daysOfTheYearApi, getWishiy, getRandomTopic, getUselessFact } = require('./newsletter');
 const { randomArr } = require('../utils/randomArr');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
@@ -66,6 +66,9 @@ const bomDia = async () => {
     const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final = msg_final + `▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})\n\n`);
   }
+
+  const msg_fato_inutil = await getUselessFact();
+  msg_final = msg_final + msg_fato_inutil;
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
   await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n" + msg_final, image: imgURL })))
