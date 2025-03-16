@@ -1,8 +1,8 @@
 const { default: axios } = require('axios');
-const { DOTY_APIKEY } = process.env;
+const { DOTY_APIKEY, RAPIDAPI_KEY, RAPIDAPI_HOST } = process.env;
 
 const getRapidApi = async (host) => {
-  
+
 }
 
 const getDotyApi = async () => {
@@ -33,9 +33,32 @@ const getWishiyApi = async () => {
     .catch((err) => console.error(err.data || err));
 }
 
+const getNewsApi = async (topic) => {
+  let response = [];
+  response = await axios({
+    method: 'GET',
+    url: 'https://news-api14.p.rapidapi.com/v2/trendings',
+    params: {
+      topic: topic,
+      language: "pt",
+      country: "br",
+      limit: 5
+    },
+    headers: {
+      'x-rapidapi-key': RAPIDAPI_KEY,
+      'x-rapidapi-host': RAPIDAPI_HOST
+    }
+  }).then((res) => res.data.success && res.data.data)
+    .catch((err) => {
+      console.error(err.data || err)
+      return [];
+    });
+  return response || [];
+}
 
 mnodule.exports = {
   getRapidApi,
   getDotyApi,
-  getWishiyApi
+  getWishiyApi,
+  getNewsApi
 }
