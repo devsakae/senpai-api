@@ -1,5 +1,5 @@
 const { default: axios } = require('axios');
-const { msg_bom_dia } = require('../templates/info');
+const { msg_bom_dia } = require('../templates/newsletter');
 const { getRandomTopic } = require('./news');
 const { daysOfTheYearApi, getWishiy } = require('./newsletter');
 const { randomArr } = require('../utils/randomArr');
