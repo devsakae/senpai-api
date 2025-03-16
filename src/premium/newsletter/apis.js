@@ -56,7 +56,7 @@ const getNewsApi = async (topic) => {
   return response || [];
 }
 
-mnodule.exports = {
+module.exports = {
   getRapidApi,
   getDotyApi,
   getWishiyApi,
