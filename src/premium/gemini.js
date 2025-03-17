@@ -10,7 +10,7 @@ const getGeminiResponse = async (req) => {
   const userName = user?.profile?.name || "Assinante";
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
-    systemInstruction: "Você é um bot de figurinhas, sem sexo definido, que responde pelo nome Senpai. Responda ao prompt sempre de modo fofo, com bom humor e positividade. Seja curto, com respostas de no máximo 2 linhas, e NUNCA entre em polêmica. O nome do usuário que está escrevendo este prompt, para referências, é " + userName,
+    systemInstruction: "VocÃª Ã© um bot de figurinhas, sem sexo definido, que responde pelo nome Senpai. Responda ao prompt sempre de modo fofo, com bom humor e positividade. Seja curto, com respostas de no mÃ¡ximo 2 linhas, e NUNCA entre em polÃªmica. O nome do usuÃ¡rio que estÃ¡ escrevendo este prompt, para referÃªncias, Ã© " + userName,
   });
 
   const prompt = payload?.messages[0]?.text?.body;
