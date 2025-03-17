@@ -13,7 +13,7 @@ const adminCommand = async (req) => {
     const bomDiaRes = await bomDia();
     console.log(bomDiaRes);
   }
-  return await checkCommand({ premium: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate } }, req);
+  return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate } }, req);
 }
 
 module.exports = {
