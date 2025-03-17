@@ -8,6 +8,7 @@ const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controlle
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
+const { getGeminiResponse } = require('../premium/gemini');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -42,7 +43,7 @@ const checkCommand = async (user, req) => {
       '';
 
     // tester:start
-    if (user.tester && user_sent?.text?.body.startsWith('.sticker ')) {
+    if (user.premium && user_sent?.text?.body.startsWith('.sticker ')) {
       if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
       return await stickerTutorial(req);
     }
@@ -111,6 +112,9 @@ const checkCommand = async (user, req) => {
       user_sent?.text?.body.startsWith('/')
     )
       return console.info(user.name, 'tried command', user_sent?.text?.body);
+
+    // if (user.premium && user.subscription?.type === "premium") return;
+    if (user.tester) return await getGeminiResponse(req);
 
     return;
   }

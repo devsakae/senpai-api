@@ -43,9 +43,9 @@ const googleThis = async (req) => {
     })
       .then((response) => {
         if (response.status !== 200 || response.statusText !== 'OK')
-          throw new Error({ response: 'Erro ao enviar' });
+          throw new Error({ data: 'Erro ao enviar' });
       })
-      .catch((err) => console.error(err.code));
+      .catch((err) => console.error("Error sending Google", err.data || err));
 }
 
 module.exports = {
