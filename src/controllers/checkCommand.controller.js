@@ -43,7 +43,7 @@ const checkCommand = async (user, req) => {
 
     // tester:start
     if (user.tester && user_sent?.text?.body.startsWith('.sticker')) {
-      if (user_sent?.text?.body.split(".sticker ").length > 0) return await getStickerWa(req);
+      if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
       return await stickerTutorial(req);
     }
     // tester:end
