@@ -16,7 +16,7 @@ const getStickerWa = async (req) => {
 	if (stickerFound.length === 0) return console.error("Erro: Nenhuma sticker encontrada para o prompt", stickerSearchStr)
 	
 	const now = new Date().getTime();
-	const user = payload.contact[0]?.wa_id;
+	const user = payload.contacts[0]?.wa_id;
 	const destDir = '/home/ec2-user/senpai-api/media/' + user;
 	if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
 	const image = await imageDownloader.image({
