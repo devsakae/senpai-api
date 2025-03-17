@@ -42,8 +42,12 @@ const checkCommand = async (user, req) => {
       '';
 
     // tester:start
-    if (user.tester && user_sent?.text?.body.startsWith('.sticker')) {
-      if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
+    if (user.tester && user_sent?.text?.body.startsWith('.sticker ')) {
+      console.log("tester sent", user_sent?.text?.body)
+      if (user_sent?.text?.body.split(".sticker ")[1].length > 0) {
+        console.log("com instrucoes")
+        return await getStickerWa(req);
+      }
       return await stickerTutorial(req);
     }
     // tester:end
