@@ -64,4 +64,6 @@ const getStickerWaPayload = async (payload) => {
 	return randomArr(response.sticker);
 };
 
-module.exports = {};
+module.exports = {
+	getStickerWa,
+};

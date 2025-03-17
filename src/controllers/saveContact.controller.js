@@ -38,7 +38,7 @@ const checkContact = async (req) => {
   if (!user) return await message_hello(req)
 
   // Premium bypass
-  if (user && user.premium) {
+  if (user && user.premium || user.tester) {
     testData.log.push(req.body);
     fs.writeFileSync(
       './data/testers.json',

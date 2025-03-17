@@ -7,6 +7,7 @@ const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumA
 const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
+const { getStickerWa } = require('../premium/stickerpack');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -39,6 +40,13 @@ const checkCommand = async (user, req) => {
       (user_sent?.type === 'interactive' &&
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
+
+    // tester:start
+    if (user.tester && user_sent?.text?.body.startsWith('.sticker')) {
+      if (user_sent?.text?.body.split(".sticker ").length > 0) return await getStickerWa(req);
+      return await stickerTutorial(req);
+    }
+    // tester:end
 
     // premium:start   
     if (interactiveType.startsWith('.getpremium')

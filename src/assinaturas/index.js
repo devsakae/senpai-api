@@ -4,7 +4,7 @@ const { randomizeThis, msg_premium_thankyou } = require('../templates/info');
 const { sendAdmin } = require('../utils/sender');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID } = process.env;
 
-let newPremiumUser = '';
+let newPremiumUser = 'User premium/tester ativado. Erro ao salvar.';
 
 const senpaiCoupons = async () => {
   const dbCoupons = await senpaiMongoDb.collection('coupons').find().toArray();
@@ -21,8 +21,8 @@ const checkCupom = async (body, user) => {
   if (validCoupom && validCoupom.left > 0) {
     if (user.premium) return console.log('usuário premium', user.profile.name, 'tentou utilizar cupom de ativação premium')
     const today = new Date();
-    const endDay = today;
-    endDay.setDate(today.getDate() + validCoupom.days);
+    let endDay = new Date();
+    endDay.setDate(endDay.getDate() + validCoupom.days);
     return await senpaiMongoDb
       .collection('customers')
       .findOneAndUpdate(
@@ -30,6 +30,7 @@ const checkCupom = async (body, user) => {
         {
           $set: {
             premium: true,
+            tester: true,
             subscription: {
               type: 'premium',
               start: today,
@@ -43,19 +44,15 @@ const checkCupom = async (body, user) => {
         await senpaiMongoDb
           .collection('coupons')
           .findOneAndUpdate({ _id: validCoupom._id }, { $inc: { left: -1 } })
-          .then((cpres) => {
-            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
+          .then(async cpres => {
+            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou Premium/Tester com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
             console.info(newPremiumUser);
+            await welcome_premium(res);
           })
-          .catch((err) =>
-            console.error('Error updating coupom', err.response?.data || err),
-          )
-          .finally(async () => await sendAdmin(newPremiumUser));
-        return await welcome_premium(res);
+          .catch(err => console.error('Error updating coupom', err.response?.data || err));
       })
-      .catch((err) =>
-        console.error('Erro concedendo cupom', err.response?.data || err),
-      );
+      .catch(err => console.error('Erro concedendo cupom', err.response?.data || err))
+      .finally(async () => await sendAdmin(newPremiumUser));
   }
   if (validCoupom) return await soldOutCoupom()
 };
