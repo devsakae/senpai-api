@@ -4,6 +4,7 @@ const { default: axios } = require('axios');
 const sharp = require("sharp");
 const fs = require('fs');
 const path = require('path');
+const imageDownloader = require("image-downloader");
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, API_URL } = process.env;
 
 const getStickerWa = async (req) => {
