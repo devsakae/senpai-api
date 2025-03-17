@@ -91,8 +91,8 @@ const bomDia = async () => {
       "Notícias que vão te deixar mais esperto que um detetive de filme noir:",
       "Notícias que vão te deixar mais ligado que um fio de alta tensão:"
     ];
-    msg_final = msg_final + "\n\n" + randomArr(topicPreface);
-    msg_final = msg_final + "\n\n" + `▪️ ${msg_topic_news.data[0].title} (${msg_topic_news.data[0].publisher.name.toUpperCase()})\n\n`
+    msg_final = msg_final + "\n\n" + randomArr(topicPreface) + "\n";
+    msg_final = msg_final + "\n" + `▪️ ${msg_topic_news.data[0].title} (${msg_topic_news.data[0].publisher.name.toUpperCase()})\n\n`
     const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final = msg_final + `▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})\n\n`);
   }
