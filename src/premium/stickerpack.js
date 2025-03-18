@@ -12,7 +12,7 @@ const getStickerWa = async (req) => {
 	const payloadStickerPromptOriginal = payload?.messages[0]?.text?.body.replace(".sticker ", "").trim();
 	const stickerSearchStr = payloadStickerPromptOriginal.replace(" ", "+");
 	
-	const stickerFound = await getStickerWaPayload(stickerSearchStr);
+	const stickerFound = await getStickerWaPayload(stickerSearchStr) || "";
 	
 	if (stickerFound.length === 0) return console.error("Erro: Nenhuma sticker encontrada para o prompt", stickerSearchStr)
 	
@@ -61,7 +61,8 @@ const getStickerWa = async (req) => {
 
 const getStickerWaPayload = async (payload) => {
 	const response = await sticker.stickerSearch(payload);
-	if (response.sticker.length === 0) return "";
+	console.log(response);
+	if (response.sticker.length === 0) return [];
 	return randomArr(response.sticker);
 };
 
