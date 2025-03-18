@@ -63,7 +63,7 @@ const bomDia = async () => {
   if (feature_phrase === "advice") {
     const response_advice = await getAdviceSlip();
     console.info("✔️  adviceSlip", response_advice?.substring(0,50));
-    if (response_advice) msg_final = msg_final + "\n\n> " + response_advice;
+    if (response_advice) msg_final = msg_final + "\n\n > " + response_advice;
   }
   if (feature_phrase === "uselessfact") {
     const response_fato_inutil = await getUselessFact();
@@ -84,9 +84,11 @@ const bomDia = async () => {
   if (response_news_by_topic.data.length > 0) {
     console.info("✔️  randomTopic");
     msg_final = msg_final + "\n\n" + randomArr(msg_noticias_preambulo) + "\n";
-    msg_final = msg_final + "\n" + `▪️ ${response_news_by_topic.data[0].title} (${response_news_by_topic.data[0].publisher.name.toUpperCase()})`
-    const randomHeadlines = response_news_by_topic.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
-    randomHeadlines.forEach((headline) => msg_final = msg_final + `\n\n▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})`);
+    msg_final = msg_final + "\n" + `- ${response_news_by_topic.data[0].title} (${response_news_by_topic.data[0].publisher.name.toUpperCase()})`
+    const randomHeadlines = response_news_by_topic.data.filter((d, i) => {
+      if (Math.floor(Math.random() * 2) === 0 && i > 0) return d;
+    });
+    randomHeadlines.forEach((headline) => msg_final = msg_final + `\n- ${headline.title} (${headline.publisher.name.toUpperCase()})`);
   }
 
   if (today.getDay() === 5 || true) {
@@ -98,21 +100,21 @@ const bomDia = async () => {
     const apple_releases = getWatchmodeStreaming("Apple", releases);
     if (netflix_releases || disney_releases || prime_releases || apple_releases) {
       msg_final = msg_final + "\n\n" + watchmode_preface;
-      if (apple_releases) {
+      if (apple_releases.length > 0) {
         msg_final = msg_final + "\n\n⚫️⚪️ Apple TV";
-        apple_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        apple_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
       }
-      if (disney_releases) {
+      if (disney_releases.length > 0) {
         msg_final = msg_final + "\n\n🔵⚪️ Disney+";
-        disney_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        disney_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
       }
-      if (netflix_releases) {
+      if (netflix_releases.length > 0) {
         msg_final = msg_final + "\n\n🔴⚪️ Netflix";
-        netflix_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        netflix_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
       }
-      if (prime_releases) {
+      if (prime_releases.length > 0) {
         msg_final = msg_final + "\n\n⚪️🔵 Prime Video";
-        prime_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        prime_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
       }
     }
   }
