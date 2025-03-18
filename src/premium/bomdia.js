@@ -89,7 +89,7 @@ const bomDia = async () => {
     randomHeadlines.forEach((headline) => msg_final = msg_final + `\n\n▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})`);
   }
 
-  if (today.getDay() === 5) {
+  if (today.getDay() === 5 || true) {
     const watchmode_preface = randomArr(msg_friday_streaming_now);
     const releases = await getWatchmodeApiDay();
     const netflix_releases = getWatchmodeStreaming("Netflix", releases);
