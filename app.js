@@ -66,20 +66,21 @@ app.use(express.json());
 
     app.get(DOWNLOAD_FOLDER, (req, res) => {
       if (req.query['token'] === WEBHOOK_VERIFY_TOKEN) {
-        exec("/usr/bin/zip -jr /home/ec2-user/file.zip /home/ec2-user/senpai-api/media/", (error, stdout, stderr) => {
-          if (error) {
-            console.error(error.message || error);
-            return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + error.message });
-          }
-          if (stderr) {
-            console.error(stderr);
-            return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + stderr });
-          }
-          console.log(stdout);
-          res.setHeader('Content-type', 'application/zip');
-          return setTimeout(() => res.sendFile(__dirname + '/file.zip'), 10000)
-        });
-
+        // exec("zip -jr /home/ec2-user/file.zip /home/ec2-user/senpai-api/media/", (error, stdout, stderr) => {
+        //   if (error) {
+        //     console.error(error.message || error);
+        //     return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + error.message });
+        //   }
+        //   if (stderr) {
+        //     console.error(stderr);
+        //     return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + stderr });
+        //   }
+        //   console.log(stdout);
+        //   res.setHeader('Content-type', 'application/zip');
+        //   return setTimeout(() => res.sendFile(__dirname + '/file.zip'), 10000)
+        // });
+        res.setHeader('Content-type', 'application/zip');
+        return res.sendFile(__dirname + '/file.zip');
       }
       return res.sendStatus(400);
     })
