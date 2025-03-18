@@ -1,5 +1,5 @@
 const { default: axios } = require('axios');
-const { msg_bom_dia, msg_noticias_preambulo } = require('../templates/newsletter');
+const { msg_bom_dia, msg_noticias_preambulo, msg_fato_inutil } = require('../templates/newsletter');
 const { daysOfTheYearApi, getWishiy, getRandomTopic, getUselessFact } = require('./newsletter');
 const { randomArr } = require('../utils/randomArr');
 const { getAdviceSlip } = require('./newsletter/newsletter.adviceSlip');
@@ -56,30 +56,30 @@ const bomDia = async () => {
 
   let msg_final = msg_bomdia + " " + msg_positividade;
 
-  const msg_advice_today = await getAdviceSlip();
-  console.info("✔️  adviceSlip", msg_advice_today?.substring(0,50));
-  if (msg_advice_today) msg_final = msg_final + "\n\n> " + msg_advice_today;
+  const response_advice = await getAdviceSlip();
+  console.info("✔️  adviceSlip", response_advice?.substring(0,50));
+  if (response_advice) msg_final = msg_final + "\n\n> " + response_advice;
   
-  const msg_aniversariante = await getWishiy() || ""; 
-  console.info("✔️  wishiy", msg_aniversariante?.substring(0,50));
-  if (msg_aniversariante) msg_final = msg_final + "\n\n" + msg_aniversariante;
+  const response_wishiy = await getWishiy() || ""; 
+  console.info("✔️  wishiy", response_wishiy?.substring(0,50));
+  if (response_wishiy) msg_final = msg_final + "\n\n" + response_wishiy;
 
-  const doty = await daysOfTheYearApi() || "";
-  console.info("✔️  daysOfTheYear", doty?.substring(0,50));
-  if (doty) msg_final = msg_final + "\n\n" + hojeDayMonth + " - " + doty;
+  const response_doty = await daysOfTheYearApi() || "";
+  console.info("✔️  daysOfTheYear", response_doty?.substring(0,50));
+  if (response_doty) msg_final = msg_final + "\n\n" + hojeDayMonth + " - " + response_doty;
   
-  const msg_topic_news = await getRandomTopic();
-  console.info("✔️  randomTopic", msg_topic_news?.substring(0,50));
-  if (msg_topic_news.data.length > 0) {
+  const response_news_by_topic = await getRandomTopic();
+  if (response_news_by_topic.data.length > 0) {
+    console.info("✔️  randomTopic");
     msg_final = msg_final + "\n\n" + randomArr(msg_noticias_preambulo) + "\n";
-    msg_final = msg_final + "\n" + `▪️ ${msg_topic_news.data[0].title} (${msg_topic_news.data[0].publisher.name.toUpperCase()})`
-    const randomHeadlines = msg_topic_news.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
+    msg_final = msg_final + "\n" + `▪️ ${response_news_by_topic.data[0].title} (${response_news_by_topic.data[0].publisher.name.toUpperCase()})`
+    const randomHeadlines = response_news_by_topic.data.filter((d, i) => (Math.floor(Math.random() * 2) === 0 && i > 0) && d);
     randomHeadlines.forEach((headline) => msg_final = msg_final + `\n\n▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})`);
   }
 
-  const msg_fato_inutil = await getUselessFact();
-  console.info("✔️  getUselessFact", msg_fato_inutil?.substring(0,50));
-  if (msg_fato_inutil) msg_final = msg_final + "\n\n" + randomArr(msg_fato_inutil) + msg_fato_inutil;
+  const response_fato_inutil = await getUselessFact();
+  console.info("✔️  getUselessFact", response_fato_inutil?.substring(0,50));
+  if (response_fato_inutil) msg_final = msg_final + "\n\n" + randomArr(msg_fato_inutil) + response_fato_inutil;
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
   await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
