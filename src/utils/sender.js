@@ -1,6 +1,7 @@
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, SUPORTE_TECNICO, BOT_ADMIN_WAID } =
   process.env;
 const { default: axios } = require('axios');
+const { senpaiMongoDb } = require("./connections");
 
 const dispatchAxios = async (data) => {
   return await axios({
@@ -41,7 +42,13 @@ const sendAdmin = async (payload) => {
     );
 };
 
+const sendPremium = async (payload) => {
+  const premiumList = (await senpaiMongoDb.collection("premium").find().toArray()).map(p => p.wa_id);
+  console.log("lista de premium:", premiumList);
+}
+
 module.exports = {
   dispatchAxios,
   sendAdmin,
+  sendPremium,
 };

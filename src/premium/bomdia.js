@@ -63,17 +63,17 @@ const bomDia = async () => {
   if (feature_phrase === "advice") {
     const response_advice = await getAdviceSlip();
     console.info("✔️  adviceSlip", response_advice?.substring(0,50));
-    if (response_advice) msg_final = msg_final + "\n\n > " + response_advice;
+    if (response_advice) msg_final = msg_final + "\n\n> " + response_advice;
   }
   if (feature_phrase === "uselessfact") {
     const response_fato_inutil = await getUselessFact();
     console.info("✔️  getUselessFact", response_fato_inutil?.substring(0,50));
-    if (response_fato_inutil) msg_final = msg_final + "\n\n>" + randomArr(msg_fato_inutil) + response_fato_inutil;  
+    if (response_fato_inutil) msg_final = msg_final + "\n\n> " + randomArr(msg_fato_inutil) + response_fato_inutil;  
   }
   if (feature_phrase === "wishiy") {
     const response_wishiy = await getWishiy() || ""; 
     console.info("✔️  wishiy", response_wishiy?.substring(0,50));
-    if (response_wishiy) msg_final = msg_final + "\n\n>" + response_wishiy;
+    if (response_wishiy) msg_final = msg_final + "\n\n> " + response_wishiy;
   }
   
   const response_doty = await daysOfTheYearApi() || "";
@@ -102,24 +102,24 @@ const bomDia = async () => {
       msg_final = msg_final + "\n\n" + watchmode_preface;
       if (apple_releases.length > 0) {
         msg_final = msg_final + "\n\n⚫️⚪️ Apple TV";
-        apple_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        apple_releases.forEach(e => msg_final = msg_final + "\n- " + e.title + " (" + srd(e?.source_release_date) + ") " + sourceType(e?.tmdb_type));
       }
       if (disney_releases.length > 0) {
         msg_final = msg_final + "\n\n🔵⚪️ Disney+";
-        disney_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        disney_releases.forEach(e => msg_final = msg_final + "\n- " + e.title + " (" + srd(e?.source_release_date) + ") " + sourceType(e?.tmdb_type));
       }
       if (netflix_releases.length > 0) {
         msg_final = msg_final + "\n\n🔴⚪️ Netflix";
-        netflix_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        netflix_releases.forEach(e => msg_final = msg_final + "\n- " + e.title + " (" + srd(e?.source_release_date) + ") " + sourceType(e?.tmdb_type));
       }
       if (prime_releases.length > 0) {
         msg_final = msg_final + "\n\n⚪️🔵 Prime Video";
-        prime_releases.forEach(e => msg_final = msg_final + "\n-" + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+        prime_releases.forEach(e => msg_final = msg_final + "\n- " + e.title + " (" + srd(e?.source_release_date) + ") " + sourceType(e?.tmdb_type));
       }
     }
   }
 
-  console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
+  console.log('*** 👁‍🗨 enviando bom dia para admins/premium...');
   await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
   // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
 
