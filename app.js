@@ -80,7 +80,7 @@ app.use(express.json());
         //   return setTimeout(() => res.sendFile(__dirname + '/file.zip'), 10000)
         // });
         res.setHeader('Content-type', 'application/zip');
-        return res.sendFile(__dirname + '/file.zip');
+        return res.sendFile(__dirname + DOWNLOAD_FOLDER + '/file.zip');
       }
       return res.sendStatus(400);
     })
