@@ -100,8 +100,22 @@ const msg_fato_inutil = [
   "Fato irrelevante e inútil de hoje: "
 ]
 
+const msg_friday_streaming_now = [
+  "Sexta-feira, dia de pegar uma 🍿 e assistir aquele seriadinho! Confira o que estreia no streaming:",
+  "Final de semana chegando e você doidinho pra ~amassar o mozão~ assistir algo legal na TV? O Senpai te ajuda.",
+  "Sextou e eu não te deixei de mãos abanando. Anota aí o que tem de novo nos melhores streamings:",
+  "Semana longa? Pois vou te ajudar a relaxar assistindo um filme muito bacana. Segue a lista!",
+  "Sabia que antigamente você precisava rebobinar a fita 📼 antes de devolver o filme pra locadora? Que? Tô falando grego? Bah, hoje é só streaming! E eu sou tão ligada que trouxe as melhores estreias pra você. ☺️",
+  "NO MEU TEMPO (nasci em 2019) não tinha tanto streaming assim...",
+  "Quer saber o que está passando nos streamings? Senpai te ajuda!",
+  "🎵🎶 Pipoca na panela, começa a arrebentar. Pipoca com sal, que sede que dá! Só ela pra salvar essa MARATONA de filmes pra assistir nesse final de semana!",
+  "Desmarca tudo e se joga na cama pra assistir as melhores estreias da semana:",
+  "Uma mega lista de filmes e seriados pra você maratonar com o mozão:"
+]
+
 module.exports = {
   msg_bom_dia,
   msg_noticias_preambulo,
-  msg_fato_inutil
+  msg_fato_inutil,
+  msg_friday_streaming_now
 }

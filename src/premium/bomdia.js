@@ -1,8 +1,9 @@
 const { default: axios } = require('axios');
-const { msg_bom_dia, msg_noticias_preambulo, msg_fato_inutil } = require('../templates/newsletter');
+const { msg_bom_dia, msg_noticias_preambulo, msg_fato_inutil, msg_friday_streaming_now } = require('../templates/newsletter');
 const { daysOfTheYearApi, getWishiy, getRandomTopic, getUselessFact } = require('./newsletter');
 const { randomArr } = require('../utils/randomArr');
 const { getAdviceSlip } = require('./newsletter/newsletter.adviceSlip');
+const { getWatchmodeApiDay, getWatchmodeStreaming, srd, sourceType } = require('./newsletter/newsletter.watchmode');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
 
@@ -88,6 +89,34 @@ const bomDia = async () => {
     randomHeadlines.forEach((headline) => msg_final = msg_final + `\n\n▪️ ${headline.title} (${headline.publisher.name.toUpperCase()})`);
   }
 
+  if (today.getDay() === 5) {
+    const watchmode_preface = randomArr(msg_friday_streaming_now);
+    const releases = await getWatchmodeApiDay();
+    const netflix_releases = getWatchmodeStreaming("Netflix", releases);
+    const disney_releases = getWatchmodeStreaming("Disney", releases);
+    const prime_releases = getWatchmodeStreaming("Amazon", releases);
+    const apple_releases = getWatchmodeStreaming("Apple", releases);
+    if (netflix_releases || disney_releases || prime_releases || apple_releases) {
+      msg_final = msg_final + "\n\n" + watchmode_preface;
+      if (apple_releases) {
+        msg_final = msg_final + "\n\n⚫️⚪️ Apple TV";
+        apple_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+      }
+      if (disney_releases) {
+        msg_final = msg_final + "\n\n🔵⚪️ Disney+";
+        disney_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+      }
+      if (netflix_releases) {
+        msg_final = msg_final + "\n\n🔴⚪️ Netflix";
+        netflix_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+      }
+      if (prime_releases) {
+        msg_final = msg_final + "\n\n⚪️🔵 Prime Video";
+        prime_releases.forEach(e => msg_final = msg_final + "\n🆕 " + e.title + " " + srd(e?.source_release_date) + sourceType(e?.tmdb_type));
+      }
+    }
+  }
+
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
   await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
   // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
@@ -119,6 +148,7 @@ const sendBomDia = async (payload) => {
     })
     .catch(err => console.error(err?.data || err));
 }
+
 
 module.exports = {
   bomDia
