@@ -2,6 +2,7 @@ const { default: axios } = require('axios');
 const { msg_bom_dia, msg_noticias_preambulo } = require('../templates/newsletter');
 const { daysOfTheYearApi, getWishiy, getRandomTopic, getUselessFact } = require('./newsletter');
 const { randomArr } = require('../utils/randomArr');
+const { getAdviceSlip } = require('./newsletter/newsletter.adviceSlip');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
 
@@ -25,6 +26,10 @@ const bomDia = async () => {
   const hojeWeekday = today.toLocaleDateString('pt-br', {
     weekday: "long"
   })
+  const hojeDayMonth = today.toLocaleDateString('pt-br', {
+    month: "long",
+    day: "numeric"
+  })
 
   const hojePreface = [
     `Hoje é ${hojeYear}.`,
@@ -46,20 +51,25 @@ const bomDia = async () => {
     `Com muito suor, chegamos no dia de hoje, ${hojeMonth}.`
   ];
 
-  const doty = await daysOfTheYearApi() || '';
-  console.info("✔️  daysOfTheYear");
-
-  const msg_aniversariante = await getWishiy();
-  console.info("✔️  wishiy");
-
   const msg_positividade = randomArr(msg_bom_dia);
   const msg_bomdia = randomArr(hojePreface);
 
-  let msg_final = msg_bomdia + " " + msg_positividade + "\n\n" + msg_aniversariante + "\n\n🟢 " + doty;
+  let msg_final = msg_bomdia + " " + msg_positividade;
 
+  const msg_advice_today = await getAdviceSlip();
+  console.info("✔️  adviceSlip", msg_advice_today?.substring(0,50));
+  if (msg_advice_today) msg_final = msg_final + "\n\n> " + msg_advice_today;
+  
+  const msg_aniversariante = await getWishiy() || ""; 
+  console.info("✔️  wishiy", msg_aniversariante?.substring(0,50));
+  if (msg_aniversariante) msg_final = msg_final + "\n\n" + msg_aniversariante;
+
+  const doty = await daysOfTheYearApi() || "";
+  console.info("✔️  daysOfTheYear", doty?.substring(0,50));
+  if (doty) msg_final = msg_final + "\n\n" + hojeDayMonth + " - " + doty;
+  
   const msg_topic_news = await getRandomTopic();
-  console.info("✔️  randomTopic");
-
+  console.info("✔️  randomTopic", msg_topic_news?.substring(0,50));
   if (msg_topic_news.data.length > 0) {
     msg_final = msg_final + "\n\n" + randomArr(msg_noticias_preambulo) + "\n";
     msg_final = msg_final + "\n" + `▪️ ${msg_topic_news.data[0].title} (${msg_topic_news.data[0].publisher.name.toUpperCase()})`
@@ -68,11 +78,11 @@ const bomDia = async () => {
   }
 
   const msg_fato_inutil = await getUselessFact();
-  console.info("✔️  getUselessFact");
+  console.info("✔️  getUselessFact", msg_fato_inutil?.substring(0,50));
   if (msg_fato_inutil) msg_final = msg_final + "\n\n" + randomArr(msg_fato_inutil) + msg_fato_inutil;
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...', msg_final);
-  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n" + msg_final, image: imgURL })))
+  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
   // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
 
 }
