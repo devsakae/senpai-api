@@ -10,7 +10,7 @@ const getUselessFact = async () => {
 
   if (uselessFact.length > 0) {
     const uselessFactTranslated = await googleTranslate({ source: "en", target: "pt-BR", query: uselessFact })
-    return "\n\n" + uselessFactTranslated;
+    return uselessFactTranslated;
   }
   return "";
 }
