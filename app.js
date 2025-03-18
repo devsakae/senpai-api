@@ -9,6 +9,7 @@ const { checkType } = require('./src/controllers/checkType.controller');
 const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
 const { premiumCheck, callBomDia } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
+const { exec } = require("child_process");
 
 const app = express();
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use(express.json());
   } catch (err) {
     return console.error(err.code);
   } finally {
-    
+
     console.log('✔ Agendando premiumcheck...')
     premiumCheck();
     console.log('✔ Agendando callBomDia...');
@@ -63,9 +64,24 @@ app.use(express.json());
       ps.pipe(res);
     });
 
-    app.get('/' + DOWNLOAD_FOLDER, (_, res) => {
-      res.setHeader('Content-type', 'application/zip');
-      res.sendFile(__dirname + '/' + DOWNLOAD_FOLDER + '/file.zip');
+    app.get(DOWNLOAD_FOLDER, (req, res) => {
+      if (req.query['token'] === WEBHOOK_VERIFY_TOKEN) {
+        exec("/usr/bin/zip -jr /home/ec2-user/file.zip /home/ec2-user/senpai-api/media/", (error, stdout, stderr) => {
+          if (error) {
+            console.error(error.message || error);
+            return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + error.message });
+          }
+          if (stderr) {
+            console.error(stderr);
+            return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + stderr });
+          }
+          console.log(stdout);
+          res.setHeader('Content-type', 'application/zip');
+          return setTimeout(() => res.sendFile(__dirname + '/file.zip'), 10000)
+        });
+
+      }
+      return res.sendStatus(400);
     })
 
     app.get('/senpailogo', (_, res) => {

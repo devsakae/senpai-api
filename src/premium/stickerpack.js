@@ -61,7 +61,6 @@ const getStickerWa = async (req) => {
 
 const getStickerWaPayload = async (payload) => {
 	const response = await sticker.stickerSearch(payload);
-	console.log(response);
 	if (response.sticker.length === 0) return [];
 	return randomArr(response.sticker);
 };
