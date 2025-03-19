@@ -12,7 +12,7 @@ const adminCommand = async (req) => {
   }
   if (commands.startsWith('.bomdia')) await bomDia();
   if (commands.startsWith('.anunciar ')) await sendPremium(commands.split(".anunciar ")[1]);
-  return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate }, name: "Administrador" }, req);
+  return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate }, name: "Administrador", subscription: { type: "premium" } }, req);
 }
 
 module.exports = {
