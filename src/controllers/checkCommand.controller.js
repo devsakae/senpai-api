@@ -13,18 +13,20 @@ const { getGeminiResponse } = require('../premium/gemini');
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
   const payload = req.body.entry[0]?.changes[0]?.value;
+  const timestampToTime = payload?.messages[0]?.timestamp * 1000;
   if (
     payload?.messages &&
-    (today.getTime() - (payload?.messages[0]?.timestamp * 1000)) > 86400000
+    (today.getTime() - timestampToTime) > 86400000 // Mais de um 1 dia?
   ) {
     return await rootMenu(payload.contacts[0]);
   }
   if (
     payload?.messages &&
-    today.getTime() - payload?.messages[0]?.timestamp > 60
+    (today.getTime() - timestampToTime) < 60 // Mais de 1 segundo?
   ) {
-    return await checkCommand(user, req);
+    return console.info(`👀 ${user?.name} enviou multiplas msg em menos de 1 segundo`)
   }
+  return await checkCommand(user, req);
 };
 
 const checkCommand = async (user, req) => {
