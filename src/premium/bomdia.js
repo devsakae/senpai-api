@@ -121,9 +121,8 @@ const bomDia = async () => {
   }
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...');
-  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
-  // await sendPremium(msg_final);
-  await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final });
+  await sendPremium(msg_final);
+  // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final });
 
 }
 
