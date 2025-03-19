@@ -1,10 +1,10 @@
 const { default: axios } = require('axios');
-const { GOOGLE_TRANSLATE_APIKEY } = process.env;
+const { GEMINI_API_KEY } = process.env;
 
 const googleTranslate = async (params) => {
   return await axios.get('https://translation.googleapis.com/language/translate/v2', {
     params: {
-      key: GOOGLE_TRANSLATE_APIKEY,
+      key: GEMINI_API_KEY,
       source: params.source,
       target: params.target,
       q: params.query,
