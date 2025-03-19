@@ -16,9 +16,9 @@ const checkContact = async (req) => {
   const contact = payload.contacts[0];
   const now = new Date();
 
-  if (admin_group.includes(contact.wa_id)) {
-    return await adminCommand(req);
-  }
+  // if (admin_group.includes(contact.wa_id)) {
+  //   return await adminCommand(req);
+  // }
 
   const user = await senpaiMongoDb.collection('customers').findOneAndUpdate(
     { wa_id: contact.wa_id },
