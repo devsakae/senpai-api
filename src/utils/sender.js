@@ -66,8 +66,33 @@ const sendPremium = async (payload) => {
   }))
 }
 
+const sendNewsletter = async (payload) => {
+  const newsletterOptinUsers = (await senpaiMongoDb.collection("premium").find({ "subscription.newsletter": true }).toArray()).map(p => p.wa_id);
+  await Promise.all(newsletterOptinUsers.map(async premium => {
+    return await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+      headers: {
+        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      data: {
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
+        to: premium,
+        type: 'text',
+        text: {
+          preview_url: true,
+          body: payload,
+        },
+      },
+    })
+  }))
+}
+
 module.exports = {
   dispatchAxios,
   sendAdmin,
   sendPremium,
+  sendNewsletter,
 };
