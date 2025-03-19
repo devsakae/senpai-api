@@ -4,6 +4,7 @@ const { daysOfTheYearApi, getWishiy, getRandomTopic, getUselessFact } = require(
 const { randomArr } = require('../utils/randomArr');
 const { getAdviceSlip } = require('./newsletter/newsletter.adviceSlip');
 const { getWatchmodeApiDay, getWatchmodeStreaming, srd, sourceType } = require('./newsletter/newsletter.watchmode');
+const { sendPremium } = require('../utils/sender');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
 
@@ -120,8 +121,9 @@ const bomDia = async () => {
   }
 
   console.log('*** 👁‍🗨 enviando bom dia para admins/premium...');
-  await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
-  // await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final + '\n\n' + imgURL, image: imgURL });
+  // await Promise.all(admins.map(async (adm) => await sendBomDia({ to: adm, text: "`[ADMIN ONLY --- MODO DE TESTE]`\n\n" + msg_final, image: imgURL })))
+  // await sendPremium(msg_final);
+  await sendBomDia({ to: process.env.BOT_ADMIN_WAID, text: msg_final });
 
 }
 
