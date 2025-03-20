@@ -12,7 +12,7 @@ const createStickerWithImagen = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value
   const user = payload.contacts[0]?.wa_id
   const originalPrompt = payload.messages[0]?.text?.body
-  const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-br", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi o idioma'";
+  const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-BR", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi o idioma'";
   const promptTranslated = "generate a sticker 512x512 of this: " + translatePrompt;
   console.log('[.stickerai] solicitando imagens no Imagen3 para o prompt', promptTranslated)
   await axios({
