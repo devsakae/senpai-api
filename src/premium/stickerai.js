@@ -14,8 +14,8 @@ const createStickerWithImagen = async (req) => {
   const originalPrompt = payload.messages[0]?.text?.body
   const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-br", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi o idioma'";
   const promptTranslated = "generate a sticker 512x512 of this: " + translatePrompt;
-
-  return await axios({
+  console.log('[.stickerai] solicitando imagens no Imagen3 para o prompt', promptTranslated)
+  await axios({
     method: 'POST',
     url: `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${GOOGLE_TRANSLATE_APIKEY}`,
     headers: {
