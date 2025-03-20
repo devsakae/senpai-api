@@ -10,7 +10,7 @@ const styles = [40, 41, 42, 43, 44, 45];
 
 const createStickerWithImagen = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value
-  const user = payload.contact[0]?.wa_id
+  const user = payload.contacts[0]?.wa_id
   const originalPrompt = payload.messages[0]?.text?.body
   const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-br", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi o idioma'";
   const promptTranslated = "generate a sticker 512x512 of this: " + translatePrompt;
