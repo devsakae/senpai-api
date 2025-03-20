@@ -9,6 +9,7 @@ const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
 const { getGeminiResponse } = require('../premium/gemini');
+const { createStickerWithImagen } = require('../premium/stickerai');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -22,7 +23,7 @@ const checkLastInteraction = async (user, req) => {
   }
   if (
     payload?.messages &&
-    (today.getTime() - timestampToTime) < 60 // Mais de 1 segundo?
+    (today.getTime() - timestampToTime) < 60 // Mensagens enviadas com menos de 1 segundo de diff?
   ) {
     return console.info(`👀 ${user?.name} enviou multiplas msg em menos de 1 segundo`)
   }
@@ -44,12 +45,16 @@ const checkCommand = async (user, req) => {
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
 
-    // tester:start
+    // premium&tester:start
     if (user.premium && user_sent?.text?.body.startsWith('.sticker ')) {
       if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
       return await stickerTutorial(req);
     }
-    // tester:end
+    if (user.tester&& user_sent?.text?.body.startsWith('.stickerai ')) {
+      if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithImagen(req);
+      return await stickerTutorial(req);
+    }
+    // premium&tester:end
 
     // premium:start   
     if (interactiveType.startsWith('.getpremium')
