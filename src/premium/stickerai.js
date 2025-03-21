@@ -96,7 +96,6 @@ const createStickerWithGemini = async (req) => {
   });
 
   try {
-    console.log("[.stickerai] gerando sticker com Gemini...");
     const response = await model.generateContent(promptTranslated);
     for (const part of response.response.candidates[0].content.parts) {
       if (part.text) {
@@ -104,9 +103,6 @@ const createStickerWithGemini = async (req) => {
       } else if (part.inlineData) {
         const imageData = part.inlineData.data;
         const buffer = Buffer.from(imageData, 'base64');
-        console.log('[.stickerai] Recebido! Salvando image...')
-        fs.writeFileSync('gemini-' + new Date().getTime() + '-generated-image.png', buffer);
-        console.log('[.stickerai] Salvei como gemini-...-generated-image.png');
         const destDir = './media/' + user;
         const webpFilename = "ai-generated-" + new Date().getTime();
         if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
@@ -118,7 +114,7 @@ const createStickerWithGemini = async (req) => {
           })
           .toFile(filePath)
           .then(async (res) => {
-            console.log("[.stickerai] sticker gerada, tentando enviar...");
+            console.log("[.stickerai] sticker gerada! enviando...");
             const stickerURL = `${API_URL}/media/${user}/${webpFilename}`;
             return await axios({
               method: 'POST',
@@ -146,11 +142,11 @@ const createStickerWithGemini = async (req) => {
                 console.error('[.stickerai] erro enviando sticker!', err.response?.data || err);
               });
           })
-        console.log('[.stickerai] finished!');
+        console.log('[.stickerai] imagem enviada!')
       }
     }
   } catch (error) {
-    console.error("Error generating content:", error);
+    console.error("[.stickerai] erro gerando imagem!", error);
   }
 
 }
