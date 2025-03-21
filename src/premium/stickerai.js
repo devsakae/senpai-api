@@ -78,6 +78,85 @@ const createStickerWithImagen = async (req) => {
   })
 }
 
+const createStickerWithGemini = async (req) => {
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+  const payload = req.body.entry[0]?.changes[0]?.value
+  const user = payload.contacts[0]?.wa_id
+  const originalPrompt = payload.messages[0]?.text?.body.split(".stickerai ")[1]
+  const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-BR", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi o idioma'";
+  const promptTranslated = "generate a sticker 512x512 of this: " + translatePrompt;
+  console.log('[.stickerai] iniciando geração sticker para o prompt', promptTranslated)
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash-exp-image-generation",
+    generationConfig: {
+      responseModalities: ['Text', 'Image']
+    },
+  });
+
+  try {
+    console.log("[.stickerai] gerando sticker com Gemini...");
+    const response = await model.generateContent(promptTranslated);
+    for (const part of response.response.candidates[0].content.parts) {
+      if (part.text) {
+        console.log(part.text);
+      } else if (part.inlineData) {
+        const imageData = part.inlineData.data;
+        const buffer = Buffer.from(imageData, 'base64');
+        console.log('[.stickerai] Recebido! Salvando image...')
+        fs.writeFileSync('gemini-' + new Date().getTime() + '-generated-image.png', buffer);
+        console.log('[.stickerai] Salvei como gemini-...-generated-image.png');
+        const destDir = './media/' + user;
+        const webpFilename = "ai-generated-" + new Date().getTime();
+        if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
+        const filePath = path.join(destDir, webpFilename + ".webp");
+        await sharp(buffer)
+          .resize(512, 512, {
+            fit: 'contain',
+            background: { r: 0, g: 0, b: 0, alpha: 0 },
+          })
+          .toFile(filePath)
+          .then(async (res) => {
+            console.log("[.stickerai] sticker gerada, tentando enviar...");
+            const stickerURL = `${API_URL}/media/${user}/${webpFilename}`;
+            return await axios({
+              method: 'POST',
+              url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+              headers: {
+                Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+                'Content-Type': 'application/json',
+              },
+              data: {
+                messaging_product: 'whatsapp',
+                recipient_type: 'individual',
+                to: user,
+                type: 'sticker',
+                sticker: {
+                  link: stickerURL,
+                },
+              },
+            })
+              .then((response) => {
+                if (response.statusText !== 'OK')
+                  throw new Error({ response: { data: 'retorno statusText !== OK' } });
+                return console.log("[.stickerai] enviada para user!");
+              })
+              .catch((err) => {
+                console.error('[.stickerai] erro enviando sticker!', err.response?.data || err);
+              });
+          })
+
+
+
+        console.log('Image saved as gemini-native-image.png');
+      }
+    }
+  } catch (error) {
+    console.error("Error generating content:", error);
+  }
+
+}
+
 const getStickerAi = async (tl, req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const wa_id = payload?.contact[0].wa_id;
