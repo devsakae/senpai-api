@@ -4,6 +4,7 @@ const { googleTranslate } = require('../utils/googletranslate');
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { RAPIDAPI_KEYS, STICKERAI_API, STICKERAI_HOST, GOOGLE_TRANSLATE_APIKEY, VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 const rapidkeys = RAPIDAPI_KEYS.split(",");
 const styles = [40, 41, 42, 43, 44, 45];
