@@ -9,7 +9,7 @@ const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
 const { getGeminiResponse } = require('../premium/gemini');
-const { createStickerWithImagen } = require('../premium/stickerai');
+const { createStickerWithImagen, createStickerWithGemini } = require('../premium/stickerai');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -51,7 +51,7 @@ const checkCommand = async (user, req) => {
       return await stickerTutorial(req);
     }
     if (user.tester&& user_sent?.text?.body.startsWith('.stickerai ')) {
-      if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithImagen(req);
+      if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
       return await stickerTutorial(req);
     }
     // premium&tester:end

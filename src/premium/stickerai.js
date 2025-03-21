@@ -145,10 +145,7 @@ const createStickerWithGemini = async (req) => {
                 console.error('[.stickerai] erro enviando sticker!', err.response?.data || err);
               });
           })
-
-
-
-        console.log('Image saved as gemini-native-image.png');
+        console.log('[.stickerai] finished!');
       }
     }
   } catch (error) {
@@ -189,4 +186,5 @@ const inputPrompt = async (prompt) => {
 module.exports = {
   getStickerAi,
   createStickerWithImagen,
+  createStickerWithGemini,
 }
