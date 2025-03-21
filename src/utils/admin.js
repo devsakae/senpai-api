@@ -11,7 +11,7 @@ const addTesterUser = async (req) => {
       tester: true
     }
   }).then(async res => await sendAdmin(`Usuário ${user} adicionado como tester!`))
-  .catch(async err => await sendAdmin('Erro adicionando usuário como tester'))
+    .catch(async err => await sendAdmin('Erro adicionando usuário como tester'))
 }
 
 module.exports = {
