@@ -13,6 +13,7 @@ const senpaiCoupons = async () => {
 };
 
 const checkCupom = async (body, user) => {
+  console.log('checking cupom')
   if (body.length < 8) return false;
   const userCoupon = body.split(' ')[1].trim();
   const dbCoupons = await senpaiCoupons();

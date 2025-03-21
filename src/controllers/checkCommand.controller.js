@@ -101,7 +101,7 @@ const checkCommand = async (user, req) => {
       return await stickerTutorial(req);
 
     if (user_sent?.text?.body.length > 7 &&
-      user_sent?.text?.body.startsWith('.cupom'))
+      user_sent?.text?.body.startsWith('.cupom '))
       return await checkCupom(
         user_sent?.text?.body,
         req.body.entry[0]?.changes[0]?.value?.contacts[0],
