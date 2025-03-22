@@ -21,7 +21,6 @@ const checkCupom = async (body, user) => {
 
   if (validCoupom && validCoupom.left > 0) {
     if (user.premium) return console.log('usuário premium', user.profile.name, 'tentou utilizar cupom de ativação premium')
-    console.log('Ativando .cupom...');
     const today = new Date();
     let endDay = new Date();
     endDay.setDate(endDay.getDate() + validCoupom.days);
@@ -35,7 +34,8 @@ const checkCupom = async (body, user) => {
             subscription: {
               type: 'basico',
               start: today,
-              end: endDay
+              end: endDay,
+              newsletter: true,
             },
           },
         },
