@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
-const { premiumCheck, callBomDia } = require('./src/utils/cronjobs');
+const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 const { exec } = require("child_process");
 
@@ -27,6 +27,8 @@ app.use(express.json());
 
     console.log('✔ Agendando premiumcheck...')
     premiumCheck();
+    console.log('✔ Agendando premiumClean...');
+    premiumClean();
     console.log('✔ Agendando callBomDia...');
     callBomDia();
 

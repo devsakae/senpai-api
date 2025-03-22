@@ -1,11 +1,18 @@
 const cron = require('node-cron')
-const { organizePremium } = require('../assinaturas/premiumControl');
+const { organizePremium, removeExpiredPremium } = require('../assinaturas/premiumControl');
 const { bomDia } = require('../premium/bomdia');
 
 const premiumCheck = () => {
-  cron.schedule('1 0 * * *', () => {
+  cron.schedule('0 10 * * *', () => {
     console.info('(CRONJOB) checking premium users ending in couple days...');
     organizePremium();
+  });
+}
+
+const premiumClean = () => {
+  cron.schedule('1 0 * * *', () => {
+    console.info('(CRONJOB) cleaning old premium users...');
+    removeExpiredPremium();
   });
 }
 
@@ -19,4 +26,5 @@ const callBomDia = () => {
 module.exports = {
   premiumCheck,
   callBomDia,
+  premiumClean,
 }
