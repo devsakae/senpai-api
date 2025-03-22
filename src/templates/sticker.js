@@ -109,9 +109,7 @@ const dynamicSticker = async (req) => {
     .output(filePath)
     .outputFormat("webp")
     .videoCodec("libwebp")
-    .outputOption(
-      '-vf scale=w=512:h=512:force_original_aspect_ratio=decrease',
-    )
+    .outputOption('-vf scale=512:512:force_original_aspect_ratio=increase,crop=512:512')
     .fps(15)
     .noAudio()
     .on('end', async () => {
