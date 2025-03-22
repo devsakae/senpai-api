@@ -8,7 +8,7 @@ const getAdviceSlip = async () => {
   adviceSlipRes = await axios({
     method: "GET",
     url: "https://api.adviceslip.com/advice"
-  }).then(res => res?.data?.advice || "")
+  }).then(res => res?.data?.slip?.advice || "")
     .catch(err => console.error(err));
 
   if (adviceSlipRes) adviceSlipResTranslated = await googleTranslate({ query: adviceSlipRes, source: "en", target: "pt-br" }) || "";
