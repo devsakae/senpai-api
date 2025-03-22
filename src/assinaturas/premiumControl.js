@@ -69,6 +69,7 @@ const removeExpiredPremium = async () => {
 const getPremiumDbUsers = async () => {
   return await senpaiMongoDb
     .collection('premium')
+    .find()
     .toArray();
 }
 

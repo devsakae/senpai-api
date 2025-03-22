@@ -10,6 +10,7 @@ const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.cont
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
 const { exec } = require("child_process");
+const { removeExpiredPremium } = require('./src/assinaturas/premiumControl');
 
 const app = express();
 app.use(express.json());
@@ -28,7 +29,8 @@ app.use(express.json());
     console.log('✔ Agendando premiumcheck...')
     premiumCheck();
     console.log('✔ Agendando premiumClean...');
-    premiumClean();
+    // premiumClean();
+    removeExpiredPremium();
     console.log('✔ Agendando callBomDia...');
     callBomDia();
 
