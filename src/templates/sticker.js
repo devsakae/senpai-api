@@ -109,8 +109,10 @@ const dynamicSticker = async (req) => {
     .output(filePath)
     .outputFormat("webp")
     .videoCodec("libwebp")
-    .size("512x512")
-    .fps(10)
+    .outputOption(
+      '-vf scale=w=512:h=512:force_original_aspect_ratio=decrease',
+    )
+    .fps(15)
     .noAudio()
     .on('end', async () => {
       // const sticker = new Sticker(filePath, {
