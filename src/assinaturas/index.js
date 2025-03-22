@@ -55,7 +55,7 @@ const checkCupom = async (body, user) => {
       .catch(err => console.error('Erro concedendo cupom', err.response?.data || err))
       .finally(async () => await sendAdmin(newPremiumUser));
   }
-  if (validCoupom) return await soldOutCoupom()
+  if (validCoupom) return await soldOutCoupom(user);
 };
 
 const welcome_premium = async ({ wa_id }) => {
