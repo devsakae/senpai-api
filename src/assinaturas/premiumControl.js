@@ -45,7 +45,7 @@ const removeExpiredPremium = async () => {
   yesterday.setHours(23, 59);
   const allPremiumDbUsers = await getPremiumDbUsers();
   const expiredPremium = allPremiumDbUsers?.filter(ep => Date(ep.subscription.end) <= yesterday)
-  if (expiredPremium.length === 0) return;
+  if (expiredPremium.length === 0) return console.info('great! no expiring premium user found today.')
   console.log(expiredPremium.length, "expired premium users found, cleaning...");
 
   await Promise.all(expiredPremium.map(async ep => {

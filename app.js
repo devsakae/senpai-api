@@ -29,8 +29,7 @@ app.use(express.json());
     console.log('✔ Agendando premiumcheck...')
     premiumCheck();
     console.log('✔ Agendando premiumClean...');
-    // premiumClean();
-    removeExpiredPremium();
+    premiumClean(); // removeExpiredPremium();
     console.log('✔ Agendando callBomDia...');
     callBomDia();
 
