@@ -1,15 +1,15 @@
 const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
-const { limitedStickers, oneStickerAtTime } = require('../templates/errors');
+const { oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker, freeUserStickerLimit } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload } = require('./flow.controller');
-const { premiumPlans, limitedStickerPremiumPlan } = require('./premium.controller');
+const { premiumPlans } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
 const { getGeminiResponse } = require('../premium/gemini');
-const { createStickerWithImagen, createStickerWithGemini } = require('../premium/stickerai');
+const { createStickerWithGemini } = require('../premium/stickerai');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -45,23 +45,21 @@ const checkCommand = async (user, req) => {
         user_sent?.interactive[user_sent?.interactive?.type]?.id) ||
       '';
 
-    // premium&tester:start
+    // premium:start
     if (user.premium && user_sent?.text?.body.startsWith('.sticker ')) {
       if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
       return await stickerTutorial(req);
     }
-    if (user.tester&& user_sent?.text?.body.startsWith('.stickerai ')) {
+    if (user.premium && user?.subscription?.type === "premium" && user_sent?.text?.body.startsWith('.stickerai ')) {
       if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
       return await stickerTutorial(req);
     }
-    // premium&tester:end
+    // premium:end
 
-    // premium:start   
     if (interactiveType.startsWith('.getpremium')
         || user_sent?.text?.body.startsWith('.getpremium')
         || user_sent?.text?.body.includes('Quero ser Premium!'))
       return await premiumPlans(req);
-    // premium:end
       
     // flows:start
     if (interactiveType === '.feedback')
