@@ -131,9 +131,59 @@ const getPremiumActivationPayload = async (req) => {
   return console.info("*** Premium activation!", response);
 }
 
+const flow_lembrete = async req => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'interactive',
+      interactive: {
+        type: 'flow',
+        header: {
+          type: 'text',
+          text: 'Ativando modo secretária',
+        },
+        body: {
+          text: 'Sua assistente pessoal aguarda suas instruções!',
+        },
+        action: {
+          name: 'flow',
+          parameters: {
+            flow_message_version: '3',
+            flow_id: '644320844624867',
+            flow_cta: 'Iniciar',
+            mode: 'published',
+            flow_token: 'lembreteactivation',
+            flow_action: 'navigate',
+            flow_action_payload: {
+              screen: 'MEU_LEMBRETE',
+            },
+          },
+        },
+      },
+    },
+  })
+    .then((response) => console.log(response.data))
+    .catch((err) =>
+      console.error(
+        'Erro enviando flow de lembrete',
+        err?.response?.data || err,
+      ),
+    );
+}
+
 module.exports = {
   flow_feedback,
   getFeedbackResponse,
   flow_premium_activation,
   getPremiumActivationPayload,
+  flow_lembrete
 }
