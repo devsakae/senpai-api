@@ -81,7 +81,7 @@ const checkCommand = async (user, req) => {
       return await canal(req);
 
     if (user_sent?.text?.body === '.suporte' || interactiveType === '.suporte') {
-      if (user.premium) return await getPremiumSuporte(req);
+      // if (user.premium) return await getPremiumSuporte(req);
       return await getSuporte(req);
     }
     if (user_sent?.text?.body === '.sobre' || interactiveType === '.sobre')
