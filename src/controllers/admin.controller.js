@@ -1,6 +1,6 @@
 const { ADMIN_CMD_ADDPREMIUM } = process.env;
 const { bomDia } = require('../premium/bomdia');
-const { addTesterUser } = require('../utils/admin');
+const { addTesterUser, blockUser } = require('../utils/admin');
 const { sendPremium } = require('../utils/sender');
 const { checkCommand } = require('./checkCommand.controller');
 const { manualPremiumActivation } = require('./premium.controller')
@@ -13,7 +13,8 @@ const adminCommand = async (req) => {
   }
   if (commands.startsWith('.bomdia')) await bomDia();
   if (commands.startsWith('.anunciar ')) await sendPremium(commands.split(".anunciar ")[1]);
-  if (commands.startsWith('.tester')) await addTesterUser(req);
+  if (commands.startsWith('.tester')) await addTesterUser(commands.split(".tester ")[1]);
+  if (commands.startsWith('.block')) await blockUser(commands.split(".block ")[1]);
   return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate }, name: "Administrador", subscription: { type: "premium" } }, req);
 }
 
