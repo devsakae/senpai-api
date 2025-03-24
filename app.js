@@ -6,11 +6,8 @@ const { checkContact } = require('./src/controllers/saveContact.controller');
 const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
-const { getPremiumUsers, getAllUsers } = require('./src/controllers/premium.controller');
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
 const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
-const { exec } = require("child_process");
-const { removeExpiredPremium } = require('./src/assinaturas/premiumControl');
 
 const app = express();
 app.use(express.json());

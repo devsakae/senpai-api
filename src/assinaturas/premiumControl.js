@@ -6,7 +6,7 @@ const organizePremium = async () => {
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(23, 59);
   const allPremiumDbUsers = await getPremiumDbUsers();
-  const endingPremiums = allPremiumDbUsers?.filter(ep => Date(ep.subscription.end) <= tomorrow)
+  const endingPremiums = allPremiumDbUsers?.filter(ep => new Date(ep.subscription.end) <= tomorrow)
 
   await Promise.all(endingPremiums.map(async (ep) => {
     console.log('sending premium message expiration to', ep.wa_id, ep.wa_name);
