@@ -109,7 +109,7 @@ const dynamicSticker = async (req) => {
     .output(filePath)
     .outputFormat("webp")
     .videoCodec("libwebp")
-    .outputOption('-vf scale=512:512:force_original_aspect_ratio=increase,crop=512:512')
+    .outputOption(['-vf scale=512:512:force_original_aspect_ratio=increase','crop=512:512'])
     .fps(15)
     .noAudio()
     .on('end', async () => {
@@ -157,14 +157,14 @@ const dynamicSticker = async (req) => {
         .then((response) => {
           if (response.statusText !== 'OK')
             throw new Error({ message: 'Erro ao enviar sticker animado.' });
-        })
+          })
+          return console.info('sticker animado enviado!')
         .catch((err) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
     })
     .on('error', () => console.error('Erro gerando sticker animado.'))
     .run()
-  return console.info('sticker animado enviado!')
 }
 
 const freeUserStickerLimit = async (req) => {
