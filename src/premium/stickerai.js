@@ -100,6 +100,33 @@ const createStickerWithGemini = async (req) => {
     for (const part of response.response.candidates[0].content.parts) {
       if (part.text) {
         console.log(part.text);
+        const userErrorGenerating = part.text || "Houve um erro ao gerar sua imagem. Você pode tentar com outro prompt?"
+        return await axios({
+          method: 'POST',
+          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+          headers: {
+            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          data: {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: user,
+            type: 'text',
+            text: {
+              preview_url: true,
+              body: userErrorGenerating,
+            },
+          },
+        })
+          .then((response) => {
+            if (response.statusText !== 'OK')
+              throw new Error({ response: { data: 'retorno statusText !== OK' } });
+            return console.log("[.stickerai] enviada para user!");
+          })
+          .catch((err) => {
+            console.error('[.stickerai] erro enviando sticker!', err.response?.data || err);
+          });
       } else if (part.inlineData) {
         const imageData = part.inlineData.data;
         const buffer = Buffer.from(imageData, 'base64');
