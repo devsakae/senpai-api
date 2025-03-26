@@ -93,8 +93,6 @@ const staticSticker = async (req) => {
 const dynamicSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
-  const userName = payload?.contacts[0]?.profile?.name;
-  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, "base64");
@@ -103,19 +101,18 @@ const dynamicSticker = async (req) => {
   const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-  await ffmpeg(tempFile)
+  ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
     .outputFormat("webp")
     .videoCodec("libwebp")
-    
     .size("512x512")
-    // .outputOption(['-vf','scale=512:512:force_original_aspect_ratio=increase,crop=512:512'])
-    
     .fps(10)
     .noAudio()
-    .on('end', async () => {
+    .on('end', async myFile => {
+      console.log(typeof myFile);
+
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
       console.log('size:', sizeInKb)
@@ -139,7 +136,7 @@ const dynamicSticker = async (req) => {
             },
           },
         }).then(res => console.log('sending error about sticker size'))
-        .catch(err => console.error('error sending error about sticker size', err.data || err));
+          .catch(err => console.error('error sending error about sticker size', err.data || err));
       }
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
@@ -162,8 +159,8 @@ const dynamicSticker = async (req) => {
         .then((response) => {
           if (response.statusText !== 'OK')
             throw new Error({ message: 'Erro ao enviar sticker animado.' });
-          })
-          return console.info('sticker animado enviado!')
+        })
+      return console.info('sticker animado enviado!')
         .catch((err) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
