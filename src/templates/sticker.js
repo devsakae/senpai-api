@@ -115,6 +115,7 @@ const dynamicSticker = async (req) => {
     .on('end', async () => {
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
+      console.log('size:', sizeInKb)
 
       if (sizeInKb >= 500) {
         const errorMessage = randomizeThis(msg_size_errors);
@@ -134,7 +135,8 @@ const dynamicSticker = async (req) => {
               body: errorMessage
             },
           },
-        })
+        }).then(res => console.log('sending error about sticker size'))
+        .catch(err => console.error('error sending error about sticker size', err.data || err));
       }
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
