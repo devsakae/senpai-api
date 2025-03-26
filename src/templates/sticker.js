@@ -103,7 +103,7 @@ const dynamicSticker = async (req) => {
   const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-  ffmpeg(tempFile)
+  await ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
@@ -113,15 +113,6 @@ const dynamicSticker = async (req) => {
     .fps(15)
     .noAudio()
     .on('end', async () => {
-      // const sticker = new Sticker(filePath, {
-      //   pack: `🇯🇵 Created by ${userName.length > 3 && userName !== "" ? userName : userPhone}`,
-      //   author: "Senpai Bot",
-      //   type: StickerTypes.FULL,
-      //   quality: 100,
-      // });
-
-      // await sticker.toFile(filePath)
-
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
 
@@ -171,6 +162,7 @@ const dynamicSticker = async (req) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
     })
+    .on('error', () => console.error('Erro gerando sticker animado.'))
     .run()
   return console.info('sticker animado enviado!')
 }
