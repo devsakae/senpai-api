@@ -112,18 +112,19 @@ const dynamicSticker = async (req) => {
     .noAudio()
     .on('error', () => console.error('Erro gerando sticker animado.'))
     .on('end', async () => {
-      console.log(filePath);
+      const formData = new FormData();
+      formData.append("file", fs.createReadStream(filePath), {
+        contentType: "image/webp",
+      });
+      formData.append("messaging_product", "whatsapp");
       await axios({
         method: 'POST',
         url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
         headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+          ...formData.getHeaders(),
         },
-        data: {
-          messaging_product: 'whatsapp',
-          file: '@/' + filePath,
-          type: 'image/webp'
-        },
+        data: formData,
       })
         .then(async res => {
           console.log('uploaded!', res);
