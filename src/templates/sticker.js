@@ -113,10 +113,9 @@ const dynamicSticker = async (req) => {
     .on('error', () => console.error('Erro gerando sticker animado.'))
     .on('end', async () => {
       const formData = new FormData();
-      formData.append("file", fs.createReadStream(filePath), {
-        contentType: "image/webp",
-      });
-      formData.append("messaging_product", "whatsapp");
+      formData.append('messaging_product', 'whatsapp');
+      formData.append('file', fs.createReadStream(filePath));
+      formData.append('type', 'image/webp');
       await axios({
         method: 'POST',
         url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
@@ -127,7 +126,7 @@ const dynamicSticker = async (req) => {
         data: formData,
       })
         .then(async res => {
-          console.log('uploaded!', res);
+          console.log('uploaded!', res.data);
           if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
           return await axios({
             method: 'POST',
