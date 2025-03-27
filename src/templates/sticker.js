@@ -99,7 +99,7 @@ const dynamicSticker = async (req) => {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
   fs.writeFileSync(tempFile, localBuffer)
-  
+
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   ffmpeg(tempFile)
     .setStartTime(0)
@@ -112,6 +112,7 @@ const dynamicSticker = async (req) => {
     .noAudio()
     .on('error', () => console.error('Erro gerando sticker animado.'))
     .on('end', async () => {
+      console.log(filePath);
       await axios({
         method: 'POST',
         url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
@@ -120,14 +121,14 @@ const dynamicSticker = async (req) => {
         },
         data: {
           messaging_product: 'whatsapp',
-          file: '@' + filePath,
+          file: filePath,
           type: 'image/webp'
         },
       })
         .then(async res => {
           console.log('uploaded!', res);
           if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
-          await axios({
+          return await axios({
             method: 'POST',
             url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
             headers: {
@@ -143,10 +144,11 @@ const dynamicSticker = async (req) => {
                 id: res.id,
               },
             },
-          })
+          }).then(res => console.log('sent?', res))
+            .catch(err => console.log('error sending', err.data || err));
         })
         .catch((err) => {
-          console.error('error sending sticker!', err.response?.data || err);
+          console.error('error uploading sticker!', err.response?.data || err);
         })
       // const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       // await axios({
