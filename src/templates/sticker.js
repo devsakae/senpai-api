@@ -89,93 +89,95 @@ const staticSticker = async (req) => {
 };
 
 const dynamicSticker = async (req) => {
-  const payload = req.body.entry[0]?.changes[0]?.value;
-  const user = payload?.contacts[0]?.wa_id;
-  const mediaExtension = payload?.messages[0]?.video?.mime_type.split('/')[1];
-  const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
-  const mediaBuffer = await getMediaBuffer(mediaInfo.url);
-  const localBuffer = Buffer.from(mediaBuffer, "base64");
-  const destDir = './media/' + user;
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
-  const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
-  fs.writeFileSync(tempFile, localBuffer)
+  // const payload = req.body.entry[0]?.changes[0]?.value;
+  // const user = payload?.contacts[0]?.wa_id;
+  // const mediaExtension = payload?.messages[0]?.video?.mime_type.split('/')[1];
+  // const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
+  // const mediaBuffer = await getMediaBuffer(mediaInfo.url);
+  // const localBuffer = Buffer.from(mediaBuffer, "base64");
+  // const destDir = './media/' + user;
+  // if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
+  // const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
+  // fs.writeFileSync(tempFile, localBuffer)
 
-  const filePath = path.join(destDir, mediaInfo.id + '.webp');
-  ffmpeg(tempFile)
-    .setStartTime(0)
-    .setDuration(6)
-    .output(filePath)
-    .outputFormat("webp")
-    .videoCodec("libwebp")
-    .size("512x512")
-    .fps(10)
-    .noAudio()
-    .on('error', () => console.error('Erro gerando sticker animado.'))
-    .on('end', async () => {
-      const formData = new FormData();
-      formData.append('messaging_product', 'whatsapp');
-      formData.append('file', fs.createReadStream(filePath));
-      formData.append('type', 'image/webp');
-      await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-        headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        },
-        data: formData,
-      })
-        .then(async res => {
-          console.log('uploaded!', res.data);
-          if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
-          return await axios({
-            method: 'POST',
-            url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-            headers: {
-              Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-            data: {
-              messaging_product: 'whatsapp',
-              recipient_type: 'individual',
-              to: user,
-              type: 'sticker',
-              sticker: {
-                id: res.id,
-              },
-            },
-          }).then(res => console.log('sent?', res))
-            .catch(err => console.log('error sending', err.data || err));
-        })
-        .catch((err) => {
-          console.error('error uploading sticker!', err.response?.data || err);
-        })
-      // const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
-      // await axios({
-      //   method: 'POST',
-      //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-      //   headers: {
-      //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      //   data: {
-      //     messaging_product: 'whatsapp',
-      //     recipient_type: 'individual',
-      //     to: user,
-      //     type: 'sticker',
-      //     sticker: {
-      //       link: stickerURL,
-      //     },
-      //   },
-      // })
-      //   .then(res => {
-      //     if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
-      //     return console.info('sticker animado', res.statusText)
-      //   })
-      //   .catch((err) => {
-      //     console.error('error sending sticker!', err.response?.data || err);
-      //   })
-    })
-    .run()
+  // const filePath = path.join(destDir, mediaInfo.id + '.webp');
+  // ffmpeg(tempFile)
+  //   .setStartTime(0)
+  //   .setDuration(6)
+  //   .output(filePath)
+  //   .outputFormat("webp")
+  //   .videoCodec("libwebp")
+  //   .size("512x512")
+  //   .fps(10)
+  //   .noAudio()
+  //   .on('error', () => console.error('Erro gerando sticker animado.'))
+  //   .on('end', async () => {
+  //     const formData = new FormData();
+  //     formData.append('messaging_product', 'whatsapp');
+  //     formData.append('file', fs.createReadStream(filePath));
+  //     formData.append('type', 'image/webp');
+  //     await axios({
+  //       method: 'POST',
+  //       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+  //       headers: {
+  //         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+  //       },
+  //       data: formData,
+  //     })
+  //       .then(async res => {
+  //         console.log('uploaded!', res.data);
+  //         if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
+  //         return await axios({
+  //           method: 'POST',
+  //           url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+  //           headers: {
+  //             Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+  //             'Content-Type': 'application/json',
+  //           },
+  //           data: {
+  //             messaging_product: 'whatsapp',
+  //             recipient_type: 'individual',
+  //             to: user,
+  //             type: 'sticker',
+  //             sticker: {
+  //               id: res.id,
+  //             },
+  //           },
+  //         }).then(res => console.log('sent?', res))
+  //           .catch(err => console.log('error sending', err.data || err));
+  //       })
+  //       .catch((err) => {
+  //         console.error('error uploading sticker!', err.response?.data || err);
+  //       })
+
+
+  // const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
+  // await axios({
+  //   method: 'POST',
+  //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+  //   headers: {
+  //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+  //     'Content-Type': 'application/json',
+  //   },
+  //   data: {
+  //     messaging_product: 'whatsapp',
+  //     recipient_type: 'individual',
+  //     to: user,
+  //     type: 'sticker',
+  //     sticker: {
+  //       link: stickerURL,
+  //     },
+  //   },
+  // })
+  //   .then(res => {
+  //     if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
+  //     return console.info('sticker animado', res.statusText)
+  //   })
+  //   .catch((err) => {
+  //     console.error('error sending sticker!', err.response?.data || err);
+  //   })
+  // })
+  // .run()
 }
 
 const freeUserStickerLimit = async (req) => {
