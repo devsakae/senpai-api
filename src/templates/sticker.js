@@ -111,7 +111,7 @@ const dynamicSticker = async (req) => {
     .fps(10)
     .noAudio()
     .on('end', async myFile => {
-      console.log(typeof myFile);
+      console.log(myFile);
 
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
