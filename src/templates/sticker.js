@@ -101,21 +101,18 @@ const dynamicSticker = async (req) => {
   const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-  ffmpeg(tempFile)
+  ffmpeg(localBuffer)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
-    .outputFormat("webp")
     .videoCodec("libwebp")
     .size("512x512")
     .fps(10)
     .noAudio()
-    .on('end', async myFile => {
-      console.log(myFile);
+    .on('end', async () => {
 
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
-      console.log('size:', sizeInKb)
 
       if (sizeInKb >= 500) {
         const errorMessage = randomizeThis(msg_size_errors);
