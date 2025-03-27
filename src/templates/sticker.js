@@ -121,7 +121,6 @@ const dynamicSticker = async (req) => {
         url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
         headers: {
           Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-          ...formData.getHeaders(),
         },
         data: formData,
       })
