@@ -121,7 +121,7 @@ const dynamicSticker = async (req) => {
         },
         data: {
           messaging_product: 'whatsapp',
-          file: filePath,
+          file: '@/' + filePath,
           type: 'image/webp'
         },
       })
