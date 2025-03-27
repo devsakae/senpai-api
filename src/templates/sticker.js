@@ -39,8 +39,6 @@ const stickerTutorial = async (req) => {
 const staticSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
-  const userName = payload?.contacts[0]?.profile?.name;
-  const userPhone = payload?.metadata?.display_phone_number;
   const mediaInfo = await getMedia(payload?.messages[0]?.image?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, 'base64');
@@ -93,12 +91,13 @@ const staticSticker = async (req) => {
 const dynamicSticker = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0]?.wa_id;
+  const mediaExtension = payload?.messages[0]?.video?.mime_type.split('/')[1];
   const mediaInfo = await getMedia(payload?.messages[0]?.video?.id);
   const mediaBuffer = await getMediaBuffer(mediaInfo.url);
   const localBuffer = Buffer.from(mediaBuffer, "base64");
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
-  const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
+  const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
   fs.writeFileSync(tempFile, localBuffer)
   
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
@@ -113,57 +112,67 @@ const dynamicSticker = async (req) => {
     .noAudio()
     .on('error', () => console.error('Erro gerando sticker animado.'))
     .on('end', async () => {
-      console.log('filepath:', filePath);
-      const stats = fs.statfsSync(filePath)
-      const sizeInKb = stats.size / 1024
-      console.log('sizeinKb', sizeInKb);
-      if (sizeInKb >= 501) {
-        const errorMessage = randomizeThis(msg_size_errors);
-        return await axios({
-          method: 'POST',
-          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-          headers: {
-            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-          data: {
-            messaging_product: 'whatsapp',
-            recipient_type: 'individual',
-            to: user,
-            type: 'text',
-            text: {
-              body: errorMessage
-            },
-          },
-        }).then(res => console.log('sending error about sticker size'))
-          .catch(err => console.error('error sending error about sticker size', err.data || err));
-      }
-      const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
         headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`
         },
         data: {
           messaging_product: 'whatsapp',
-          recipient_type: 'individual',
-          to: user,
-          type: 'sticker',
-          sticker: {
-            link: stickerURL,
-          },
+          file: '@' + filePath,
+          type: 'image/webp'
         },
       })
-        .then(res => {
-          if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
-          console.log(res);
-          return console.info('sticker animado enviado!')
+        .then(async res => {
+          console.log('uploaded!', res);
+          if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
+          await axios({
+            method: 'POST',
+            url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+            headers: {
+              Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+              'Content-Type': 'application/json',
+            },
+            data: {
+              messaging_product: 'whatsapp',
+              recipient_type: 'individual',
+              to: user,
+              type: 'sticker',
+              sticker: {
+                id: res.id,
+              },
+            },
+          })
         })
         .catch((err) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
+      // const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
+      // await axios({
+      //   method: 'POST',
+      //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+      //   headers: {
+      //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   data: {
+      //     messaging_product: 'whatsapp',
+      //     recipient_type: 'individual',
+      //     to: user,
+      //     type: 'sticker',
+      //     sticker: {
+      //       link: stickerURL,
+      //     },
+      //   },
+      // })
+      //   .then(res => {
+      //     if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
+      //     return console.info('sticker animado', res.statusText)
+      //   })
+      //   .catch((err) => {
+      //     console.error('error sending sticker!', err.response?.data || err);
+      //   })
     })
     .run()
 }
