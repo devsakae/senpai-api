@@ -111,11 +111,12 @@ const dynamicSticker = async (req) => {
     .size("512x512")
     .fps(10)
     .noAudio()
+    .on('error', () => console.error('Erro gerando sticker animado.'))
     .on('end', async () => {
-
+      console.log('filepath:', filePath);
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
-
+      console.log('sizeinKb', sizeInKb);
       if (sizeInKb >= 501) {
         const errorMessage = randomizeThis(msg_size_errors);
         return await axios({
@@ -155,16 +156,15 @@ const dynamicSticker = async (req) => {
           },
         },
       })
-        .then((response) => {
-          if (response.statusText !== 'OK')
-            throw new Error({ message: 'Erro ao enviar sticker animado.' });
-            return console.info('sticker animado enviado!')
+        .then(res => {
+          if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
+          console.log(res);
+          return console.info('sticker animado enviado!')
         })
         .catch((err) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
     })
-    .on('error', () => console.error('Erro gerando sticker animado.'))
     .run()
 }
 
