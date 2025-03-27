@@ -99,12 +99,14 @@ const dynamicSticker = async (req) => {
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const tempFile = path.join(destDir, mediaInfo.id + ".mp4")
-  const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-  ffmpeg(localBuffer)
+  
+  const filePath = path.join(destDir, mediaInfo.id + '.webp');
+  ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
+    .outputFormat("webp")
     .videoCodec("libwebp")
     .size("512x512")
     .fps(10)
@@ -114,7 +116,7 @@ const dynamicSticker = async (req) => {
       const stats = fs.statfsSync(filePath)
       const sizeInKb = stats.size / 1024
 
-      if (sizeInKb >= 500) {
+      if (sizeInKb >= 501) {
         const errorMessage = randomizeThis(msg_size_errors);
         return await axios({
           method: 'POST',
@@ -156,8 +158,8 @@ const dynamicSticker = async (req) => {
         .then((response) => {
           if (response.statusText !== 'OK')
             throw new Error({ message: 'Erro ao enviar sticker animado.' });
+            return console.info('sticker animado enviado!')
         })
-      return console.info('sticker animado enviado!')
         .catch((err) => {
           console.error('error sending sticker!', err.response?.data || err);
         })
