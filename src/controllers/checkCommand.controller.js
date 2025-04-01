@@ -39,6 +39,12 @@ const checkCommand = async (user, req) => {
     return await flow_premium_activation(req);
   }
 
+  if (user_sent?.type === 'reply') {
+    console.log(user_sent);
+    if (user_sent?.reply?.text?.body.startsWith('.getpremium'))
+      return await premiumPlans(req);
+  }
+
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     let interactiveType =
       (user_sent?.type === 'interactive' &&
