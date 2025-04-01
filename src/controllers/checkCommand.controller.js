@@ -39,12 +39,6 @@ const checkCommand = async (user, req) => {
     return await flow_premium_activation(req);
   }
 
-  if (user_sent?.type === 'reply') {
-    console.log(user_sent);
-    if (user_sent?.reply?.text?.body.startsWith('.getpremium'))
-      return await premiumPlans(req);
-  }
-
   if (user_sent?.type === 'text' || user_sent?.type === 'interactive') {
     let interactiveType =
       (user_sent?.type === 'interactive' &&
@@ -63,12 +57,11 @@ const checkCommand = async (user, req) => {
     // premium:end
 
     if (interactiveType.startsWith('.getpremium')
+        || interactiveType === '.getpremium'
         || user_sent?.text?.body.startsWith('.getpremium')
         || user_sent?.text?.body.includes('Quero ser Premium!'))
       return await premiumPlans(req);
       
-    // flows:start
-
     // tester:start
     if (user.tester && user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
     // tester:end
