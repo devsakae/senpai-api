@@ -31,11 +31,11 @@ const checkLastInteraction = async (user, req) => {
 };
 
 const checkCommand = async (user, req) => {
-  
+
   const today = new Date();
   const user_sent = req.body.entry[0]?.changes[0]?.value?.messages[0];
-  
-  if (user_sent?.type === 'button'  && user_sent?.button?.payload === 'Possuo um Código') {
+
+  if (user_sent?.type === 'button' && user_sent?.button?.payload === 'Possuo um Código') {
     return await flow_premium_activation(req);
   }
 
@@ -57,15 +57,15 @@ const checkCommand = async (user, req) => {
     // premium:end
 
     if (interactiveType.startsWith('.getpremium')
-        || interactiveType === '.getpremium'
-        || user_sent?.text?.body.startsWith('.getpremium')
-        || user_sent?.text?.body.includes('Quero ser Premium!'))
+      || interactiveType === '.getpremium'
+      || user_sent?.text?.body.startsWith('.getpremium')
+      || user_sent?.text?.body.includes('Quero ser Premium!'))
       return await premiumPlans(req);
-      
+
     // tester:start
     if (user.tester && user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
     // tester:end
-    
+
     if (interactiveType === '.feedback')
       return await flow_feedback(req);
 
@@ -127,30 +127,11 @@ const checkCommand = async (user, req) => {
     return;
   }
 
-  if (user_sent?.type === 'image') {
-      const userLastImageSentDatetime = new Date(user?.last_time.image);
-      if (
-        ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000)
-        && !user.premium)
-      ) {
-        console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
-        return await freeUserStickerLimit(req);
-      }
-      if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
-        console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
-        return await oneStickerAtTime(req);
-      }
-      if (user_sent?.type === 'image') return await staticSticker(req);
-      // if (user_sent?.type === 'video') return await dynamicSticker(req)
-    }
-
-  // if (user_sent?.type === 'image' || user_sent?.type === 'video') {
+  // if (user_sent?.type === 'image') {
   //   const userLastImageSentDatetime = new Date(user?.last_time.image);
-  //   const userLastVideoSentDatetime = new Date(user?.last_time.video);
   //   if (
-  //     ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000
-  //     || today.getTime() - userLastVideoSentDatetime.getTime() < 86400000)
-  //     && !user.premium)
+  //     ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000)
+  //       && !user.premium)
   //   ) {
   //     console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
   //     return await freeUserStickerLimit(req);
@@ -160,8 +141,27 @@ const checkCommand = async (user, req) => {
   //     return await oneStickerAtTime(req);
   //   }
   //   if (user_sent?.type === 'image') return await staticSticker(req);
-  //   // if (user_sent?.type === 'video') return await dynamicSticker(req)
+  //   if (user_sent?.type === 'video') return await dynamicSticker(req)
   // }
+
+  if (user_sent?.type === 'image' || user_sent?.type === 'video') {
+    const userLastImageSentDatetime = new Date(user?.last_time.image);
+    const userLastVideoSentDatetime = new Date(user?.last_time.video);
+    if (
+      ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000
+        || today.getTime() - userLastVideoSentDatetime.getTime() < 86400000)
+        && !user.premium)
+    ) {
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
+      return await freeUserStickerLimit(req);
+    }
+    if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
+      console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
+      return await oneStickerAtTime(req);
+    }
+    if (user_sent?.type === 'image') return await staticSticker(req);
+    if (user_sent?.type === 'video') return await dynamicSticker(req)
+  }
 
 };
 
