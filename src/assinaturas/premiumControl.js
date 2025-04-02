@@ -39,33 +39,29 @@ const organizePremium = async () => {
 };
 
 const removeExpiredPremium = async () => {
-  // const yesterday = new Date();
-  // yesterday.setDate(yesterday.getDate() - 1);
-  // yesterday.setHours(23, 59);
-  // const allPremiumDbUsers = await getPremiumDbUsers();
-  // const expiredPremium = allPremiumDbUsers?.filter(ep => Date(ep.subscription.end) <= yesterday)
   
   const expiredPremium = await getExpiringPremiumDbUsers();
+  console.log(expiredPremium)
   if (expiredPremium.length === 0) return console.info('[removeExpiredPremium] great! no expiring premium user found today.')
   console.log("[removeExpiredPremium]", expiredPremium.length, "expired premium users found, cleaning...");
   console.info('[removeExpiredPremium] test complete. Check array:')
-  console.log(expiredPremium)
-  // await Promise.all(expiredPremium.map(async ep => {
-  //   console.info("updating on customers db...")
-  //   await senpaiMongoDb.collection("customers").findOneAndUpdate({
-  //     wa_id: ep.wa_id
-  //   }, {
-  //     $set: {
-  //       premium: false,
-  //       "subscription.type": "free",
-  //     }
-  //   });
-  // })).then(async res => {
-  //   console.info("deleting from premium db...")
-  //   await Promise.all(expiredPremium.map(async ep => {
-  //     await senpaiMongoDb.collection("premium").findOneAndDelete({ wa_id: ep.wa_id });
-  //   }))
-  // }).catch(err => console.error("error removing expired:", err.data || err));
+  await Promise.all(expiredPremium.map(async ep => {
+    console.info("updating on customers db...")
+    await senpaiMongoDb.collection("customers").findOneAndUpdate({
+      wa_id: ep.wa_id
+    }, {
+      $set: {
+        premium: false,
+        "subscription.type": "free",
+      }
+    });
+  })).then(async res => {
+    console.info("deleting from premium db...")
+    await Promise.all(expiredPremium.map(async ep => {
+      await senpaiMongoDb.collection("premium").findOneAndDelete({ wa_id: ep.wa_id });
+    }))
+  }).catch(err => console.error("error removing expired:", err.data || err));
+
 }
 
 const getPremiumDbUsers = async () => {
@@ -78,7 +74,7 @@ const getPremiumDbUsers = async () => {
 const getExpiringPremiumDbUsers = async () => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  yesterday.setHours(23, 59);
+  yesterday.setHours(23, 59, 59);
   console.log('[getExpiringPremium]', yesterday)
   return await senpaiMongoDb
     .collection('premium')
