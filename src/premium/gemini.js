@@ -16,6 +16,7 @@ const getGeminiResponse = async (req) => {
   const prompt = payload?.messages[0]?.text?.body;
   const result = await model.generateContent(prompt);
   const botResponse = result.response.text();
+  console.log("BotSenpai:", botResponse)
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
