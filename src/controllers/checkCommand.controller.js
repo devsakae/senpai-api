@@ -127,23 +127,6 @@ const checkCommand = async (user, req) => {
     // return;
   }
 
-  // if (user_sent?.type === 'image') {
-  //   const userLastImageSentDatetime = new Date(user?.last_time.image);
-  //   if (
-  //     ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000)
-  //       && !user.premium)
-  //   ) {
-  //     console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
-  //     return await freeUserStickerLimit(req);
-  //   }
-  //   if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
-  //     console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
-  //     return await oneStickerAtTime(req);
-  //   }
-  //   if (user_sent?.type === 'image') return await staticSticker(req);
-  //   if (user_sent?.type === 'video') return await dynamicSticker(req)
-  // }
-
   if (user_sent?.type === 'image' || user_sent?.type === 'video') {
     const userLastImageSentDatetime = new Date(user?.last_time.image);
     const userLastVideoSentDatetime = new Date(user?.last_time.video);
