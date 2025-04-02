@@ -50,7 +50,7 @@ const checkCommand = async (user, req) => {
       if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
       return await stickerTutorial(req);
     }
-    if (user.premium && user?.subscription?.type === "premium" && user_sent?.text?.body.startsWith('.stickerai ')) {
+    if (user.premium && user_sent?.text?.body.startsWith('.stickerai ')) {
       if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
       return await stickerTutorial(req);
     }
@@ -122,9 +122,9 @@ const checkCommand = async (user, req) => {
     )
       return console.info(user.name, 'tried command', user_sent?.text?.body);
 
-    if (user.premium && user?.subscription?.type === "premium") return await getGeminiResponse(req);
-
-    return;
+    return await getGeminiResponse(req);
+    // if (user.premium && user?.subscription?.type === "premium") return await getGeminiResponse(req);
+    // return;
   }
 
   // if (user_sent?.type === 'image') {
