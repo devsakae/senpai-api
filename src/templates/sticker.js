@@ -143,7 +143,10 @@ const dynamicSticker = async (req) => {
                 id: res.id,
               },
             },
-          }).then(res => console.log('sent?', res))
+          }).then(res => {
+            console.log(res);
+            return res;
+          })
             .catch(err => console.log('error sending', err.data || err));
         })
         .catch((err) => {
