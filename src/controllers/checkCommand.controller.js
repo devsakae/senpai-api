@@ -122,9 +122,9 @@ const checkCommand = async (user, req) => {
     )
       return console.info(user.name, 'tried command', user_sent?.text?.body);
 
-    return await getGeminiResponse(req);
-    // if (user.premium && user?.subscription?.type === "premium") return await getGeminiResponse(req);
-    // return;
+    if (user.premium && user?.subscription?.type === "premium") return await getGeminiResponse(req);
+
+    return;
   }
 
   if (user_sent?.type === 'image' || user_sent?.type === 'video') {
