@@ -2,29 +2,29 @@ const randomizeThis = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 const msg_welcome = [
-  '🥰 Olá, docinho! Que alegria te ver por aqui! 💖\n\nEu sou a SenpaiBot, sua assistente fofa e cheia de carinho! ✨ Estou aqui para te ajudar com figurinhas e o que mais precisar! Se eu demorar a responder, talvez eu esteja retocando meu batom digital... 💄😆\n\nQuer saber mais sobre mim? Dá uma olhadinha aqui: http://www.botdosenpai.com.br 💕',
-  '🌸 Oiiie! Que felicidade ter você por aqui! 🎀\n\nSou a SenpaiBot, sempre pronta para te ajudar a criar figurinhas e deixar suas conversas ainda mais divertidas! 💖 Me chama sempre que precisar, viu?\n\nSe quiser me conhecer melhor, acesse: http://www.botdosenpai.com.br ✨',
-  '💞 Olá, meu bem! Seja muito bem-vindo(a) à SenpaiBot! 🥰\n\nSou sua assistente virtual fofinha e estou aqui para transformar suas ideias em figurinhas lindas! 🎨✨ Qualquer coisa, é só me chamar!\n\nQuer saber mais sobre mim? Acesse: www.botdosenpai.com.br 🎀',
-  '🐱 Oiii, fofinho(a)! Você chegou e meu coraçãozinho digital já ficou feliz! 💕\n\nEu sou a SenpaiBot, e estou aqui para criar figurinhas, espalhar amor e te fazer sorrir! 😻✨\n\nDá uma passadinha no meu site para saber mais sobre mim: http://www.botdosenpai.com.br 🌸',
-  '🎀 Oi, meu bem! Tudo certinho? 🌈\n\nVocê acabou de falar com a bot mais fofa do WhatsApp! 💖 Estou sempre aqui para criar figurinhas lindas e alegrar o seu dia! ✨\n\nSe quiser me conhecer melhor, acesse: http://www.botdosenpai.com.br 💕',
-  '🐰 Oi, oi! Que bom que você chegou! 🎉💖\n\nEu sou a SenpaiBot, sua amiga virtual cheia de fofura! 🥰 Se precisar de figurinhas ou de um papo animado, estou por aqui! Se eu sumir rapidinho, é porque fui pegar um docinho virtual... 🍭😆\n\nQuer saber mais sobre mim? Acesse: http://www.botdosenpai.com.br ✨',
-  '🌟 Yay! Você me chamou e eu já fiquei toda animada! 🥰\n\nSou a SenpaiBot, e estou aqui para transformar suas ideias em figurinhas incríveis! ✨ Qualquer dúvida ou ajuda, pode contar comigo!\n\nAcesse meu site para saber mais sobre mim: www.botdosenpai.com.br 💖',
-  '😻 Miau! Que delícia te ver aqui! 💖\n\nEu sou a SenpaiBot, sempre pronta para te ajudar a criar figurinhas maravilhosas! ✨ Se precisar de algo, é só me chamar, viu?\n\nSe quiser saber mais sobre mim, acesse: http://www.botdosenpai.com.br 🎀',
-  '💖 Oiii, pessoa especial! Que bom que você chegou! 🥰\n\nEu sou a SenpaiBot e estou aqui para deixar seu WhatsApp ainda mais fofo e divertido! 🌸\n\nSe quiser saber mais sobre mim, dá uma passadinha no meu site: http://www.botdosenpai.com.br 💕',
-  '🎀 Yaaaay! Você me chamou e eu já estou toda feliz! 😍\n\nSou a SenpaiBot, sua assistente fofinha! Sempre que precisar de figurinhas ou de um toque de alegria no seu dia, é só me chamar! 💞\n\nQuer me conhecer melhor? Acesse: www.botdosenpai.com.br 🌸',
+  '🥰 Olá, docinho! Que alegria ter você aqui comigo! 💖\n\nEu sou a *Bot do Senpai*, sua assistente virtual cheia de carinho e fofura! ✨ Estou aqui pra te ajudar com figurinhas lindas e o que mais precisar! Se eu demorar a responder, talvez esteja retocando meu batom digital... 💄😆\n\nQuer saber mais sobre mim? Dá uma passadinha aqui: http://www.botdosenpai.com.br 💕',
+  '🌸 Oiiiieee~ Que felicidade te receber! 🎀\n\nSou a *Bot do Senpai*, prontinha pra criar figurinhas fofinhas e deixar suas conversas ainda mais divertidas! 💖 Me chama quando quiser, tá bem?\n\nQuer me conhecer melhor? Acesse: http://www.botdosenpai.com.br ✨',
+  '💞 Olá, meu bem! Seja muito bem-vindo(a) à *Bot do Senpai*! 🥰\n\nSua assistente fofinha chegou pra transformar suas ideias em figurinhas encantadoras! 🎨✨ Qualquer coisinha, estarei aqui!\n\nDescubra mais sobre mim no site: www.botdosenpai.com.br 🎀',
+  '🐱 Oiii, fofurinha! Você chegou e meu coraçãozinho digital já brilhou! 💕\n\nEu sou a *Bot do Senpai*, pronta pra criar figurinhas, espalhar amor e te fazer sorrir! 😻✨\n\nMe conhece melhor aqui: http://www.botdosenpai.com.br 🌸',
+  '🎀 Oi, meu bem! Tudo certinho por aí? 🌈\n\nVocê tá falando com a bot mais fofa do WhatsApp! 💖 Tô aqui pra criar figurinhas maravilhosas e alegrar o seu dia! ✨\n\nQuer saber mais sobre mim? Acesse: http://www.botdosenpai.com.br 💕',
+  '🐰 Oi, oi! Que alegria te ver por aqui! 🎉💖\n\nEu sou a *Bot do Senpai*, sua companheira virtual cheia de fofura! 🥰 Se precisar de figurinhas ou só de um carinho digital, tô por aqui! Se eu sumir rapidinho, é porque fui buscar um docinho virtual... 🍭😆\n\nQuer saber mais sobre mim? Corre lá: http://www.botdosenpai.com.br ✨',
+  '🌟 Yaaay! Você me chamou e eu fiquei toda animada! 🥰\n\nSou a *Bot do Senpai*, aqui pra transformar suas ideias em figurinhas lindas e exclusivas! ✨ Precisou de ajuda? Tô só um "oi" de distância!\n\nAcesse meu site: www.botdosenpai.com.br 💖',
+  '😻 Miau~ Que gostosura ter você aqui comigo! 💖\n\nEu sou a *Bot do Senpai*, sempre pronta pra te ajudar a criar figurinhas fofinhas e deixar seus dias mais doces! ✨\n\nQuer saber mais? Me visita: http://www.botdosenpai.com.br 🎀',
+  '💖 Oiii, pessoinha especial! Que bom que você chegou! 🥰\n\nEu sou a *Bot do Senpai*, e tô aqui pra deixar seu WhatsApp mais fofo, criativo e cheio de figurinhas lindas! 🌸\n\nMe conhece melhor aqui: http://www.botdosenpai.com.br 💕',
+  '🎀 Yaaaay! Você me chamou e eu fiquei toda felizinha! 😍\n\nSou a *Bot do Senpai*, sua ajudante fofa! Sempre que quiser figurinhas ou um toque de alegria no dia, é só me chamar! 💞\n\nQuer me conhecer melhor? Corre lá: www.botdosenpai.com.br 🌸',
 ];
 
 const msg_tutorials = [
-  '💖 Owwwn, que alegria te ver aqui! Obrigado por usar o Bot do Senpai! 🥰 Vamos criar figurinhas lindas juntos? Escolha uma opção abaixo! ✨',
-  '🐱 Arigatooo~! 💕 Você é um amor por usar o Bot do Senpai! Vamos fazer figurinhas incríveis? Escolha uma opção e bora! 😍',
-  '🥺 O Senpai tá muito feliz de ter você aqui! Obrigado por confiar em mim! 💝 Vamos criar figurinhas mágicas juntos? ✨ Escolha uma opção!',
-  '🌸 O seu sorriso vale mais do que mil figurinhas! 😻 Obrigado por usar o Bot do Senpai! Vamos criar algo lindo? Escolha uma opção abaixo! 🥳',
-  '😚 Obrigado, docinho! Você faz meu dia mais feliz só por estar aqui! 💞 Bora criar figurinhas maravilhosas? Escolha uma opção e vamos nessa! 🚀',
-  '🐰 Seu carinho ilumina meu código! 💡✨ Obrigado por usar o Bot do Senpai! Escolha uma opção e vamos transformar amor em figurinhas! 🥰',
-  '🎀 Awwn, você escolheu o Bot do Senpai! 💖 Eu tô super empolgado para fazer figurinhas incríveis com você! Escolha uma opção e bora lá! 🥳',
-  '💞 Você é um serzinho especial! Obrigado por usar o Bot do Senpai! 🥺 Vamos criar figurinhas cheias de amor? Escolha uma opção abaixo! 🌟',
-  '🐶 Eu queria te dar um abraço de gratidão! 🤗 Obrigado por estar aqui! Vamos criar figurinhas fofinhas juntos? Escolha uma opção! 🎨💖',
-  '🍭 Você é um docinho! Obrigado por escolher o Bot do Senpai! 💕 Estou pronto para criar figurinhas encantadoras com você! Escolha uma opção! ✨',
+  '💖 Oi, oi! Que emoção te ver aqui! Você acaba de entrar no mundinho mágico da Senpai! ✨ Vamos criar figurinhas que brilham? Escolha uma opção! 🌟',
+  '🎀 Awnn~ você chegou! 😍 Eu já tava com saudade sem nem te conhecer! Que tal criarmos figurinhas fofinhas juntas? É só escolher uma opção! 🐾',
+  '🐱 Nyaa~! Senpai aqui pronta pra te mimar com figurinhas incríveis! 💕 Escolha uma opção e vamos deixar o WhatsApp mais fofo juntos! 🎨',
+  '🌸 Seu toque despertou minha função de fofura máxima! 😳 Obrigada por usar a Bot do Senpai! Bora criar algo mágico? Escolha sua aventura! ✨',
+  '🍭 Você apareceu e meu coração deu um bug de alegria! 💗 Vem comigo criar figurinhas cheias de amor! Escolha uma opção, vai~!',
+  '🧁 Você chegou e o clima ficou doce por aqui! Que tal espalharmos amor em forma de figurinhas? 💕 Escolha uma opção e vem comigo! ✨',
+  '🎠 O carrossel da criatividade já está girando! E você é o convidado especial! 🎨 Bora criar arte em forma de figurinhas? Escolha aqui embaixo 💫',
+  '🐰 A fábrica de figurinhas fofas abriu só pra você! 💖 E adivinha? Eu sou a operária chefe da diversão! Vamos começar? Escolha uma opção! 😋',
+  '🍓 O mundo ficou mais colorido com a sua presença! 🌈 Vamos criar figurinhas com gostinho de carinho? É só clicar em uma opção aqui embaixo! 💌',
+  '📦 Entregando um pacote de abraços digitais com figurinhas personalizadas! 📬 Pronta pra te ajudar, viu? Escolhe aqui e vamos brincar juntas! 💕',
 ];
 
 const msg_sticker = [
@@ -41,16 +41,16 @@ const msg_sticker = [
 ];
 
 const msg_limitsticker = [
-  '⏳ Ei, calma aí, artista das figurinhas! 🎨 Você já criou seu sticker hoje! Mas não se preocupe, o encanto recarrega em 24 horas! 💖',
-  '🛑 Opa, opa! O motorzinho das figurinhas precisa de um descanso! 😴 Volte amanhã para criar mais adesivos incríveis! ✨',
-  '✨ Parece que você atingiu o limite de figurinhas mágicas do dia! 🦄 Mas não se preocupe, amanhã a fábrica abre de novo! 🎠',
-  '📢 Atenção, mestre das figurinhas! 📸 Você já usou seu poder máximo de hoje! Mas amanhã você pode voltar com tudo! 💪🔥',
-  '🕰️ O sticker mágico precisa descansar um pouquinho! 😴 Volte amanhã e continue espalhando diversão com suas figurinhas! 🥰',
-  '🎭 O palco das figurinhas está fechado por hoje! 🏰 Mas amanhã você pode brilhar de novo com novas criações! 🌟',
-  '💡 Ufa! Você criou tantas figurinhas que até meu sistema ficou impressionado! 🤯 Volte amanhã para mais diversão! 😍',
-  '🌟 Sticker factory fechada por hoje! 🏭 Mas amanhã tem reabertura com muitas criações novas! Fique de olho! 👀',
-  '🚀 Pouso forçado! Você já usou seu limite de figurinhas hoje! 🛸 Mas amanhã a viagem continua, então fique pronto! 💫',
-  '🎀 Sua criatividade é incrível! Mas agora, um tempinho de descanso para o sistema! Volte amanhã para mais figurinhas fofas! 💕',
+  '⏳ Você já usou sua figurinha diária! O plano gratuito permite apenas 1 por dia. Desbloqueie o Premium e aproveite sem limites! 💎',
+  '🛑 Limite diário atingido! No plano gratuito, você pode criar 1 figurinha por dia. Com o Premium, é ilimitado e com funções exclusivas! 🚀',
+  '✨ Figurinha feita! No plano grátis, o limite é 1 por dia. Assine o Premium e crie quantas quiser, com acesso a recursos únicos! 🔓',
+  '📢 Sua figurinha do dia foi criada! Para continuar se divertindo sem limites e desbloquear funções VIP, torne-se Premium! 👑',
+  '😴 A fábrica de figurinhas fechou por hoje! O plano gratuito libera 1 por dia. No Premium, ela nunca para! 💥',
+  '🎭 Limite diário alcançado! Quer criar sem parar e liberar funções secretas? O Premium é pra você! 🎉',
+  '🔒 O plano gratuito permite 1 figurinha por dia. Com o Premium, você tem acesso total e ferramentas exclusivas! 🧰',
+  '🕰️ Figurinha enviada! Com o plano grátis, é só 1 por dia. No Premium, é sem limites e com recursos especiais! ✨',
+  '💡 Chegou ao limite diário! Com o Premium, você ultrapassa essa barreira e desbloqueia recursos VIP! 💎',
+  '🎁 Figurinha criada com sucesso! Para continuar agora mesmo, assine o Premium e aproveite tudo sem restrições! 🚀',
 ];
 
 const msg_premium_thankyou = [
