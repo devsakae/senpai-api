@@ -25,7 +25,8 @@ const createStickerWithImagen = async (req) => {
       numberOfImages: 1,
     },
   });
-  const localBuffer = Buffer.from(response.generatedImages[0], 'base64');
+  console.log(response.generatedImages);
+  const localBuffer = Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
   const destDir = './media/' + user;
   const webpFilename = "imagen3-generated-" + new Date().getTime() + ".png";
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
@@ -59,64 +60,6 @@ const createStickerWithImagen = async (req) => {
     .catch((err) => {
       console.error('[.imagem] erro enviando sticker!', err.response?.data || err);
     });
-  // await axios({
-  //   method: 'POST',
-  //   url: `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${GOOGLE_TRANSLATE_APIKEY}`,
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   data: {
-  //     instances: [{
-  //       prompt: promptTranslated,
-  //     }],
-  //     parameters: {
-  //       sampleCount: 1
-  //     }
-  //   }
-  // }).then(async (res) => {
-  //   console.log("[.imagem] gerando com Imagen3...");
-  //   if (!res.predictions || res?.predictions.length === 0) throw new Error({ data: "Nenhuma imagem gerada" })
-  //   const localBuffer = Buffer.from(res.predictions[0].bytesBase64Encoded, 'base64');
-  //   const destDir = './media/' + user;
-  //   const webpFilename = "ai-generated-" + new Date().getTime();
-  //   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
-  //   const filePath = path.join(destDir, webpFilename + ".png");
-  //   await sharp(localBuffer)
-  //     .toFile(filePath)
-  //     .then(async (res) => {
-  //       console.log("[.imagem] sticker gerada, tentando enviar...");
-  //       const imagemURL = `${API_URL}/media/${user}/${webpFilename}`;
-  //       return await axios({
-  //         method: 'POST',
-  //         url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-  //         headers: {
-  //           Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //         data: {
-  //           messaging_product: 'whatsapp',
-  //           recipient_type: 'individual',
-  //           to: user,
-  //           type: 'image',
-  //           image: {
-  //             link: imagemURL,
-  //             caption: "Sua imagem está pronta! #BotSenpai"
-  //           },
-  //         },
-  //       })
-  //         .then((response) => {
-  //           if (response.statusText !== 'OK')
-  //             throw new Error({ response: { data: 'retorno statusText !== OK' } });
-  //           return console.log("[.imagem] enviada para user!");
-  //         })
-  //         .catch((err) => {
-  //           console.error('[.imagem] erro enviando sticker!', err.response?.data || err);
-  //         });
-  //     })
-
-  // }).catch(err => {
-  //   console.error("[.imagem] erro gerando imagem com Imagen3!", err.data || err);
-  // })
 }
 
 const createStickerWithGemini = async (req) => {
