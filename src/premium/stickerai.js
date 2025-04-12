@@ -10,7 +10,7 @@ const rapidkeys = RAPIDAPI_KEYS.split(",");
 const styles = [40, 41, 42, 43, 44, 45];
 
 const createStickerWithImagen = async (req) => {
-  const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
+  const ai = new GoogleGenerativeAI({ apiKey: GOOGLE_API_KEY });
   const payload = req.body.entry[0]?.changes[0]?.value
   const user = payload.contacts[0]?.wa_id
   const originalPrompt = payload.messages[0]?.text?.body.split(".imagem ")[1]
