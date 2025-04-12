@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const { senpaiMongoDb } = require("../utils/connections");
 const { sendAdmin } = require("../utils/sender");
 const { msg_limitsticker, msg_premium_wannabe, randomizeThis } = require("../templates/info");
-const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, } = process.env;
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, ADMIN_CMD_ADDPREMIUM } = process.env;
 
 const getPremiumUsers = async () => {
   const premiumUsers = await senpaiMongoDb.collection('premium').find().toArray();

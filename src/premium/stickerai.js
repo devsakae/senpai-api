@@ -28,7 +28,7 @@ const createStickerWithImagen = async (req) => {
   console.log(response.generatedImages);
   const localBuffer = Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
   const destDir = './media/' + user;
-  const webpFilename = "imagen3-generated-" + new Date().getTime() + ".png";
+  const webpFilename = "imagen3-generated-" + new Date().getTime();
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const filePath = path.join(destDir, webpFilename + ".png");
   fs.writeFileSync(filePath, localBuffer);
