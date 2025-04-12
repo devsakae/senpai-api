@@ -9,7 +9,7 @@ const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
 const { getGeminiResponse } = require('../premium/gemini');
-const { createStickerWithGemini } = require('../premium/stickerai');
+const { createStickerWithGemini, createStickerWithImagen } = require('../premium/stickerai');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -46,13 +46,15 @@ const checkCommand = async (user, req) => {
       '';
 
     // premium:start
-    if (user.premium && user_sent?.text?.body.startsWith('.sticker ')) {
-      if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
-      return await stickerTutorial(req);
-    }
-    if (user.premium && user_sent?.text?.body.startsWith('.stickerai ')) {
-      if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
-      return await stickerTutorial(req);
+    if (user.premium) {
+      if (user_sent?.text?.body.startsWith('.sticker ')) {
+        if (user_sent?.text?.body.split(".sticker ")[1].length > 0) return await getStickerWa(req);
+        return await stickerTutorial(req);
+      }
+      if (user_sent?.text?.body.startsWith('.stickerai ')) {
+        if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
+        return await stickerTutorial(req);
+      }
     }
     // premium:end
 
@@ -63,7 +65,10 @@ const checkCommand = async (user, req) => {
       return await premiumPlans(req);
 
     // tester:start
-    if (user.tester && user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
+    if (user.tester) {
+      if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
+      if (user_sent?.text?.body.startsWith('.imagem ')) return await createStickerWithImagen(req);
+    }
     // tester:end
 
     if (interactiveType === '.feedback')
