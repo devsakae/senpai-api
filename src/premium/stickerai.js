@@ -20,82 +20,61 @@ const createStickerWithImagen = async (req) => {
   const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-BR", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi'";
   const promptTranslated = translatePrompt;
   console.log('[.imagem] gerando imagem com o prompt', promptTranslated, "(" + originalPrompt + ")")
-  const response = await ai.models.generateImages({
+  await ai.models.generateImages({
     model: 'imagen-3.0-generate-002',
     prompt: promptTranslated,
     config: {
       numberOfImages: 1,
     },
-  });
-  const localBuffer = Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
-  const destDir = './media/' + user;
-  const webpFilename = "imagen3-generated-" + new Date().getTime();
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
-  const filePath = path.join(destDir, webpFilename + ".png");
-  fs.writeFileSync(filePath, localBuffer);
-  const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
-  console.log("[.imagem] gerada:", imagemURL);
-  const formData = new FormData();
-  const myFile = fs.createReadStream(filePath);
-  formData.append('messaging_product', 'whatsapp');
-  formData.append('file', myFile);
-  formData.append('type', 'image/png');
-  await axios({
-    method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-    headers: {
-      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      ...formData.getHeaders()
-    },
-    data: formData,
-  }).then(async res => {
-    console.log('[.imagem] enviada para servidor da Meta com id:', res.id);
-    if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
-    return await axios({
-      method: 'POST',
-      url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-      headers: {
-        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      data: {
-        messaging_product: 'whatsapp',
-        recipient_type: 'individual',
-        to: userPhone,
-        type: 'image',
-        image: {
-          id: res.id,
-          caption: originalPrompt
+  })
+    .then(async response => {
+      const localBuffer = Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
+      const destDir = './media/' + user;
+      const webpFilename = "imagen3-generated-" + new Date().getTime();
+      if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
+      const filePath = path.join(destDir, webpFilename + ".png");
+      fs.writeFileSync(filePath, localBuffer);
+      const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
+      console.log("[.imagem] gerada:", imagemURL);
+      const formData = new FormData();
+      const myFile = fs.createReadStream(filePath);
+      formData.append('messaging_product', 'whatsapp');
+      formData.append('file', myFile);
+      formData.append('type', 'image/png');
+      await axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+        headers: {
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+          ...formData.getHeaders()
         },
-      },
-    }).then(res => console.log("[.imagem] enviado!"))
-      .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response.data), err.response.data));
-  }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response.data), err.response.data))
+        data: formData,
+      }).then(async res => {
+        console.log('[.imagem] enviada para servidor da Meta com id:', res.id);
+        if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
+        return await axios({
+          method: 'POST',
+          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+          headers: {
+            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          data: {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: userPhone,
+            type: 'image',
+            image: {
+              id: res.id,
+              caption: originalPrompt
+            },
+          },
+        }).then(res => console.log("[.imagem] enviado!"))
+          .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response.data), err.response.data));
+      }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response.data), err.response.data))
 
-  //   return await axios({
-  //     method: 'POST',
-  //     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-  //     headers: {
-  //       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     data: {
-  //       messaging_product: 'whatsapp',
-  //       recipient_type: 'individual',
-  //       to: userPhone,
-  //       type: 'image',
-  //       image: {
-  //         link: imagemURL,
-  //         caption: originalPrompt
-  //       },
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (response.statusText !== 'OK')
-  //         throw new Error({ data: { error: { message: 'retorno statusText !== OK' } } });
-  //       return console.log("[.imagem] enviada para user!");
-  //     })
-  //     .catch((err) => console.error('[.imagem] erro enviando sticker!', err.data?.error?.message));
+    })
+    .catch(err => console.error(err))
 }
 
 const createStickerWithGemini = async (req) => {
