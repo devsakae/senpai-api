@@ -50,8 +50,7 @@ const createStickerWithImagen = async (req) => {
         },
         data: formData,
       }).then(async res => {
-        console.log(res);
-        console.log('[.imagem] enviada para servidor da Meta com id:', res?.id);
+        console.log('[.imagem] enviada para servidor da Meta com id:', res.data.id);
         if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
         return await axios({
           method: 'POST',
@@ -66,7 +65,7 @@ const createStickerWithImagen = async (req) => {
             to: userPhone,
             type: 'image',
             image: {
-              id: res.id,
+              id: res.data.id,
               caption: originalPrompt
             },
           },
