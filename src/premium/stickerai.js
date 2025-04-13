@@ -54,7 +54,7 @@ const createStickerWithImagen = async (req) => {
         if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
         return await axios({
           method: 'POST',
-          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
           headers: {
             Authorization: `Bearer ${GRAPH_API_TOKEN}`,
             'Content-Type': 'application/json',
