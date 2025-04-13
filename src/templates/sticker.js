@@ -3,8 +3,7 @@ const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
-// const { Sticker, StickerTypes } = require('wa-sticker-formatter');
-const { randomizeThis, msg_sticker, msg_limitsticker, msg_size_errors } = require('./info');
+const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
 const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, API_URL } = process.env;
 
 const stickerTutorial = async (req) => {
@@ -143,44 +142,36 @@ const dynamicSticker = async (req) => {
                 id: res.id,
               },
             },
-          }).then(res => {
-            console.log(res);
-            return res;
-          })
-            .catch(err => console.log('error sending', err.data || err));
+          }).then(res => console.log(res))
+            .catch(err => console.error('error sending', err.data || err));
         })
-        .catch((err) => {
-          console.error('error uploading sticker!', err.response?.data || err);
+        .catch((err) => console.error('error uploading sticker!', err.data?.error.message || err));
+
+      const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
+      await axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+        headers: {
+          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        data: {
+          messaging_product: 'whatsapp',
+          recipient_type: 'individual',
+          to: user,
+          type: 'sticker',
+          sticker: {
+            link: stickerURL,
+          },
+        },
+      })
+        .then(res => {
+          if (res.statusText !== 'OK') throw new Error({ data: { error: { message: 'Erro ao enviar sticker animado.' } } });
+          return console.info('sticker animado', res.statusText)
         })
-
-
-  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
-  await axios({
-    method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-    headers: {
-      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    data: {
-      messaging_product: 'whatsapp',
-      recipient_type: 'individual',
-      to: user,
-      type: 'sticker',
-      sticker: {
-        link: stickerURL,
-      },
-    },
-  })
-    .then(res => {
-      if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao enviar sticker animado.' });
-      return console.info('sticker animado', res.statusText)
+        .catch((err) => console.error('error sending sticker!', err.data.error.message || err))
     })
-    .catch((err) => {
-      console.error('error sending sticker!', err.response?.data || err);
-    })
-  })
-  .run()
+    .run()
 }
 
 const freeUserStickerLimit = async (req) => {

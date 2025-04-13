@@ -64,12 +64,9 @@ const createStickerWithImagen = async (req) => {
           caption: originalPrompt
         },
       },
-    }).then(res => {
-      console.log(res);
-      return res.data;
-    })
-      .catch(err => console.error('erro envio user', err?.response));
-  }).catch(err => console.error("erro upload imagem", err?.response))
+    }).then(res => console.log("[.imagem] enviado!"))
+      .catch(err => console.error("[.imagem/erro] envio user", err?.data?.error.message || err));
+  }).catch(err => console.error("[.imagem/erro] upload imagem", err?.data?.error.message || err))
   // return await axios({
   //   method: 'POST',
   //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
