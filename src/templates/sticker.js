@@ -32,7 +32,7 @@ const stickerTutorial = async (req) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'Erro ao enviar stickerTutorial' });
     })
-    .catch((err) => console.error(err.response));
+    .catch((err) => console.error(err.response.data));
 };
 
 const staticSticker = async (req) => {
@@ -80,9 +80,9 @@ const staticSticker = async (req) => {
   })
     .then((response) => {
       if (response.statusText !== 'OK')
-        throw new Error({ data: { error: { message: 'Erro ao enviar sticker' } } });
+        throw new Error({ response: { data: 'Erro ao enviar sticker' } });
     })
-    .catch((err) => console.error('error sending sticker!', err.data.error.message || err));
+    .catch((err) => console.error('error sending sticker!', err.response.data || err));
 };
 
 const dynamicSticker = async (req) => {
@@ -164,10 +164,10 @@ const dynamicSticker = async (req) => {
         },
       })
         .then(res => {
-          if (res.statusText !== 'OK') throw new Error({ data: { error: { message: 'Erro ao enviar sticker animado.' } } });
+          if (res.statusText !== 'OK') throw new Error({ response: { data: 'Erro ao enviar sticker animado.' } });
           return console.info('sticker animado', res.statusText)
         })
-        .catch((err) => console.error('error sending sticker!', err.data.error.message || err))
+        .catch((err) => console.error('error sending sticker!', err.response.data || err))
     })
     .run()
 }
@@ -209,7 +209,7 @@ const getMedia = async (imageId) => {
     },
   })
     .then((response) => response.data)
-    .catch((err) => console.error('Error getting URL', err.code));
+    .catch((err) => console.error('Error getting URL', err.response.data));
 };
 
 const getMediaBuffer = async (mediaUrl) => {
@@ -222,7 +222,7 @@ const getMediaBuffer = async (mediaUrl) => {
     responseType: 'arraybuffer',
   })
     .then((response) => response.data)
-    .catch((err) => console.error('error media buffer', err.code));
+    .catch((err) => console.error('error media buffer', err.response.data));
 };
 
 const sendMediaIdToUser = async (mediaId, userId) => {

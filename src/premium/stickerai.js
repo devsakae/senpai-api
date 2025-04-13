@@ -70,8 +70,8 @@ const createStickerWithImagen = async (req) => {
             },
           },
         }).then(res => console.log("[.imagem] enviado!"))
-          .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response.data), err.response.data));
-      }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response.data), err.response.data))
+          .catch(err => console.error("[.imagem/erro] envio user", err.response.data));
+      }).catch(err => console.error("[.imagem/erro] upload imagem", err.response.data))
 
     })
     .catch(err => console.error(err))
@@ -122,9 +122,7 @@ const createStickerWithGemini = async (req) => {
               throw new Error({ response: { data: 'retorno statusText !== OK' } });
             return console.log("[.stickerai] enviada para user!");
           })
-          .catch((err) => {
-            console.error('[.stickerai] erro enviando sticker!', err.response?.data || err);
-          });
+          .catch((err) => console.error('[.stickerai] erro enviando sticker!', err.response?.data || err));
       } else if (part.inlineData) {
         const imageData = part.inlineData.data;
         const buffer = Buffer.from(imageData, 'base64');
@@ -171,7 +169,7 @@ const createStickerWithGemini = async (req) => {
       }
     }
   } catch (error) {
-    console.error("[.stickerai] erro gerando imagem!", error);
+    console.error("[.stickerai] erro gerando imagem!", err.response.data);
   }
 
 }
