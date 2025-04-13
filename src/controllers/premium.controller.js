@@ -125,13 +125,17 @@ const manualPremiumActivation = async (req) => {
   if (!newPremiumUser) return sendAdmin('Erro: Usuário não existe no banco de dados. Verificar wa_id.');
   await senpaiMongoDb.collection('premium').findOneAndUpdate(
     { wa_id: commands[1] },
-    { ...newPremiumUser,
-      premium: true,
-      subscription: {
-        type: commands[2],
-        start: today,
-        end: expirationDate
-      } },
+    {
+      $set: {
+        ...newPremiumUser,
+        premium: true,
+        subscription: {
+          type: commands[2],
+          start: today,
+          end: expirationDate
+        }
+      }
+    },
     { upsert: true }
   )
   await senpaiMongoDb.collection('premium').insertOne({
