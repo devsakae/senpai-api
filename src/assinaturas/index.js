@@ -98,8 +98,8 @@ const soldOutCoupom = async (user) => {
         body: "Infelizmente o cupom informado não é válido e/ou já se esgotou.\n\nFique ligado no nosso canal para novos cupons!",
       },
     },
-  }).then((res) => console.log('informing user', user.name, 'that used a soldout coupon'))
-    .catch((err) => console.error('error informing user about soldout coupon', err.response?.data || err))
+  }).then((res) => console.log('informing user', user.profile.name, 'that used a soldout coupon'))
+    .catch((err) => console.error('error informing user about soldout coupon', err.data.error.message || err))
 }
 
 module.exports = {

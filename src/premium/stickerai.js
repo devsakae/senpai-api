@@ -78,7 +78,7 @@ const createStickerWithImagen = async (req) => {
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
-      to: userPhone,
+      to: "+554891371440",
       type: 'image',
       image: {
         link: imagemURL,

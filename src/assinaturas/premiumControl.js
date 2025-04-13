@@ -39,12 +39,12 @@ const organizePremium = async () => {
 };
 
 const removeExpiredPremium = async () => {
-  
+  console.log('[.removeexpiredpremium] inicializando...')
   const expiredPremium = await getExpiringPremiumDbUsers();
   console.log(expiredPremium)
-  if (expiredPremium.length === 0) return console.info('[removeExpiredPremium] great! no expiring premium user found today.')
-  console.log("[removeExpiredPremium]", expiredPremium.length, "expired premium users found, cleaning...");
-  console.info('[removeExpiredPremium] test complete. Check array:')
+  if (expiredPremium.length === 0) return console.info('[.removeexpiredpremium] great! no expiring premium user found today.')
+  console.log("[.removeexpiredpremium]", expiredPremium.length, "expired premium users found, cleaning...");
+  console.info('[.removeexpiredpremium] test complete. Check array:')
   await Promise.all(expiredPremium.map(async ep => {
     console.info("updating on customers db...")
     await senpaiMongoDb.collection("customers").findOneAndUpdate({
@@ -75,7 +75,7 @@ const getExpiringPremiumDbUsers = async () => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   yesterday.setHours(23, 59, 59);
-  console.log('[getExpiringPremium]', yesterday)
+  console.log('[.getexpiringpremium]', yesterday)
   return await senpaiMongoDb
     .collection('premium')
     .find({

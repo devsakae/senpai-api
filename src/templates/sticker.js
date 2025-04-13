@@ -80,11 +80,9 @@ const staticSticker = async (req) => {
   })
     .then((response) => {
       if (response.statusText !== 'OK')
-        throw new Error({ message: 'Erro ao enviar sticker' });
+        throw new Error({ data: { error: { message: 'Erro ao enviar sticker' } } });
     })
-    .catch((err) => {
-      console.error('error sending sticker!', err.response?.data || err);
-    });
+    .catch((err) => console.error('error sending sticker!', err.data.error.message || err));
 };
 
 const dynamicSticker = async (req) => {
