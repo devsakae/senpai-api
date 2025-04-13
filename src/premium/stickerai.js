@@ -17,7 +17,7 @@ const createStickerWithImagen = async (req) => {
   const originalPrompt = payload.messages[0]?.text?.body.split(".imagem ")[1]
   const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-BR", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi'";
   const promptTranslated = translatePrompt;
-  console.log('[.imagem] solicitando imagens no Imagen3 para o prompt', promptTranslated)
+  console.log('[.imagem] gerando imagem com o prompt', promptTranslated, "(" + originalPrompt + ")")
   const response = await ai.models.generateImages({
     model: 'imagen-3.0-generate-002',
     prompt: promptTranslated,
@@ -31,9 +31,8 @@ const createStickerWithImagen = async (req) => {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const filePath = path.join(destDir, webpFilename + ".png");
   fs.writeFileSync(filePath, localBuffer);
-  console.log("[.imagem] imagem gerada, tentando enviar...");
   const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
-
+  console.log("[.imagem] gerada:", imagemURL);
   const formData = new FormData();
   formData.append('messaging_product', 'whatsapp');
   formData.append('file', fs.createReadStream(filePath));
@@ -69,8 +68,8 @@ const createStickerWithImagen = async (req) => {
       console.log(res);
       return res.data;
     })
-      .catch(err => console.error('error sending', err.data || err));
-  }).catch(err => console.error("Erro no upload de imagem criada com Imagen3", err.data || err))
+      .catch(err => console.error('erro envio user', err?.response));
+  }).catch(err => console.error("erro upload imagem", err?.response))
   // return await axios({
   //   method: 'POST',
   //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
