@@ -25,15 +25,14 @@ const createStickerWithImagen = async (req) => {
       numberOfImages: 1,
     },
   });
-  console.log(response.generatedImages);
   const localBuffer = Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
   const destDir = './media/' + user;
   const webpFilename = "imagen3-generated-" + new Date().getTime();
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const filePath = path.join(destDir, webpFilename + ".png");
   fs.writeFileSync(filePath, localBuffer);
-  console.log("[.imagem] sticker gerada, tentando enviar...");
-  const imagemURL = `${API_URL}/media/${user}/${webpFilename}`;
+  console.log("[.imagem] imagem gerada, tentando enviar...");
+  const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -125,7 +124,7 @@ const createStickerWithGemini = async (req) => {
           .toFile(filePath)
           .then(async (res) => {
             console.log("[.stickerai] sticker gerada! enviando...");
-            const stickerURL = `${API_URL}/media/${user}/${webpFilename}`;
+            const stickerURL = `${API_URL}/media/${user}/${webpFilename}.webp`;
             return await axios({
               method: 'POST',
               url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,

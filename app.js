@@ -52,7 +52,7 @@ app.use(express.json());
 
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
-        './media/' + req.params.user_id + '/' + req.params.media_id + '.webp',
+        './media/' + req.params.user_id + '/' + req.params.media_id,
       );
       const ps = new stream.PassThrough();
       stream.pipeline(r, ps, (err) => {

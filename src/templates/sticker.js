@@ -61,7 +61,7 @@ const staticSticker = async (req) => {
 
   // await sticker.toFile(filePath)
 
-  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
+  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -154,7 +154,7 @@ const dynamicSticker = async (req) => {
         })
 
 
-  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}`;
+  const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
