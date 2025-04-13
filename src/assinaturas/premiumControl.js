@@ -80,7 +80,7 @@ const getExpiringPremiumDbUsers = async () => {
     .collection('premium')
     .find({
       "subscription.end": {
-        $lte: ISODate(yesterday)
+        $lte: new Date(yesterday)
       }
     })
     .toArray();
