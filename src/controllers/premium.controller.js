@@ -138,15 +138,6 @@ const manualPremiumActivation = async (req) => {
     },
     { upsert: true }
   )
-  await senpaiMongoDb.collection('premium').insertOne({
-    ...newPremiumUser,
-    premium: true,
-    subscription: {
-      type: commands[2],
-      start: today,
-      end: expirationDate
-    }
-  })
     .then(res => sendAdmin('Conta premium concedida!'))
     .catch(err => console.error('Erro salvando usuário na collection premium'));
   return;
