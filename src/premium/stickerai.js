@@ -43,6 +43,7 @@ const createStickerWithImagen = async (req) => {
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      "Content-Type": "multipart/form-data"
     },
     data: formData,
   }).then(async res => {
@@ -66,8 +67,8 @@ const createStickerWithImagen = async (req) => {
         },
       },
     }).then(res => console.log("[.imagem] enviado!"))
-      .catch(err => console.error("[.imagem/erro] envio user", err?.data?.error.message));
-  }).catch(err => console.error("[.imagem/erro] upload imagem", err?.data?.error.message))
+      .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err)));
+  }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err)))
 
 //   return await axios({
 //     method: 'POST',
