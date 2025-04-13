@@ -14,6 +14,7 @@ const createStickerWithImagen = async (req) => {
   const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
   const payload = req.body.entry[0]?.changes[0]?.value
   const user = payload.contacts[0]?.wa_id
+  const userPhone = "+" + payload.messages[0].from
   const originalPrompt = payload.messages[0]?.text?.body.split(".imagem ")[1]
   const translatePrompt = await googleTranslate({ query: originalPrompt, source: "pt-BR", target: "en" }) || "japanese girl with pink hair and blue laces saying 'Desculpe, não entendi'";
   const promptTranslated = translatePrompt;
@@ -77,7 +78,7 @@ const createStickerWithImagen = async (req) => {
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
-      to: user,
+      to: userPhone,
       type: 'image',
       image: {
         link: imagemURL,
