@@ -35,20 +35,17 @@ const createStickerWithImagen = async (req) => {
   fs.writeFileSync(filePath, localBuffer);
   const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
   console.log("[.imagem] gerada:", imagemURL);
+  const formData = new FormData();
   const myFile = fs.createReadStream(filePath);
-  let formData = new FormData();
   formData.append('messaging_product', 'whatsapp');
-  formData.append('file', fs.createReadStream(filePath));
+  formData.append('file', myFile);
   formData.append('type', 'image/png');
-  myFile.on('end', async () => {
-    console.log('myfile end')
-  })
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      "Content-Type": "multipart/form-data"
+      ...formData.getHeaders()
     },
     data: formData,
   }).then(async res => {
@@ -72,8 +69,8 @@ const createStickerWithImagen = async (req) => {
         },
       },
     }).then(res => console.log("[.imagem] enviado!"))
-      .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response), err.response));
-  }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response), err.response))
+      .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response.data), err.response.data));
+  }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response.data), err.response.data))
 
   //   return await axios({
   //     method: 'POST',
