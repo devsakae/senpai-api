@@ -87,7 +87,7 @@ const completeMenu = async (req) => {
           button: 'Clique aqui',
           sections: [
             {
-              title: 'Como fazer figurinhas?',
+              title: 'Como fazer figurinha?',
               rows: [
                 {
                   id: '.sticker',
