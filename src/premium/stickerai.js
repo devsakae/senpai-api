@@ -6,7 +6,7 @@ const path = require('path');
 const sharp = require('sharp');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GoogleGenAI } = require('@google/genai');
-const { RAPIDAPI_KEYS, STICKERAI_API, STICKERAI_HOST, GOOGLE_TRANSLATE_APIKEY, VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, API_URL, GOOGLE_API_KEY } = process.env;
+const { RAPIDAPI_KEYS, STICKERAI_API, STICKERAI_HOST, VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, API_URL, GOOGLE_API_KEY } = process.env;
 const rapidkeys = RAPIDAPI_KEYS.split(",");
 const styles = [40, 41, 42, 43, 44, 45];
 
@@ -33,32 +33,70 @@ const createStickerWithImagen = async (req) => {
   fs.writeFileSync(filePath, localBuffer);
   console.log("[.imagem] imagem gerada, tentando enviar...");
   const imagemURL = `${API_URL}/media/${user}/${webpFilename}.png`;
-  return await axios({
+
+  const formData = new FormData();
+  formData.append('messaging_product', 'whatsapp');
+  formData.append('file', fs.createReadStream(filePath));
+  formData.append('type', 'image/png');
+  await axios({
     method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
     headers: {
       Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'application/json',
     },
-    data: {
-      messaging_product: 'whatsapp',
-      recipient_type: 'individual',
-      to: user,
-      type: 'image',
-      image: {
-        link: imagemURL,
-        caption: "Sua imagem está pronta! #BotSenpai"
+    data: formData,
+  }).then(async res => {
+    console.log('[.imagem] enviada para servidor da Meta:', imagemURL);
+    if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
+    return await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+      headers: {
+        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+        'Content-Type': 'application/json',
       },
-    },
-  })
-    .then((response) => {
-      if (response.statusText !== 'OK')
-        throw new Error({ response: { data: 'retorno statusText !== OK' } });
-      return console.log("[.imagem] enviada para user!");
+      data: {
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
+        to: user,
+        type: 'image',
+        image: {
+          id: res.id,
+          caption: originalPrompt
+        },
+      },
+    }).then(res => {
+      console.log(res);
+      return res.data;
     })
-    .catch((err) => {
-      console.error('[.imagem] erro enviando sticker!', err.response?.data || err);
-    });
+      .catch(err => console.error('error sending', err.data || err));
+  }).catch(err => console.error("Erro no upload de imagem criada com Imagen3", err.data || err))
+  // return await axios({
+  //   method: 'POST',
+  //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+  //   headers: {
+  //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+  //     'Content-Type': 'application/json',
+  //   },
+  //   data: {
+  //     messaging_product: 'whatsapp',
+  //     recipient_type: 'individual',
+  //     to: user,
+  //     type: 'image',
+  //     image: {
+  //       link: imagemURL,
+  //       caption: "Sua imagem está pronta! #BotSenpai"
+  //     },
+  //   },
+  // })
+  //   .then((response) => {
+  //     if (response.statusText !== 'OK')
+  //       throw new Error({ response: { data: 'retorno statusText !== OK' } });
+  //     return console.log("[.imagem] enviada para user!");
+  //   })
+  //   .catch((err) => {
+  //     console.error('[.imagem] erro enviando sticker!', err.response?.data || err);
+  //   });
 }
 
 const createStickerWithGemini = async (req) => {
