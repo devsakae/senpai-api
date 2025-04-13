@@ -115,37 +115,37 @@ const dynamicSticker = async (req) => {
       formData.append('messaging_product', 'whatsapp');
       formData.append('file', fs.createReadStream(filePath));
       formData.append('type', 'image/webp');
-      await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-        headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        },
-        data: formData,
-      })
-        .then(async res => {
-          console.log('uploaded!', res.data);
-          if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
-          return await axios({
-            method: 'POST',
-            url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-            headers: {
-              Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-            data: {
-              messaging_product: 'whatsapp',
-              recipient_type: 'individual',
-              to: user,
-              type: 'sticker',
-              sticker: {
-                id: res.id,
-              },
-            },
-          }).then(res => console.log(res))
-            .catch(err => console.error('error sending', err.data || err));
-        })
-        .catch((err) => console.error('error uploading sticker!', err.data?.error.message || err));
+      // await axios({
+      //   method: 'POST',
+      //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+      //   headers: {
+      //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      //   },
+      //   data: formData,
+      // })
+      //   .then(async res => {
+      //     console.log('uploaded!', res.data);
+      //     if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
+      //     return await axios({
+      //       method: 'POST',
+      //       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+      //       headers: {
+      //         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      //         'Content-Type': 'application/json',
+      //       },
+      //       data: {
+      //         messaging_product: 'whatsapp',
+      //         recipient_type: 'individual',
+      //         to: user,
+      //         type: 'sticker',
+      //         sticker: {
+      //           id: res.id,
+      //         },
+      //       },
+      //     }).then(res => console.log(res))
+      //       .catch(err => console.error('error sending', err.data || err));
+      //   })
+      //   .catch((err) => console.error('error uploading sticker!', err.data?.error.message || err));
 
       const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
       await axios({
