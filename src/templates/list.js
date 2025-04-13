@@ -84,10 +84,10 @@ const completeMenu = async (req) => {
           text: 'Sua colaboração mantém nosso bot vivo. Obrigada!',
         },
         action: {
-          button: '🌟 Toque para ver os comandos!',
+          button: '🌟 Ver os comandos!',
           sections: [
             {
-              title: '🎨 Figurinhas Inteligentes',
+              title: '🎨 Figurinhas',
               rows: [
                 {
                   id: '.sticker',
@@ -102,7 +102,7 @@ const completeMenu = async (req) => {
               ],
             },
             {
-              title: '📖 Ajuda & Informações',
+              title: '📖 Ajuda & Info',
               rows: [
                 {
                   id: '.suporte',
