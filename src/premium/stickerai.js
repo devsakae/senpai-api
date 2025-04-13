@@ -6,6 +6,7 @@ const path = require('path');
 const sharp = require('sharp');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GoogleGenAI } = require('@google/genai');
+const FormData = require('form-data');
 const { RAPIDAPI_KEYS, STICKERAI_API, STICKERAI_HOST, VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN, API_URL, GOOGLE_API_KEY } = process.env;
 const rapidkeys = RAPIDAPI_KEYS.split(",");
 const styles = [40, 41, 42, 43, 44, 45];
@@ -36,42 +37,43 @@ const createStickerWithImagen = async (req) => {
   console.log("[.imagem] gerada:", imagemURL);
   const myFile = fs.createReadStream(filePath);
   let formData = new FormData();
+  formData.append('messaging_product', 'whatsapp');
+  formData.append('file', fs.createReadStream(filePath));
+  formData.append('type', 'image/png');
   myFile.on('end', async () => {
-    formData.append('messaging_product', 'whatsapp');
-    formData.append('file', fs.createReadStream(filePath));
-    formData.append('type', 'image/png');
-    await axios({
+    console.log('myfile end')
+  })
+  await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      "Content-Type": "multipart/form-data"
+    },
+    data: formData,
+  }).then(async res => {
+    console.log('[.imagem] enviada para servidor da Meta com id:', res.id);
+    if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
+    return await axios({
       method: 'POST',
       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
       headers: {
         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-        "Content-Type": "multipart/form-data"
+        'Content-Type': 'application/json',
       },
-      data: formData,
-    }).then(async res => {
-      console.log('[.imagem] enviada para servidor da Meta com id:', res.id);
-      if (res.statusText !== 'OK') throw new Error({ message: '[.imagem] erro ao realizar upload de imagem criada com Imagen3.' });
-      return await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-        headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-          'Content-Type': 'application/json',
+      data: {
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
+        to: userPhone,
+        type: 'image',
+        image: {
+          id: res.id,
+          caption: originalPrompt
         },
-        data: {
-          messaging_product: 'whatsapp',
-          recipient_type: 'individual',
-          to: userPhone,
-          type: 'image',
-          image: {
-            id: res.id,
-            caption: originalPrompt
-          },
-        },
-      }).then(res => console.log("[.imagem] enviado!"))
-        .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response), err.response));
-    }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response), err.response))
-  })
+      },
+    }).then(res => console.log("[.imagem] enviado!"))
+      .catch(err => console.error("[.imagem/erro] envio user", Object.keys(err.response), err.response));
+  }).catch(err => console.error("[.imagem/erro] upload imagem", Object.keys(err.response), err.response))
 
   //   return await axios({
   //     method: 'POST',
