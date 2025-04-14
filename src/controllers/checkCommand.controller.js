@@ -55,6 +55,10 @@ const checkCommand = async (user, req) => {
         if (user_sent?.text?.body.split(".stickerai ")[1].length > 0) return await createStickerWithGemini(req);
         return await stickerTutorial(req);
       }
+      if (user.subscription.type === "premium"
+        && user_sent?.text?.body.startsWith('.imagem')) {
+        return await createStickerWithImagen(req);
+      }
     }
     // premium:end
 
@@ -67,7 +71,6 @@ const checkCommand = async (user, req) => {
     // tester:start
     if (user.tester) {
       if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
-      if (user_sent?.text?.body.startsWith('.imagem ')) return await createStickerWithImagen(req);
     }
     // tester:end
 
