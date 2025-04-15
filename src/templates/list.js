@@ -84,40 +84,55 @@ const completeMenu = async (req) => {
           text: 'Sua colaboração mantém nosso bot vivo. Obrigado pelo apoio!',
         },
         action: {
-          button: 'Clique aqui',
+          button: '📜 Ver Menu', // <= Máximo 20 caracteres
           sections: [
             {
-              title: 'Como fazer figurinha?',
+              title: '🎨 Figurinhas',
               rows: [
                 {
                   id: '.sticker',
                   title: '.sticker',
-                  description: 'Aprenda a fazer figurinhas!',
+                  description: 'Imagem, vídeo ou GIF viram figurinha!',
                 },
                 {
-                  id: '.privacy',
-                  title: 'Termos de Uso',
-                  description: 'Leia os termos antes de prosseguir',
+                  id: '.stickerai',
+                  title: '.stickerai',
+                  description: 'Crie figurinhas com IA!',
                 },
               ],
             },
             {
-              title: 'Exclusivo para PREMIUM!',
+              title: '⚙️ Utilidades',
               rows: [
                 {
                   id: '.google',
-                  title: '.google [pesquisa]',
-                  description: 'Eu faço uma pesquisa no Google pra você',
+                  title: '.google',
+                  description: 'Pesquiso no Google por você!',
                 },
                 {
+                  id: '.imagem',
+                  title: '.imagem',
+                  description: 'Envio imagens sobre o tema escolhido!',
+                },
+              ],
+            },
+            {
+              title: '📞 Suporte & Infos',
+              rows: [
+                {
                   id: '.suporte',
-                  title: '.Suporte',
-                  description: 'Suporte dedicado, sempre pronto para ajudar',
+                  title: '.suporte',
+                  description: 'Atendimento exclusivo.',
                 },
                 {
                   id: '.feedback',
                   title: '.feedback',
-                  description: 'Responda nosso questionário e nos ajude a melhorar!',
+                  description: 'Envie sua opinião.',
+                },
+                {
+                  id: '.privacy',
+                  title: 'Termos de Uso',
+                  description: 'Leia nossos termos de uso.',
                 },
               ],
             },
