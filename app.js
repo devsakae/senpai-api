@@ -105,6 +105,11 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
+    app.post('/instahook', async (req, res) => {
+      console.log(req);
+      return res.sendStatus(200);
+    })
+
     // app.post('/getpremium', async (req, res) => {
     //   const payload = req.body;
     //   console.log(payload);
