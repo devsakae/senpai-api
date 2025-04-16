@@ -50,6 +50,19 @@ app.use(express.json());
       }
     });
 
+    app.get('/instahook', (req, res) => {
+      const mode = req.query['hub.mode'];
+      const token = req.query['hub.verify_token'];
+      const challenge = req.query['hub.challenge'];
+      // check the mode and token sent are correct
+      if (mode === 'subscribe' && token === WEBHOOK_VERIFY_TOKEN) {
+        console.log('Webhook verified successfully with challenge', challenge);
+        return res.status(200).send(challenge);
+      } else {
+        return res.sendStatus(403).end();
+      }
+    });
+
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
         './media/' + req.params.user_id + '/' + req.params.media_id,
@@ -66,19 +79,6 @@ app.use(express.json());
 
     app.get(DOWNLOAD_FOLDER, (req, res) => {
       if (req.query['token'] === WEBHOOK_VERIFY_TOKEN) {
-        // exec("zip -jr /home/ec2-user/file.zip /home/ec2-user/senpai-api/media/", (error, stdout, stderr) => {
-        //   if (error) {
-        //     console.error(error.message || error);
-        //     return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + error.message });
-        //   }
-        //   if (stderr) {
-        //     console.error(stderr);
-        //     return res.status(500).send({ message: "Houve um erro ao zipar os arquivos" + stderr });
-        //   }
-        //   console.log(stdout);
-        //   res.setHeader('Content-type', 'application/zip');
-        //   return setTimeout(() => res.sendFile(__dirname + '/file.zip'), 10000)
-        // });
         res.setHeader('Content-type', 'application/zip');
         return res.sendFile(__dirname + DOWNLOAD_FOLDER + '/file.zip');
       }
@@ -109,34 +109,6 @@ app.use(express.json());
       console.log(req);
       return res.sendStatus(200); 
     })
-
-    // app.post('/getpremium', async (req, res) => {
-    //   const payload = req.body;
-    //   console.log(payload);
-    // })
-
-    // app.post(process.env.MERCADOPAGO, async (req, res) => {
-    //   console.log(req);
-    //   res.sendStatus(200).end();
-    // })
-
-    // app.get(process.env.SAUP, async (req, res) => {
-    //   const token = req.query['hub.verify_token'];
-    //   if (token === WEBHOOK_VERIFY_TOKEN) {
-    //     const users = await getPremiumUsers();
-    //     return res.status(200).send({ users });
-    //   }
-    //   return res.sendStatus(400).end();
-    // })
-
-    // app.get(process.env.SAUF, async (req, res) => {
-    //   const token = req.query['hub.verify_token'];
-    //   if (token === WEBHOOK_VERIFY_TOKEN) {
-    //     const users = await getAllUsers();
-    //     return res.status(200).send({ users });
-    //   }
-    //   return res.sendStatus(400).end();
-    // })
 
   }
 })();
