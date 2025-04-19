@@ -25,15 +25,15 @@ const rootMenu = async (contact) => {
             {
               type: 'reply',
               reply: {
-                id: '.sticker',
-                title: '.sticker',
+                id: '.canal',
+                title: 'Canal',
               },
             },
             {
               type: 'reply',
               reply: {
                 id: '.suporte',
-                title: '.suporte',
+                title: 'Suporte',
               },
             },
             {
