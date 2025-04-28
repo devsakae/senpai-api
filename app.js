@@ -27,8 +27,8 @@ app.use(express.json());
     premiumCheck();
     console.log('✔ Agendando premiumClean...');
     premiumClean(); // removeExpiredPremium();
-    console.log('✔ Agendando callBomDia...');
-    callBomDia();
+    // console.log('✔ Agendando callBomDia...');
+    // callBomDia();
 
     app.listen(PORT, () => {
       console.log('✔ API escutando na porta', PORT);

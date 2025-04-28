@@ -58,7 +58,7 @@ const bomDia = async () => {
 
   let msg_final = msg_bomdia + " " + msg_positividade;
 
-  const feature_phrases = ["advice", "uselessfact", "wishiy"];
+  const feature_phrases = ["advice", "uselessfact"];
   const feature_phrase = randomArr(feature_phrases);
   console.info("destaque de hoje:", feature_phrase);
   if (feature_phrase === "advice") {
