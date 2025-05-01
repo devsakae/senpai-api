@@ -10,6 +10,7 @@ const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
 const { getGeminiResponse } = require('../premium/gemini');
 const { createStickerWithGemini, createStickerWithImagen } = require('../premium/stickerai');
+const { getPremiumWithoutFlow } = require('../templates/reply');
 
 const checkLastInteraction = async (user, req) => {
   const today = new Date();
@@ -66,7 +67,8 @@ const checkCommand = async (user, req) => {
       || interactiveType === '.getpremium'
       || user_sent?.text?.body.startsWith('.getpremium')
       || user_sent?.text?.body.includes('Quero ser Premium!'))
-      return await premiumPlans(req);
+      return await getPremiumWithoutFlow(req);
+      // return await premiumPlans(req);
 
     // tester:start
     if (user.tester) {
