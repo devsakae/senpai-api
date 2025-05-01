@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const limitedStickerPremiumPlan = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPrÃ³ximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000).toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" });
+  const response = randomizeThis(msg_limitsticker) + "\n\n" + randomizeThis(msg_premium_wannabe) + "\n\nPróximo sticker a partir de " + new Date((payload?.messages[0]?.timestamp * 1000) + 86400000).toLocaleString('pt-br', { timeZone: "America/Sao_Paulo" });
   return await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -122,7 +122,7 @@ const manualPremiumActivation = async (req) => {
           }
         }
       })
-  if (!newPremiumUser) return sendAdmin('Erro: Usuário não existe no banco de dados. Verificar wa_id.');
+  if (!newPremiumUser) return sendAdmin('Erro: Usu�rio n�o existe no banco de dados. Verificar wa_id.');
   await senpaiMongoDb.collection('premium').findOneAndUpdate(
     { wa_id: commands[1] },
     {
@@ -139,7 +139,7 @@ const manualPremiumActivation = async (req) => {
     { upsert: true }
   )
     .then(res => sendAdmin('Conta premium concedida!'))
-    .catch(err => console.error('Erro salvando usuário na collection premium'));
+    .catch(err => console.error('Erro salvando usu�rio na collection premium'));
   return;
 }
 

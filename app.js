@@ -63,6 +63,18 @@ app.use(express.json());
       }
     });
 
+    app.get(process.env.MERCADOPAGO, (req, res) => {
+      console.log('GET');
+      console.log(req);
+      return res.sendStatus(200).end();
+    })
+    
+    app.post(process.env.MERCADOPAGO, (req, res) => {
+      console.log('POST');
+      console.log(req);
+      return res.sendStatus(200).end();
+    })
+
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
         './media/' + req.params.user_id + '/' + req.params.media_id,

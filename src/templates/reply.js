@@ -64,13 +64,20 @@ const getPremiumWithoutFlow = async (req) => {
         type: 'button',
         header: {
           type: 'text',
-          text: '🎀 Benefícios dos Planos',
+          text: '🎀 Seja Premium!',
         },
         body: {
-          text: 'Aqui estão os detalhes dos nossos planos Premium:\n\n🇯🇵 *Plano Grátis* • R$ 0,00/mês\n• 1 figurinha a cada 24 horas\n\n🌸 *Plano Pro* • R$ 4,90/mês\n• Figurinhas ilimitadas\n• Modo Conversa • fale com a IA como uma amiga\n• Atualizações constantes\n• Comandos avançados\n\n❤️ *Plano Mestre* • R$ 9,90/mês\n• Tudo do plano Pro\n• StickerAI • Criação de figurinhas com IA\n• ImagemIA • Gere imagens do seu jeito\n• Modo Conversa Avançado • IA ainda mais inteligente\n• Novidades exclusivas para assinantes\n\n💬 Suporte & Disponibilidade • Válido para todos os planos\n• Suporte sempre disponível\n• 99,9% de tempo online\n\n🔹 Caso tenha qualquer dúvida sobre a forma de pagamento ou queira mais detalhes sobre nossos planos, clique no botão abaixo e fale diretamente com o nosso suporte. Estamos aqui para ajudar!',
+          text: '🌸 *Pro* – R$ 4,90/mês\nhttps://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n🪷 *Mestre* – R$ 9,90/mês\nhttps://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\n❓ Após pagar, envie: *.cupom (código de compra)* aqui no WhatsApp para ativar.\n\n⚠️ *Não tem cartão de crédito?* Pague via *Pix*:\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: 59.053.632 Marcelo Pinho de Oliveira\n\nDúvidas? Fale com nosso suporte 👇',
         },
         action: {
           buttons: [
+            {
+              type: 'reply',
+              reply: {
+                id: '.cupom',
+                title: '✅ Possuo um Código',
+              },
+            },
             {
               type: 'reply',
               reply: {
