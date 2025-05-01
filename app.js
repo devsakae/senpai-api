@@ -62,16 +62,14 @@ app.use(express.json());
         return res.sendStatus(403).end();
       }
     });
-
-    app.get(MERCADOPAGO_TEST, (req, res) => {
-      console.log('MERCADOPAGO_TEST GET');
-      console.log(req);
-      return res.sendStatus(200).end();
-    })
     
     app.post(MERCADOPAGO_TEST, (req, res) => {
-      console.log('MERCADOPAGO_TEST POST');
-      console.log(req);
+      console.log(req.body);
+      return res.sendStatus(200).end();
+    })
+
+    app.post(MERCADOPAGO, (req, res) => {
+      console.log(req.body);
       return res.sendStatus(200).end();
     })
 
