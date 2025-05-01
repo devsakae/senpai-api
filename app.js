@@ -64,11 +64,13 @@ app.use(express.json());
     });
     
     app.post(MERCADOPAGO_TEST, (req, res) => {
+      console.log('** MercadoPago Test');
       console.log(req.body);
       return res.sendStatus(200).end();
     })
 
     app.post(MERCADOPAGO, (req, res) => {
+      console.log('** MercadoPago Prod');
       console.log(req.body);
       return res.sendStatus(200).end();
     })

@@ -71,9 +71,9 @@ const checkCommand = async (user, req) => {
       return await premiumPlans(req);
 
     // tester:start
-    if (user.tester) {
-      if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
-    }
+    // if (user.tester) {
+    //   if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
+    // }
     // tester:end
 
     if (interactiveType === '.feedback')
