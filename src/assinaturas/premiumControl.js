@@ -23,11 +23,29 @@ const organizePremium = async () => {
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
         to: ep.wa_id,
-        type: 'text',
-        text: {
-          preview_url: false,
-          body: 'Sua conta Premium está próximo de expirar... Que tal garantir uma assinatura?\n\nAcesse nosso menu e selecione Quero ser Premium!\n\nEnvie .getpremium',
-        },
+        type: "interactive",
+        interactive: {
+          type: "button",
+          header: {
+            type: "text",
+            text: "🕒 Lembrete de Renovação"
+          },
+          body: {
+            text: "Olá! Sua assinatura Premium do Bot do Senpai está prestes a expirar.\n\n💳 Se você pagou com cartão de crédito, a renovação é automática se houver saldo disponível.\n\n🔁 Caso queira renovar manualmente ou fazer o pagamento por Pix, siga as instruções:\n\n✅ Plano Pro: Stickers ilimitados | Stickers com IA | Buscador de stickers | Conversa interativa\n Valor: R$ 4,90 por mês\n Link: https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n❇️ Plano Master: Tudo do Plano Pro | Gerador de Imagem com IA \n Valor: R$ 9,90 por mês\n Link: https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\nℹ️ Se você não possui cartão de crédito e mesmo assim quer adquirir um dos planos, faça o pagamento por Pix no valor correspondente do plano que deseja adquirir.\n Chave: pix@botdosenpai.com.br\n Titular: 59.053.632 Marcelo Pinho de Oliveira\n\n Desde logo, nosso muito obrigado antecipadamente por ser nosso assinante! :)"
+          },
+          action: {
+            buttons: [
+              {
+                type: "reply",
+                reply: {
+                  id: ".suporte",
+                  title: "💬 Falar com Suporte"
+                }
+              }
+            ]
+          }
+        }
+
       },
     })
       .then((response) => {
