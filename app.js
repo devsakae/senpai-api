@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
-const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO } = process.env;
 
 const app = express();
 app.use(express.json());
@@ -63,13 +63,13 @@ app.use(express.json());
       }
     });
 
-    app.get(process.env.MERCADOPAGO, (req, res) => {
+    app.get(MERCADOPAGO, (req, res) => {
       console.log('GET');
       console.log(req);
       return res.sendStatus(200).end();
     })
     
-    app.post(process.env.MERCADOPAGO, (req, res) => {
+    app.post(MERCADOPAGO, (req, res) => {
       console.log('POST');
       console.log(req);
       return res.sendStatus(200).end();
