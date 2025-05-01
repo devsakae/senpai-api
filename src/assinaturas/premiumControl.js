@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const { senpaiMongoDb } = require('../utils/connections');
+const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const organizePremium = async () => {
   const tomorrow = new Date();
@@ -30,9 +31,9 @@ const organizePremium = async () => {
       },
     })
       .then((response) => {
-        if (response.status !== 200 || response.statusText !== 'OK')
-          throw new Error({ response: 'status !== 200' });
-        return;
+        if (response.status !== 200 && response.statusText !== 'OK')
+          throw new Error({ response: { data: 'status !== 200' } });
+        return console.log('[endingpremium] Ok!', response);
       })
       .catch((err) => console.error('Erro ao enviar premium expiration!', err.response?.data || err));
   }))

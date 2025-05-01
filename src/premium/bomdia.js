@@ -9,8 +9,7 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
 
 const bomDia = async () => {
-  console.info("*** Iniciando processo da newsletter...")
-
+  
   const today = new Date();
   let imgURL = "";
 
@@ -54,10 +53,12 @@ const bomDia = async () => {
   ];
 
   const msg_positividade = randomArr(msg_bom_dia);
-  const msg_bomdia = randomArr(hojePreface);
+  const msg_preface = randomArr(hojePreface);
+  let msg_final = msg_preface + " " + msg_positividade;
 
-  let msg_final = msg_bomdia + " " + msg_positividade;
-
+  console.info("*** Enviando newsletter de bom dia")
+  console.info(msg_final);
+  
   const feature_phrases = ["advice", "uselessfact"];
   const feature_phrase = randomArr(feature_phrases);
   console.info("destaque de hoje:", feature_phrase);
@@ -71,11 +72,13 @@ const bomDia = async () => {
     console.info("✔️  getUselessFact", response_fato_inutil?.substring(0,50));
     if (response_fato_inutil) msg_final = msg_final + "\n\n> " + randomArr(msg_fato_inutil) + response_fato_inutil;  
   }
-  if (feature_phrase === "wishiy") {
-    const response_wishiy = await getWishiy() || ""; 
-    console.info("✔️  wishiy", response_wishiy?.substring(0,50));
-    if (response_wishiy) msg_final = msg_final + "\n\n> " + response_wishiy;
-  }
+
+  // Deprecado em abril/25
+  // if (feature_phrase === "wishiy") {
+  //   const response_wishiy = await getWishiy() || ""; 
+  //   console.info("✔️  wishiy", response_wishiy?.substring(0,50));
+  //   if (response_wishiy) msg_final = msg_final + "\n\n> " + response_wishiy;
+  // }
   
   const response_doty = await daysOfTheYearApi() || "";
   console.info("✔️  daysOfTheYear", response_doty?.substring(0,50));
