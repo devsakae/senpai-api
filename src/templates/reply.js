@@ -74,13 +74,6 @@ const getPremiumWithoutFlow = async (req) => {
             {
               type: 'reply',
               reply: {
-                id: '.voltar',
-                title: '🔙 Voltar',
-              },
-            },
-            {
-              type: 'reply',
-              reply: {
                 id: '.suporte',
                 title: '💬 Falar com Suporte',
               },

@@ -67,8 +67,8 @@ const checkCommand = async (user, req) => {
       || interactiveType === '.getpremium'
       || user_sent?.text?.body.startsWith('.getpremium')
       || user_sent?.text?.body.includes('Quero ser Premium!'))
-      return await getPremiumWithoutFlow(req);
-      // return await premiumPlans(req);
+      // return await getPremiumWithoutFlow(req);
+      return await premiumPlans(req);
 
     // tester:start
     if (user.tester) {
