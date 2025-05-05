@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
-const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST, STRIPE } = process.env;
 
 const app = express();
 app.use(express.json());
@@ -71,6 +71,12 @@ app.use(express.json());
 
     app.post(MERCADOPAGO, (req, res) => {
       console.log('** MercadoPago Prod');
+      console.log(req.body);
+      return res.sendStatus(200).end();
+    })
+
+    app.post(STRIPE, (req, res) => {
+      console.log('** Stripe Prod');
       console.log(req.body);
       return res.sendStatus(200).end();
     })
