@@ -4,7 +4,7 @@ const { oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker, freeUserStickerLimit } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload, flow_lembrete } = require('./flow.controller');
-const { premiumPlans, beneficiosPlanos } = require('./premium.controller');
+const { premiumPlans, beneficiosPlanos, assinePro, assineMaster } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
@@ -70,10 +70,24 @@ const checkCommand = async (user, req) => {
       return await premiumPlans(req);
 
     if (interactiveType.startsWith('.beneficiosplanos')
-      || interactiveType === '.beneficiosplanos')
+      || interactiveType === '.beneficiosplanos'
+      || user_sent?.text?.body.startsWith('.beneficiosplanos')
+      || user_sent?.text?.body.includes('.beneficiosplanos'))
       return await beneficiosPlanos(req);
-    
-      // tester:start
+
+    if (interactiveType.startsWith('.assinarpro')
+        || interactiveType === '.assinarpro'
+        || user_sent?.text?.body.startsWith('.assinarpro')
+        || user_sent?.text?.body.includes('.assinarpro'))
+    return await assinePro(req);
+
+    if (interactiveType.startsWith('.assinarmestre')
+      || interactiveType === '.assinarmestre'
+      || user_sent?.text?.body.startsWith('.assinarmestre')
+      || user_sent?.text?.body.includes('.assinarmestre'))
+    return await assineMaster(req);
+
+    // tester:start
     // if (user.tester) {
     //   if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
     // }

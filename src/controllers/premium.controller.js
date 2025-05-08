@@ -130,13 +130,6 @@ const premiumPlans = async (req) => {
             {
               type: "reply",
               reply: {
-                id: ".cupom",
-                title: "🚀 Ativar Plano"
-              }
-            },
-            {
-              type: "reply",
-              reply: {
                 id: ".beneficiosplanos",
                 title: "🔓 Benefícios"
               }
