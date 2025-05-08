@@ -12,8 +12,10 @@ const senpaiCoupons = async () => {
   return dbCoupons;
 };
 
-const checkCupom = async (body, user) => {
-  console.log('checking cupom')
+const checkCupom = async (body, req) => {
+  console.log('checking cupom...')
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  const user = payload?.contacts[0];
   if (body.length < 8) return false;
   const userCoupon = body.split(' ')[1].trim();
   const dbCoupons = await senpaiCoupons();
@@ -58,8 +60,31 @@ const checkCupom = async (body, user) => {
     // .finally(async () => await sendAdmin(newPremiumUser));
   }
 
-  return sendAdmin("⚠️ Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
+  sendAdmin("⚠️ Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
 
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'text',
+      text: {
+        preview_url: true,
+        body: "🕐 Código recebido!\n\nRecebemos seu número de transação e ele será analisado por nossa equipe com atenção e segurança.\n\n⏳ A verificação pode levar alguns minutos. Assim que for aprovado, seu acesso Premium ao Bot do Senpai será liberado! 💎\n\n❓ Se tiver qualquer dúvida, é só chamar o suporte por aqui mesmo. Estamos à disposição!"
+      }
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'ERRO no envio código recebido .cupom' });
+    })
+    .catch((err) => console.error(err.response?.data || err.response || err));
 };
 
 const welcome_premium = async ({ wa_id }) => {

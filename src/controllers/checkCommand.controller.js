@@ -139,7 +139,7 @@ const checkCommand = async (user, req) => {
       user_sent?.text?.body.startsWith('.cupom '))
       return await checkCupom(
         user_sent?.text?.body,
-        req.body.entry[0]?.changes[0]?.value?.contacts[0],
+        req,
       );
 
     if (user_sent?.text?.body === '.privacy' || interactiveType === '.privacy')
