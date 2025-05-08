@@ -4,7 +4,7 @@ const { oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker, freeUserStickerLimit } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload, flow_lembrete } = require('./flow.controller');
-const { premiumPlans, beneficiosPlanos, assinePro, assineMaster } = require('./premium.controller');
+const { premiumPlans, beneficiosPlanos, assinePro, assineMaster, ativarPremium } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
@@ -74,6 +74,12 @@ const checkCommand = async (user, req) => {
       || user_sent?.text?.body.startsWith('.beneficiosplanos')
       || user_sent?.text?.body.includes('.beneficiosplanos'))
       return await beneficiosPlanos(req);
+
+      if (interactiveType.startsWith('.ativarpremium')
+        || interactiveType === '.ativarpremium'
+        || user_sent?.text?.body.startsWith('.ativarpremium')
+        || user_sent?.text?.body.includes('.ativarpremium'))
+        return await ativarPremium(req);
 
     if (interactiveType.startsWith('.assinarpro')
         || interactiveType === '.assinarpro'

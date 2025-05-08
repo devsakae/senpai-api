@@ -137,6 +137,13 @@ const premiumPlans = async (req) => {
             {
               type: "reply",
               reply: {
+                id: ".ativarpremium",
+                title: "✅ Tenho um Código"
+              }
+            },
+            {
+              type: "reply",
+              reply: {
                 id: ".suporte",
                 title: "🛠️ Suporte ao Cliente"
               }
@@ -207,6 +214,33 @@ const beneficiosPlanos = async (req) => {
     .then((response) => {
       if (response.status !== 200 || response.statusText !== 'OK')
         throw new Error({ response: 'ERRO no .beneficiosPlanos' });
+    })
+    .catch((err) => console.error(err.response?.data || err.response || err));
+}
+
+const ativarPremium = async (req) => {
+  const payload = req.body.entry[0]?.changes[0]?.value;
+  return await axios({
+    method: 'POST',
+    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+    headers: {
+      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: payload?.contacts[0]?.wa_id,
+      type: 'text',
+      text: {
+        preview_url: true,
+        body: "🚀 Ativar seu Plano Premium é fácil!\nSe você já assinou um dos planos no Mercado Pago, siga os passos abaixo para ativar seu acesso:\n\n1️⃣ Vá até seu app do Mercado Pago\n2️⃣ Encontre o comprovante de pagamento da assinatura\n3️⃣ Copie o número da transação (ex: _12345_⁠)\n4️⃣ Envie aqui no WhatsApp:\n\n⁠.cupom 12345\n\n📌 Substitua o número acima pelo da sua transação!\n\nApós isso, a Bot do Senpai irá validar sua assinatura e liberar todos os benefícios do seu plano! 💎\n\n❓ Em caso de dúvidas, fale com o suporte."
+      }
+    },
+  })
+    .then((response) => {
+      if (response.status !== 200 || response.statusText !== 'OK')
+        throw new Error({ response: 'ERRO no .ativarPremium' });
     })
     .catch((err) => console.error(err.response?.data || err.response || err));
 }
@@ -315,6 +349,7 @@ module.exports = {
   premiumPlans,
   manualPremiumActivation,
   beneficiosPlanos,
+  ativarPremium,
   assinePro,
   assineMaster
 }
