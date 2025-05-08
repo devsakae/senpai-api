@@ -4,7 +4,7 @@ const { oneStickerAtTime } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
 const { staticSticker, stickerTutorial, dynamicSticker, freeUserStickerLimit } = require('../templates/sticker');
 const { getFeedbackResponse, flow_feedback, flow_premium_activation, getPremiumActivationPayload, flow_lembrete } = require('./flow.controller');
-const { premiumPlans } = require('./premium.controller');
+const { premiumPlans, beneficiosPlanos } = require('./premium.controller');
 const { getSuporte } = require('./suporte.controller');
 const { googleThis } = require('../premium/google');
 const { getStickerWa } = require('../premium/stickerpack');
@@ -67,10 +67,13 @@ const checkCommand = async (user, req) => {
       || interactiveType === '.getpremium'
       || user_sent?.text?.body.startsWith('.getpremium')
       || user_sent?.text?.body.includes('Quero ser Premium!'))
-      // return await getPremiumWithoutFlow(req);
       return await premiumPlans(req);
 
-    // tester:start
+    if (interactiveType.startsWith('.beneficiosplanos')
+      || interactiveType === '.beneficiosplanos')
+      return await beneficiosPlanos(req);
+    
+      // tester:start
     // if (user.tester) {
     //   if (user_sent?.text?.body.startsWith('.lembrete ')) return await flow_lembrete(req);
     // }
