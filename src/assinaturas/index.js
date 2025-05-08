@@ -58,7 +58,7 @@ const checkCupom = async (body, user) => {
     // .finally(async () => await sendAdmin(newPremiumUser));
   }
 
-  return sendAdmin("Código de Compra enviado por", user.wa_id, " (" + user.profile.name + "):", userCoupon);
+  return sendAdmin("Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
 
 };
 
