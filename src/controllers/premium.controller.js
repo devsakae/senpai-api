@@ -115,6 +115,7 @@ const premiumPlans = async (req) => {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
       to: payload?.contacts[0]?.wa_id,
+      type: "interactive",
       interactive: {
         type: "button",
         header: {
