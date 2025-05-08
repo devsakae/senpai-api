@@ -9,9 +9,8 @@ const { VERSION, GRAPH_API_TOKEN, PHONE_NUMBER_ID, ADMIN_WAID } = process.env
 const admins = ADMIN_WAID.split(',');
 
 const bomDia = async () => {
-  
   const today = new Date();
-  let imgURL = "";
+  console.info('Preparando newsletter para', today.toLocaleDateString('pt-br'))
 
   const hojeYear = today.toLocaleDateString('pt-br', {
     weekday: "long",
