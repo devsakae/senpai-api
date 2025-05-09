@@ -21,10 +21,35 @@ const limitedStickers = async (req) => {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
       to: req.body?.entry[0]?.changes[0]?.value?.contacts[0]?.wa_id,
-      type: 'text',
-      text: {
-        body: limit_message,
-      },
+      type: "interactive",
+      interactive: {
+        type: "button",
+        header: {
+          type: "text",
+          text: "Oh-oh!"
+        },
+        body: {
+          "text": limit_message
+        },
+        action: {
+          buttons: [
+            {
+              type: "reply",
+              reply: {
+                id: ".getpremium",
+                title: "Assinar Premium"
+              }
+            },
+            {
+              type: "reply",
+              reply: {
+                id: ".suporte",
+                title: "Falar com Suporte"
+              }
+            }
+          ]
+        }
+      }
     },
   });
 };
