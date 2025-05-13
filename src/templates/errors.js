@@ -39,13 +39,6 @@ const limitedStickers = async (req) => {
                 id: ".getpremium",
                 title: "Assinar Premium"
               }
-            },
-            {
-              type: "reply",
-              reply: {
-                id: ".suporte",
-                title: "Falar com Suporte"
-              }
             }
           ]
         }
