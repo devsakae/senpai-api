@@ -176,9 +176,9 @@ const checkCommand = async (user, req) => {
       return await oneStickerAtTime(req);
     }
     if (user_sent?.type === 'image') {
-      /* if (user_sent?.image.caption !== "") {
+      if (user_sent?.image.caption !== "") {
         return console.log("verificar caption", user_sent);
-      } */
+      }
       return await staticSticker(req);
     }
     if (user_sent?.type === 'video') return await dynamicSticker(req);
