@@ -1,4 +1,4 @@
-const { checkCupom } = require('../assinaturas');
+﻿const { checkCupom } = require('../assinaturas');
 const { canal, sobre, privacy } = require('../templates');
 const { oneStickerAtTime, limitedStickers } = require('../templates/errors');
 const { rootMenu, completeMenu } = require('../templates/list');
@@ -170,13 +170,20 @@ const checkCommand = async (user, req) => {
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
       return await limitedStickers(req);
-      // return await freeUserStickerLimit(req);
     }
     if (user_sent?.timestamp - 3 < user.last_time?.timestamp) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.')
       return await oneStickerAtTime(req);
     }
-    if (user_sent?.type === 'image') return await staticSticker(req);
+    if (user_sent?.type === 'image') {
+      if (user_sent?.image?.caption !== "") {
+        return console.log("verificar caption", user_sent);
+      }
+      else if (user_sent?.image?.mime_type === "image/webp") {
+        return console.log("verificar fig to image", user_sent);
+      }
+      return await staticSticker(req);
+    }
     if (user_sent?.type === 'video') return await dynamicSticker(req)
   }
 
