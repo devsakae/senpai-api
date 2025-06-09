@@ -164,8 +164,8 @@ const checkCommand = async (user, req) => {
     const userLastImageSentDatetime = new Date(user?.last_time.image);
     const userLastVideoSentDatetime = new Date(user?.last_time.video);
     if (
-      ((today.getTime() - userLastImageSentDatetime.getTime() < 86400000
-        || today.getTime() - userLastVideoSentDatetime.getTime() < 86400000)
+      ((today.getTime() - userLastImageSentDatetime.getTime() < 21600000 /* (6h); 86400000 (24h) */
+        || today.getTime() - userLastVideoSentDatetime.getTime() < 21600000)
         && !user.premium)
     ) {
       console.error(today.toISOString(), '🚫', user.name, 'allowed for 1 sticker only.');
