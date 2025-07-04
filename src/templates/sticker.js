@@ -96,11 +96,9 @@ const dynamicSticker = async (req) => {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
   fs.writeFileSync(tempFile, localBuffer)
+
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
-
-  const readyFile = await removeMetadata(tempFile, filePath)
-
-  ffmpeg(readyFile)
+  ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
     .output(filePath)
@@ -167,24 +165,12 @@ const dynamicSticker = async (req) => {
       })
         .then(res => {
           if (res.statusText !== 'OK') throw new Error({ response: { data: 'Erro ao enviar sticker animado.' } });
-          return console.info('Sticker animado enviado', res.statusText)
+          return console.info('sticker animado', res.statusText)
         })
         .catch((err) => console.error('error sending sticker!', err.response.data || err))
     })
     .run()
 }
-
-async function removeMetadata(inputPath, outputPath) {
-  try {
-    await sharp(inputPath)
-      .withMetadata({})
-      .toFile(outputPath);
-    console.log(`Metadata removed from ${inputPath} and saved to ${outputPath}`);
-  } catch (error) {
-    console.error("Error removing metadata:", error);
-  }
-}
-
 
 const freeUserStickerLimit = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
