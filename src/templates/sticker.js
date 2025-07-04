@@ -98,7 +98,7 @@ const dynamicSticker = async (req) => {
   fs.writeFileSync(tempFile, localBuffer)
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
 
-  const readyFile = await removeMetadata(filePath, filePath)
+  const readyFile = await removeMetadata(tempFile, filePath)
 
   ffmpeg(readyFile)
     .setStartTime(0)
