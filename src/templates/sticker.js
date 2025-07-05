@@ -101,6 +101,7 @@ const dynamicSticker = async (req) => {
   ffmpeg(tempFile)
     .setStartTime(0)
     .setDuration(6)
+    .outputOptions('-map_metadata', '-1')
     .output(filePath)
     .outputFormat("webp")
     .videoCodec("libwebp")
