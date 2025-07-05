@@ -17,6 +17,7 @@
     "test": "mocha"
   },
   "devDependencies": {
+    "exiftool-vendored": "^30.3.0",
     "stickerwa-search": "^1.1.0"
   }
 }
