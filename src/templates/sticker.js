@@ -97,82 +97,50 @@ const dynamicSticker = async (req) => {
   const tempFile = path.join(destDir, mediaInfo.id + '-raw.' + mediaExtension)
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
-
   const tempFileWithoutExif = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
-  await removeExifFromVideo(tempFile, tempFileWithoutExif)
-  ffmpeg(tempFileWithoutExif)
-    .setStartTime(0)
-    .setDuration(6)
-    .outputOptions('-map_metadata', '-1')
-    .output(filePath)
-    .outputFormat("webp")
-    .videoCodec("libwebp")
-    .size("512x512")
-    .fps(10)
-    .noAudio()
-    .on('error', () => console.error('Erro gerando sticker animado.'))
-    .on('end', async () => {
-      const formData = new FormData();
-      formData.append('messaging_product', 'whatsapp');
-      formData.append('file', fs.createReadStream(filePath));
-      formData.append('type', 'image/webp');
-      // await axios({
-      //   method: 'POST',
-      //   url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-      //   headers: {
-      //     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      //   },
-      //   data: formData,
-      // })
-      //   .then(async res => {
-      //     console.log('uploaded!', res.data);
-      //     if (res.statusText !== 'OK') throw new Error({ message: 'Erro ao realizar upload de sticker animado.' });
-      //     return await axios({
-      //       method: 'POST',
-      //       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/media`,
-      //       headers: {
-      //         Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      //         'Content-Type': 'application/json',
-      //       },
-      //       data: {
-      //         messaging_product: 'whatsapp',
-      //         recipient_type: 'individual',
-      //         to: user,
-      //         type: 'sticker',
-      //         sticker: {
-      //           id: res.id,
-      //         },
-      //       },
-      //     }).then(res => console.log(res))
-      //       .catch(err => console.error('error sending', err.data || err));
-      //   })
-      //   .catch((err) => console.error('error uploading sticker!', err.data?.error.message || err));
-
-      const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
-      await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-        headers: {
-          Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-          'Content-Type': 'application/json',
-        },
-        data: {
-          messaging_product: 'whatsapp',
-          recipient_type: 'individual',
-          to: user,
-          type: 'sticker',
-          sticker: {
-            link: stickerURL,
+  await removeExifFromVideo(tempFile, tempFileWithoutExif).then((res) => {
+    ffmpeg(tempFileWithoutExif)
+      .setStartTime(0)
+      .setDuration(6)
+      .outputOptions('-map_metadata', '-1')
+      .output(filePath)
+      .outputFormat("webp")
+      .videoCodec("libwebp")
+      .size("512x512")
+      .fps(10)
+      .noAudio()
+      .on('error', () => console.error('Erro gerando sticker animado.'))
+      .on('end', async () => {
+        const formData = new FormData();
+        formData.append('messaging_product', 'whatsapp');
+        formData.append('file', fs.createReadStream(filePath));
+        formData.append('type', 'image/webp');
+        const stickerURL = `${API_URL}/media/${user}/${mediaInfo.id}.webp`;
+        await axios({
+          method: 'POST',
+          url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
+          headers: {
+            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+            'Content-Type': 'application/json',
           },
-        },
-      })
-        .then(res => {
-          if (res.statusText !== 'OK') throw new Error({ response: { data: 'Erro ao enviar sticker animado.' } });
-          return console.info('sticker animado', res.statusText)
+          data: {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: user,
+            type: 'sticker',
+            sticker: {
+              link: stickerURL,
+            },
+          },
         })
-        .catch((err) => console.error('error sending sticker!', err.response.data || err))
-    })
-    .run()
+          .then(res => {
+            if (res.statusText !== 'OK') throw new Error({ response: { data: 'Erro ao enviar sticker animado.' } });
+            return console.info('sticker animado', res.statusText)
+          })
+          .catch((err) => console.error('error sending sticker!', err.response.data || err))
+      })
+      .run()
+  })
 }
 
 function removeExifFromVideo(inputVideo, outputVideo) {
