@@ -94,11 +94,13 @@ const dynamicSticker = async (req) => {
   const localBuffer = Buffer.from(mediaBuffer, "base64");
   const destDir = './media/' + user;
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
-  const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
+  const tempFile = path.join(destDir, mediaInfo.id + '-raw.' + mediaExtension)
+  const filePath = path.join(destDir, mediaInfo.id + '.webp');
   fs.writeFileSync(tempFile, localBuffer)
 
-  const filePath = path.join(destDir, mediaInfo.id + '.webp');
-  ffmpeg(tempFile)
+  const tempFileWithoutExif = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
+  await removeExifFromVideo(tempFile, tempFileWithoutExif)
+  ffmpeg(tempFileWithoutExif)
     .setStartTime(0)
     .setDuration(6)
     .outputOptions('-map_metadata', '-1')
@@ -172,6 +174,23 @@ const dynamicSticker = async (req) => {
     })
     .run()
 }
+
+function removeExifFromVideo(inputVideo, outputVideo) {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputVideo)
+      .outputOptions('-map_metadata', '-1') // Remove all metadata
+      .on('end', () => {
+        console.log('EXIF data removed successfully.');
+        resolve();
+      })
+      .on('error', (err) => {
+        console.error('Error removing EXIF data:', err);
+        reject(err);
+      })
+      .save(outputVideo);
+  });
+}
+
 
 const freeUserStickerLimit = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
