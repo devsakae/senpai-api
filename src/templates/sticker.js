@@ -1,7 +1,6 @@
 const { default: axios } = require('axios');
 const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
-const { exiftool } = require('exiftool-vendored');
 const fs = require('fs');
 const path = require('path');
 const { randomizeThis, msg_sticker, msg_limitsticker } = require('./info');
@@ -97,7 +96,7 @@ const dynamicSticker = async (req) => {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir);
   const tempFile = path.join(destDir, mediaInfo.id + '.' + mediaExtension)
   fs.writeFileSync(tempFile, localBuffer)
-  await removeExifFromGif(tempFile);
+
   const filePath = path.join(destDir, mediaInfo.id + '.webp');
   ffmpeg(tempFile)
     .setStartTime(0)
@@ -172,20 +171,6 @@ const dynamicSticker = async (req) => {
     })
     .run()
 }
-
-async function removeExifFromGif(filePath) {
-  try {
-    // Remove all EXIF metadata
-    await exiftool.write(filePath, { all: '' }, ['overwrite_original']);
-    console.log(`EXIF data removed from ${filePath}`);
-  } catch (error) {
-    console.error(`Error removing EXIF from ${filePath}:`, error);
-  } finally {
-    // Ensure exiftool is closed to avoid leaving processes open
-    await exiftool.end();
-  }
-}
-
 
 const freeUserStickerLimit = async (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
