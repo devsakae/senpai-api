@@ -18,29 +18,29 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}* 👋 Como posso te ajudar hoje?\n\n🤖 Sou a *Bot do Senpai*, sua assistente virtual gratuita disponível 24 horas por dia pra te ajudar sempre que precisar!\n\nSe é sua primeira vez por aqui, comece explorando uma das opções abaixo:\n\n- 🖼️ *Envie uma imagem, vídeo ou gif* que eu transformo automaticamente em figurinha pra você!\n- 📢 *.canal*: Entre no meu canal no WhatsApp e receba dicas, cupons e sorteios exclusivos!\n- 🛠️ *.suporte*: Precisa de ajuda? Chame meu suporte técnico a qualquer momento.\n- ℹ️ *.sobre*: Conheça mais sobre quem eu sou e tudo o que posso fazer por você.\n\n🚧 *Estou em fase BETA*, em breve trarei ainda mais novidades pra você!`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\n🎀 Sou a *Bot do Senpai*, oficialmente reconhecida pelo *WhatsApp*. Comigo, sua *segurança* vem em primeiro lugar, sem nenhum risco de *banimento*. Conte comigo a qualquer hora, com muito carinho e dedicação!\n\nSe é sua primeira vez por aqui, comece explorando uma das opções abaixo:\n\n- 🖼️ *Envie uma imagem ou gif* que eu transformo automaticamente em figurinha pra você!\n- ❤️ *Assinatura VIP*: Aproveite tudo sem limites e com várias funções!\n- 📢 *Canal*: Entre no meu canal no WhatsApp e receba cupons e atualizações!\n- 🛠️ *Suporte*: Precisa de ajuda? Chame meu suporte técnico a qualquer momento.\n\n🚧 Em fase *BETA*, construindo algo especial para tornar seu dia melhor!`,
         },
         action: {
           buttons: [
             {
               type: 'reply',
               reply: {
-                id: '.canal',
-                title: 'Canal',
+                id: '.getpremium',
+                title: '❤️ Assinatura VIP',
               },
             },
             {
               type: 'reply',
               reply: {
                 id: '.suporte',
-                title: 'Suporte',
+                title: '🛠️ Suporte',
               },
             },
             {
               type: 'reply',
               reply: {
-                id: '.getpremium',
-                title: 'Quero ser Premium!',
+                id: '.canal',
+                title: '📢 Canal',
               },
             },
           ],
@@ -75,29 +75,29 @@ const completeMenu = async (req) => {
         type: 'list',
         header: {
           type: 'text',
-          text: '🌟 Menu Premium 🌟',
+          text: '✅ Comandos Disponíveis',
         },
         body: {
           text: message_body,
         },
         footer: {
-          text: 'Sua colaboração mantém nosso bot vivo. Obrigado pelo apoio!',
+          text: 'Bem-vindo(a) ao nosso espaço especial!',
         },
         action: {
-          button: '📜 Ver Menu', // <= Máximo 20 caracteres
+          button: '📂 Menu', // <= Máximo 20 caracteres
           sections: [
             {
               title: '🎨 Figurinhas',
               rows: [
                 {
                   id: '.sticker',
-                  title: '.sticker',
-                  description: 'Imagem, vídeo ou GIF viram figurinha!',
+                  title: '.Sticker',
+                  description: 'Imagem, vídeo ou GIF viram figurinha! (⚠️ Vídeos: máx. 5 seg)',
                 },
                 {
                   id: '.stickerai',
-                  title: '.stickerai',
-                  description: 'Crie figurinhas com IA!',
+                  title: '.Stickerai',
+                  description: 'Digite uma ideia e veja a mágica da IA virar figurinha!',
                 },
               ],
             },
@@ -106,13 +106,8 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.google',
-                  title: '.google',
-                  description: 'Pesquiso no Google por você!',
-                },
-                {
-                  id: '.imagem',
-                  title: '.imagem',
-                  description: 'Envio imagens sobre o tema escolhido!',
+                  title: '.Google',
+                  description: 'Faça buscas no Google sem sair do chat!',
                 },
               ],
             },
@@ -121,12 +116,12 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.suporte',
-                  title: '.suporte',
+                  title: '.Suporte',
                   description: 'Atendimento exclusivo.',
                 },
                 {
                   id: '.feedback',
-                  title: '.feedback',
+                  title: '.Feedback',
                   description: 'Envie sua opinião.',
                 },
                 {
