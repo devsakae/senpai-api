@@ -33,7 +33,7 @@ const limitedStickerPremiumPlan = async (req) => {
         type: 'button',
         header: {
           type: 'text',
-          text: 'Oh-oh!',
+          text: '🎁 Quer mais?',
         },
         body: {
           text: response,
@@ -44,7 +44,7 @@ const limitedStickerPremiumPlan = async (req) => {
               type: 'reply',
               reply: {
                 id: '.getpremium',
-                title: 'Quero ser Premium!',
+                title: '💎 Ativar VIP',
               },
             },
           ],
@@ -123,7 +123,7 @@ const premiumPlans = async (req) => {
           text: "⛩️ Sua Experiência, Sem Limites!"
         },
         body: {
-          text: "🎐 Seja *Pro* ou *Mestre*, o Premium foi feito pra quem quer mais! Mais figurinhas, mais liberdade, mais diversão. Ative e sinta a diferença de ter a *Senpai* só pra você!\n\n🌸 *Pro* – R$ 4,90/mês\nIdeal para quem quer comandos avançados, figurinhas ilimitadas e suporte!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n🪷 *Mestre* – R$ 9,90/mês\nInclui tudo do Pro + recursos de IA, novidades antecipadas e muito mais!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\n✅ Após o pagamento, envie aqui: *.cupom SEUCÓDIGO*\n\n💳 Sem cartão? Pague via Pix:\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: 59.053.632 Marcelo Pinho de Oliveira\n\n❓ Dúvidas ou quer comparar os planos? Use os botões abaixo:"
+          text: "🎐 Seja *Pro* ou *Mestre*, o Premium foi feito pra quem quer mais! Mais figurinhas, mais liberdade, mais diversão. Ative e sinta a diferença de ter a *Senpai* só pra você!\n\n🌸 *Pro* – R$ 4,90/mês\nPerfeito para quem busca funções essenciais, figurinhas ilimitadas e suporte sempre disponível!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n🪷 *Mestre* – R$ 9,90/mês\nInclui tudo do Pro + recursos de IA, novidades antecipadas e muito mais! Adicione o bot no seu grupo e aproveite várias funções exclusivas para facilitar e animar seu espaço!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\n✅ Após o pagamento, envie aqui: *.cupom SEUCÓDIGO*\n\n💳 Sem cartão? Pague via Pix:\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: 59.053.6** Marcelo Pinho de Oliveira\n\n❓ Dúvidas ou quer comparar os planos? Use os botões abaixo:"
         },
         action: {
           buttons: [
@@ -181,7 +181,7 @@ const beneficiosPlanos = async (req) => {
           text: "🎀 Benefícios dos Planos"
         },
         body: {
-          text: "🌸 *Plano Pro* • R$ 4,90/mês\n• *Figurinhas ilimitadas*\n• *Modo Conversa* – fale com a IA como uma amiga\n• *Atualizações constantes*\n• *Comandos avançados*\n\n❤️ *Plano Mestre* • R$ 9,90/mês\n• *Tudo do plano Pro*\n• *StickerAI* – Criação de figurinhas com IA\n• *ImagemIA* – Gere imagens do seu jeito\n• *Bot Exclusivo* – Use o bot no seu grupo com todas as funções\n• *Downloader Multimídia* – Baixe Reels do Instagram, vídeos do TikTok e músicas do YouTube\n• *Gerenciamento* – Comandos automáticos e jogos para animar seu grupo\n• *Editor de Figurinhas* – Altere nome e autor das suas figurinhas\n• *Conversor de Figurinhas* – Transforme figurinhas em imagens facilmente\n• *Figurinhas Transparentes* – Crie figurinhas com fundo transparente\n\n💬 *Suporte & Disponibilidade – Válido para todos os planos*\n• *Suporte sempre disponível*\n• *99,9% de tempo on-line*\n\n🔹 Caso tenha qualquer dúvida sobre pagamento ou queira mais detalhes, clique abaixo e fale com nosso suporte!"
+          text: "🌸 *Plano Pro* – R$ 4,90/mês\n• Figurinhas ilimitadas: crie e envie quantas quiser.\n• Modo Conversa: fale com a IA como uma amiga.\n• Atualizações constantes: melhorias automáticas.\n• Comandos avançados: funções especiais para você.\n\n❤️ *Plano Mestre* – R$ 9,90/mês\n• Tudo do Pro incluso.\n• StickerAI: crie figurinhas com IA.\n• Bot Exclusivo: use todas as funções no seu grupo.\n• Adicione o bot no seu grupo!\n• Gerenciamento: deixe a Senpai cuidar do seu grupo mesmo quando você não estiver por perto.\n• Editor de Figurinhas – Altere nome e autor das suas figurinhas.\n• Conversor de Figurinhas.\n• Jogos – Anime o seu grupo com brincadeiras.\n\nE não tem só isso, em breve terá muito mais comandos!\n\n💬 *Suporte para todos*\n• Sempre disponível.\n• 99,9% do tempo online.\n\n🔹 Dúvidas? Clique abaixo e fale com nosso suporte!"
         },
         action: {
           buttons: [
