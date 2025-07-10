@@ -26,7 +26,7 @@ const limitedStickers = async (req) => {
         type: "button",
         header: {
           type: "text",
-          text: "Oh-oh!"
+          text: "🎁 Quer mais?"
         },
         body: {
           "text": limit_message
@@ -37,7 +37,7 @@ const limitedStickers = async (req) => {
               type: "reply",
               reply: {
                 id: ".getpremium",
-                title: "Assinar Premium"
+                title: "💎 Ativar VIP"
               }
             }
           ]

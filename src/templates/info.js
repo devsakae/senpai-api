@@ -41,16 +41,16 @@ const msg_sticker = [
 ];
 
 const msg_limitsticker = [
-  '⏰ Você atingiu seu limite diário! Assine o plano Premium para criar figurinhas sem limites e aproveitar benefícios exclusivos!',
-  '🚫 Limite diário atingido! Faça upgrade para o Premium e crie quantas figurinhas quiser, além de acessar recursos especiais!',
-  '🌟 Limite diário alcançado! Com o Premium você cria sem limites e ainda desbloqueia vários benefícios exclusivos!',
-  '📣 Você já usou sua figurinha do dia! Assine o Premium para criar sem parar e aproveitar todas as vantagens!',
-  '😴 Limite diário atingido! No Premium, você cria figurinhas ilimitadas e aproveita funcionalidades extras!',
-  '🎉 Limite do dia batido! Assine Premium para criar sem limite e ter acesso a recursos exclusivos!',
-  '🔐 Limite diário atingido! Com o Premium, crie quantas figurinhas quiser e desfrute de benefícios exclusivos!',
-  '⌛ Você chegou ao limite hoje! Faça upgrade para o Premium e crie figurinhas ilimitadas com vantagens especiais!',
-  '💎 Limite diário atingido! Com o plano Premium, crie sem restrições e tenha acesso a várias funções especiais!',
-  '🎁 Limite diário alcançado! Assine o Premium para figurinhas ilimitadas e muitos outros benefícios exclusivos!',
+  '⏰ Você atingiu seu limite diário! *Assine o VIP* para criar figurinhas sem limites e aproveitar benefícios exclusivos!',
+  '🚫 Limite diário atingido! Faça upgrade para o *VIP* e crie quantas figurinhas quiser, além de acessar recursos especiais!',
+  '🌟 Limite diário alcançado! Com o *VIP* você cria sem limites e ainda desbloqueia vários benefícios exclusivos!',
+  '📣 Você já usou sua figurinha do dia! *Assine o VIP* para criar sem parar e aproveitar todas as vantagens!',
+  '😴 Limite diário atingido! No *VIP*, você cria figurinhas ilimitadas e aproveita funcionalidades extras!',
+  '🎉 Limite do dia batido! *Assine o VIP* para criar sem limite e ter acesso a recursos exclusivos!',
+  '🔐 Limite diário atingido! Com o *VIP*, crie quantas figurinhas quiser e desfrute de benefícios exclusivos!',
+  '⌛ Você chegou ao limite hoje! Faça upgrade para o *VIP* e crie figurinhas ilimitadas com vantagens especiais!',
+  '💎 Limite diário atingido! Com o plano *VIP*, crie sem restrições e tenha acesso a várias funções especiais!',
+  '🎁 Limite diário alcançado! *Assine o VIP* para figurinhas ilimitadas e muitos outros benefícios exclusivos!',
 ];
 
 const msg_premium_thankyou = [
