@@ -12,11 +12,12 @@ const adminCommand = async (req) => {
   if (commands.startsWith(ADMIN_CMD_ADDPREMIUM)) {
     return await manualPremiumActivation(req);
   }
-  if (commands.startsWith('.bomdia')) await bomDia();
-  if (commands.startsWith('.anunciar ')) await sendPremium(commands.split(".anunciar ")[1]);
-  if (commands.startsWith('.tester')) await addTesterUser(commands.split(".tester ")[1]);
-  if (commands.startsWith('.block')) await blockUser(commands.split(".block ")[1]);
-  if (commands.startsWith('.cleanpremium')) await removeExpiredPremium();
+  if (commands.startsWith('.testing')) return console.log("test successfull");
+  if (commands.startsWith('.bomdia')) return await bomDia();
+  if (commands.startsWith('.anunciar ')) return await sendPremium(commands.split(".anunciar ")[1]);
+  if (commands.startsWith('.tester')) return await addTesterUser(commands.split(".tester ")[1]);
+  if (commands.startsWith('.block')) return await blockUser(commands.split(".block ")[1]);
+  if (commands.startsWith('.cleanpremium')) return await removeExpiredPremium();
   return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate }, name: "Administrador", subscription: { type: "premium" } }, req);
 }
 

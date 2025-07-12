@@ -10,7 +10,7 @@ const organizePremium = async () => {
   const endingPremiums = allPremiumDbUsers?.filter(ep => new Date(ep.subscription.end) <= tomorrow)
 
   await Promise.all(endingPremiums.map(async (ep) => {
-    console.log('sending premium message expiration to', ep?.wa_id, ep?.profile?.wa_name);
+    console.log('sending premium message expiration to', ep?.wa_id, ep?.wa_name);
 
     await axios({
       method: 'POST',
@@ -51,7 +51,7 @@ const organizePremium = async () => {
       .then((response) => {
         if (response.status !== 200 && response.statusText !== 'OK')
           throw new Error({ response: { data: 'status !== 200' } });
-        return console.log('[endingpremium] Ok!', response);
+        return console.log('[endingpremium] ', response?.statusText || "Ok");
       })
       .catch((err) => console.error('Erro ao enviar premium expiration!', err.response?.data || err));
   }))

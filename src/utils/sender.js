@@ -43,6 +43,7 @@ const sendAdmin = async (payload) => {
 };
 
 const sendPremium = async (payload) => {
+  console.log("sending announcement to vips: " + payload.substring(0,100) + " (...)")
   const premiumList = (await senpaiMongoDb.collection("premium").find().toArray()).map(p => p.wa_id);
   await Promise.all(premiumList.map(async premium => {
     return await axios({

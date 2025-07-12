@@ -63,23 +63,23 @@ app.use(express.json());
       }
     });
     
-    app.post(MERCADOPAGO_TEST, (req, res) => {
-      console.log('** MercadoPago Test');
-      console.log(req.body);
-      return res.sendStatus(200).end();
-    })
+    // app.post(MERCADOPAGO_TEST, (req, res) => {
+    //   console.log('** MercadoPago Test');
+    //   console.log(req.body);
+    //   return res.sendStatus(200).end();
+    // })
 
-    app.post(MERCADOPAGO, (req, res) => {
-      console.log('** MercadoPago Prod');
-      console.log(req.body);
-      return res.sendStatus(200).end();
-    })
+    // app.post(MERCADOPAGO, (req, res) => {
+    //   console.log('** MercadoPago Prod');
+    //   console.log(req.body);
+    //   return res.sendStatus(200).end();
+    // })
 
-    app.post(STRIPE, (req, res) => {
-      console.log('** Stripe Prod');
-      console.log(req.body);
-      return res.sendStatus(200).end();
-    })
+    // app.post(STRIPE, (req, res) => {
+    //   console.log('** Stripe Prod');
+    //   console.log(req.body);
+    //   return res.sendStatus(200).end();
+    // })
 
     app.get('/media/:user_id/:media_id', (req, res) => {
       const r = fs.createReadStream(
@@ -123,10 +123,10 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
-    app.post('/instahook', async (req, res) => {
-      console.log(req);
-      return res.sendStatus(200); 
-    })
+    // app.post('/instahook', async (req, res) => {
+    //   console.log(req);
+    //   return res.sendStatus(200); 
+    // })
 
   }
 })();
