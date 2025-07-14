@@ -36,7 +36,7 @@ const checkCupom = async (body, req) => {
           $set: {
             premium: true,
             subscription: {
-              type: 'basico',
+              type: validCoupom.type,
               start: today,
               end: endDay,
               newsletter: true,
@@ -50,7 +50,7 @@ const checkCupom = async (body, req) => {
           .collection('coupons')
           .findOneAndUpdate({ _id: validCoupom._id }, { $inc: { left: -1 } })
           .then(async cpres => {
-            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou Premium/Tester com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
+            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou Premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
             console.info(newPremiumUser);
             await welcome_premium(res);
           })
