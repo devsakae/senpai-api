@@ -19,7 +19,7 @@ const checkCupom = async (body, req) => {
   if (body.length < 8) return false;
   const userCoupon = body.split(' ')[1].trim();
   const dbCoupons = await senpaiCoupons();
-  const validCoupom = dbCoupons.find((el) => el.code === userCoupon);
+  const validCoupom = dbCoupons.find((el) => el.code.toLowerCase() === userCoupon.toLowerCase());
 
   if (validCoupom && validCoupom.left === 0) return await soldOutCoupom(user);
 
@@ -60,7 +60,7 @@ const checkCupom = async (body, req) => {
     // .finally(async () => await sendAdmin(newPremiumUser));
   }
 
-  sendAdmin("⚠️ Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
+  await sendAdmin("⚠️ Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
 
   return await axios({
     method: 'POST',
