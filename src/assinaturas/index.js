@@ -13,7 +13,6 @@ const senpaiCoupons = async () => {
 };
 
 const checkCupom = async (body, req) => {
-  console.log('checking cupom...')
   const payload = req.body.entry[0]?.changes[0]?.value;
   const user = payload?.contacts[0];
   if (body.length < 8) return false;
@@ -45,6 +44,26 @@ const checkCupom = async (body, req) => {
         },
         { upsert: true },
       )
+      .then(async (res) => {
+        await senpaiMongoDb
+          .collection('premium')
+          .findOneAndUpdate(
+            { wa_id: user.wa_id },
+            {
+              $set: {
+                ...res,
+                premium: true,
+                subscription: {
+                  type: validCoupom.type,
+                  start: today,
+                  end: endDay,
+                  newsletter: true,
+                },
+              },
+            },
+            { upsert: true },
+          )
+      })
       .then(async (res) => {
         await senpaiMongoDb
           .collection('coupons')
@@ -87,8 +106,8 @@ const checkCupom = async (body, req) => {
     .catch((err) => console.error(err.response?.data || err.response || err));
 };
 
-const welcome_premium = async ({ wa_id }) => {
-  const welcome_message = randomizeThis(msg_premium_thankyou);
+const welcome_premium = async (data) => {
+  const welcome_message = data?.message || randomizeThis(msg_premium_thankyou);
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
@@ -99,7 +118,7 @@ const welcome_premium = async ({ wa_id }) => {
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
-      to: wa_id,
+      to: data.wa_id,
       type: 'text',
       text: {
         preview_url: false,
