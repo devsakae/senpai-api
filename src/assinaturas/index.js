@@ -64,14 +64,14 @@ const checkCupom = async (body, req) => {
             { upsert: true },
           )
       })
-      .then(async (res) => {
+      .then(async () => {
         await senpaiMongoDb
           .collection('coupons')
           .findOneAndUpdate({ _id: validCoupom._id }, { $inc: { left: -1 } })
           .then(async cpres => {
-            newPremiumUser = `🔆 Usuário ${res?.name} @${res?.wa_id} virou Premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
+            newPremiumUser = `🔆 Usuário ${user?.name} @${user?.wa_id} virou Premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
             console.info(newPremiumUser);
-            await welcome_premium(res);
+            await welcome_premium({ wa_id: user.wa_id });
           })
           .catch(err => console.error('Error updating coupom', err.response?.data || err));
       })
@@ -118,7 +118,7 @@ const welcome_premium = async (data) => {
     data: {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
-      to: data.wa_id,
+      to: data?.wa_id,
       type: 'text',
       text: {
         preview_url: false,
