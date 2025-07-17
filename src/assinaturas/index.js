@@ -75,8 +75,8 @@ const checkCupom = async (body, req) => {
           })
           .catch(err => console.error('Error updating coupom', err.response?.data || err));
       })
-      .catch(err => console.error('Erro concedendo cupom', err.response?.data || err));
-    // .finally(async () => await sendAdmin(newPremiumUser));
+      .catch(err => console.error('Erro concedendo cupom', err.response?.data || err))
+      .finally(async () => await sendAdmin(newPremiumUser));
   }
 
   await sendAdmin("⚠️ Código de Compra enviado por " + user?.wa_id + " (" + user.profile.name + "): " + userCoupon);
