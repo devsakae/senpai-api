@@ -71,7 +71,7 @@ const checkCupom = async (body, req) => {
           .then(async cpres => {
             newPremiumUser = `🔆 Usuário ${user?.profile?.name} @${user?.wa_id} virou Premium com o cupom ${userCoupon}! Ainda restam: ${cpres.left - 1}`;
             console.info(newPremiumUser);
-            await welcome_premium({ wa_id: user.wa_id });
+            await welcome_premium({ wa_id: user.wa_id, message: cpres.message });
           })
           .catch(err => console.error('Error updating coupom', err.response?.data || err));
       })
