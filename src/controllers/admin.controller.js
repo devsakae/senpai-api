@@ -1,7 +1,7 @@
 const { ADMIN_CMD_ADDPREMIUM } = process.env;
 const { removeExpiredPremium } = require('../assinaturas/premiumControl');
 const { bomDia } = require('../premium/bomdia');
-const { addTesterUser, blockUser } = require('../utils/admin');
+const { addTesterUser, blockUser, countUsers } = require('../utils/admin');
 const { sendPremium } = require('../utils/sender');
 const { checkCommand } = require('./checkCommand.controller');
 const { manualPremiumActivation } = require('./premium.controller')
@@ -18,6 +18,7 @@ const adminCommand = async (req) => {
   if (commands.startsWith('.tester')) return await addTesterUser(commands.split(".tester ")[1]);
   if (commands.startsWith('.block')) return await blockUser(commands.split(".block ")[1]);
   if (commands.startsWith('.cleanpremium')) return await removeExpiredPremium();
+  if (commands.startsWith('.users')) return await countUsers();
   return await checkCommand({ premium: true, tester: true, last_time: { contact: adminDate, image: adminDate, text: adminDate, video: adminDate }, name: "Administrador", subscription: { type: "premium" } }, req);
 }
 
