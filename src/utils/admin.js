@@ -43,10 +43,10 @@ const blockUser = async (user) => {
 }
 
 const countUsers = async () => {
-  await senpaiMongoDb.collection('customers').countDocuments({})
-    .then(async counted_docs => await sendAdmin(`✅ Já estamos com *${counted_docs}* usuários registrados no banco de dados.`))
-    .catch(error => console.error(error?.details || error))
-    .finally(console.info(`✅ Já estamos com *${counted_docs}* usuários registrados no banco de dados.`));
+  const countedDocs = await senpaiMongoDb.collection('customers').countDocuments({});
+  const countedInfo = `✅ Já estamos com *${countedDocs}* usuários registrados no banco de dados.`
+  await sendAdmin(countedInfo);
+  return console.info(countedInfo);
 }
 
 module.exports = {
