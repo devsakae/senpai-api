@@ -43,26 +43,10 @@ const blockUser = async (user) => {
 }
 
 const countUsers = async () => {
-  const countedDocs = await senpaiMongoDb.collection('customers').countDocuments({});
-  return await axios({
-    method: 'POST',
-    url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
-    headers: {
-      Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    data: {
-      messaging_product: 'whatsapp',
-      block_users: [
-        {
-          user: user
-        }
-      ]
-    },
-  })
-    .then(async res => await sendAdmin(`✅ Já estamos com *${countedDocs}* usuários registrados no banco de dados.`))
+  await senpaiMongoDb.collection('customers').countDocuments({})
+    .then(async counted_docs => await sendAdmin(`✅ Já estamos com *${counted_docs}* usuários registrados no banco de dados.`))
     .catch(error => console.error(error?.details || error))
-    .finally(async () => await sendAdmin(blockResponse));
+    .finally(console.info(`✅ Já estamos com *${counted_docs}* usuários registrados no banco de dados.`));
 }
 
 module.exports = {
