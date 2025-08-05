@@ -70,6 +70,7 @@ const sendPremium = async (payload) => {
 const sendNewsletter = async (payload) => {
   const newsletterOptinUsers = (await senpaiMongoDb.collection("premium").find({ "subscription.newsletter": true }).toArray()).map(p => p.wa_id);
   await Promise.all(newsletterOptinUsers.map(async premium => {
+    console.log(`user ${premium} dispatched`)
     return await axios({
       method: 'POST',
       url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
