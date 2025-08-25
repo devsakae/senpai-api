@@ -123,10 +123,17 @@ const premiumPlans = async (req) => {
           text: "⛩️ Sua Experiência, Sem Limites!"
         },
         body: {
-          text: "🎐 Seja *Pro* ou *Mestre*, o Premium foi feito pra quem quer mais! Mais figurinhas, mais liberdade, mais diversão. Ative e sinta a diferença de ter a *Senpai* só pra você!\n\n🌸 *Pro* – R$ 4,90/mês\nPerfeito para quem busca funções essenciais, figurinhas ilimitadas e suporte sempre disponível!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n🪷 *Mestre* – R$ 9,90/mês\nInclui tudo do Pro + recursos de IA, novidades antecipadas e muito mais! Adicione o bot no seu grupo e aproveite várias funções exclusivas para facilitar e animar seu espaço!\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\n✅ Após o pagamento, envie aqui: *.cupom SEUCÓDIGO*\n\n💳 Sem cartão? Pague via Pix:\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: 59.053.6** Marcelo Pinho de Oliveira\n\n❓ Dúvidas ou quer comparar os planos? Use os botões abaixo:"
+          text: "🎐 Desbloqueie *figurinhas ilimitadas* e recursos exclusivos agora mesmo!\n\n💳 Pague com Pix (mais rápido):\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: Marcelo Pinho de Oliveira\n\n✅ Após pagar, clique em *Confirmar* abaixo.\n\n🌸 Ou ative no Cartão (assinatura automática *Mercado Pago*):\n\n🔗 *VIP Pro* – R$ 4,90 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6 \n\n🔗 *VIP Mestre* – R$ 9,90 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c \n\n⏳ Todos os *VIPs* têm duração de *30 dias*.\n\n🔓 Clique em *Benefícios* abaixo e veja tudo o que cada *VIP* oferece!\n\n❓ Em caso de dúvida, clique no botão *Suporte* abaixo e vamos te atender."
         },
         action: {
           buttons: [
+            {
+              type: "reply",
+              reply: {
+                id: ".ativarpremium",
+                title: "✅ Confirmar"
+              }
+            },
             {
               type: "reply",
               reply: {
@@ -137,15 +144,8 @@ const premiumPlans = async (req) => {
             {
               type: "reply",
               reply: {
-                id: ".ativarpremium",
-                title: "✅ Tenho um Código"
-              }
-            },
-            {
-              type: "reply",
-              reply: {
                 id: ".suporte",
-                title: "🛠️ Suporte ao Cliente"
+                title: "❓ Suporte"
               }
             }
           ]
@@ -178,10 +178,10 @@ const beneficiosPlanos = async (req) => {
         type: "button",
         header: {
           type: "text",
-          text: "🎀 Benefícios dos Planos"
+          text: "🎀 Benefícios"
         },
         body: {
-          text: "🌸 *Plano Pro* – R$ 4,90/mês\n• Figurinhas ilimitadas: crie e envie quantas quiser.\n• Modo Conversa: fale com a IA como uma amiga.\n• Atualizações constantes: melhorias automáticas.\n• Comandos avançados: funções especiais para você.\n\n❤️ *Plano Mestre* – R$ 9,90/mês\n• Tudo do Pro incluso.\n• StickerAI: crie figurinhas com IA.\n• Bot Exclusivo: use todas as funções no seu grupo.\n• Adicione o bot no seu grupo!\n• Gerenciamento: deixe a Senpai cuidar do seu grupo mesmo quando você não estiver por perto.\n• Editor de Figurinhas – Altere nome e autor das suas figurinhas.\n• Conversor de Figurinhas.\n• Jogos – Anime o seu grupo com brincadeiras.\n\nE não tem só isso, em breve terá muito mais comandos!\n\n💬 *Suporte para todos*\n• Sempre disponível.\n• 99,9% do tempo online.\n\n🔹 Dúvidas? Clique abaixo e fale com nosso suporte!"
+          text: "🌸 *VIP Pro* – R$ 4,90/mês\n• *Figurinhas sem limites* – Crie e envie quantas quiser, sem restrições!\n• *Converse com a Senpai* – Tire dúvidas e tenha um bate-papo interativo, quase como ter sua própria assistente AI!\n\n🪷 *VIP Mestre* – R$ 9,90/mês\nPerfeito para donos de grupos grandes que querem mais *controle*, *segurança* e *diversão*:\n• *Gerenciamento completo* do grupo\n• *Editor* e *Conversor de Figurinhas*\n• *Moderação avançada* e *Antilink automático*\n• *Horário programado* e *boas-vindas automáticas*\n• *Mini jogos* e comandos dinâmicos\n• Baixe vídeos do Instagram e Twitter\n• *Figurinhas com fundo transparente*\n• *Atualizações semanais*\n\n💬 *Suporte sempre disponível* – 99,9% do tempo online\n\n💳 *Pagamentos via Pix (mais rápido)*: pix@botdosenpai.com.br\n\n🔹 Para pagar com cartão de crédito, clique no botão correspondente abaixo:\n\n🌸 *Cartão Pro*\n🪷 *Cartão Mestre*\n\n❓ Em caso de dúvida, clique no botão *Suporte* e vamos te atender!"
         },
         action: {
           buttons: [
@@ -189,21 +189,21 @@ const beneficiosPlanos = async (req) => {
               type: "reply",
               reply: {
                 id: ".assinarpro",
-                title: "🌸 Assinar Pro"
+                title: "🌸 Cartão Pro"
               }
             },
             {
               type: "reply",
               reply: {
                 id: ".assinarmestre",
-                title: "🪷 Assinar Mestre"
+                title: "🪷 Cartão Mestre"
               }
             },
             {
               type: "reply",
               reply: {
                 id: ".suporte",
-                title: "💬 Falar com Suporte"
+                title: "❓ Falar com Suporte"
               }
             }
           ]
@@ -234,7 +234,7 @@ const ativarPremium = async (req) => {
       type: 'text',
       text: {
         preview_url: true,
-        body: "🚀 Ativar seu Plano Premium é fácil!\nSe você já assinou um dos planos no Mercado Pago, siga os passos abaixo para ativar seu acesso:\n\n1️⃣ Vá até seu app do Mercado Pago\n2️⃣ Encontre o comprovante de pagamento da assinatura\n3️⃣ Copie o número da transação (ex: _12345_⁠)\n4️⃣ Envie aqui no WhatsApp:\n\n⁠.cupom 12345\n\n📌 Substitua o número acima pelo da sua transação!\n\nApós isso, a Bot do Senpai irá validar sua assinatura e liberar todos os benefícios do seu plano! 💎\n\n❓ Em caso de dúvidas, fale com o suporte."
+        body: "💙 Ative seu *VIP* em poucos minutos!\n\nSe você já fez a assinatura pelo *Mercado Pago* ou *PIX*, siga este passo a passo:\n\n1️⃣ Abra o aplicativo do *Mercado Pago*\n2️⃣ Localize o *comprovante da assinatura*\n3️⃣ Copie o *número da transação* (exemplo: _12345_)\n4️⃣ Envie aqui no WhatsApp usando o comando:\n\n.cupom 12345\n\n📌 Substitua o número acima pelo código da sua transação!\n\n⏳ Assim que você enviar, *nossa equipe irá analisar*.Esse processo pode levar *alguns minutinhos* até a liberação.\n\n✅ Após a validação, a *Bot do Senpai* vai liberar automaticamente *todos os benefícios VIP* 💎\n\n💬 Dúvidas? Chame o suporte, estamos prontos para ajudar!"
       }
     },
   })
@@ -261,7 +261,7 @@ const assinePro = async (req) => {
       type: 'text',
       text: {
         preview_url: true,
-        body: "🌸 Então você decidiu ser Pro?\n\nObrigado por fazer parte 💖\n\nCom o plano Pro, você vai ter figurinhas ilimitadas, comandos avançados, modo conversa, atualizações exclusivas e suporte prioritário!\n\n👉 Acesse agora e faça sua assinatura pelo link abaixo:\nhttps://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\nAssim que o pagamento for aprovado, você receberá um código. Envie aqui no chat *.cupom [SEU CÓDIGO DE COMPRA]* (exemplo: .cupom ABC123)\n\n💌 Qualquer dúvida, é só chamar!"
+        body: "🌸 Que alegria ter você como *Pro!* 💖\n\nObrigado por apoiar a *Bot do Senpai* ✨\n\n👉 Ative seu *VIP* pelo link:\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n\n📌 Assim que o pagamento for aprovado, você receberá um *código de compra*.\nEnvie aqui no chat:\n\n.cupom SEU-CÓDIGO\n(exemplo: .cupom ABC123)\n\n💌 Qualquer dúvida, é só chamar!"
       }
     },
   })
@@ -288,7 +288,7 @@ const assineMaster = async (req) => {
       type: 'text',
       text: {
         preview_url: true,
-        body: "🌸 Então você decidiu ser Mestre?\n\nObrigado por fazer parte 💖\n\nCom o plano Mestre, você desbloqueia TUDO do Pro + funções exclusivas como StickerAI, ImagemIA, conversa avançada com IA e novidades antes de todo mundo.\n\n👉 Acesse agora e faça sua assinatura pelo link abaixo:\nhttps://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\nAssim que o pagamento for aprovado, você receberá um código. Envie aqui no chat *.cupom [SEU CÓDIGO DE COMPRA]* (exemplo: .cupom ABC123)\n\n💌 Qualquer dúvida, é só chamar!"
+        body: "🌸 Que alegria ter você como *Mestre!* 💖\n\nObrigado por apoiar a *Bot do Senpai* ✨\n\n👉 Ative seu *VIP* pelo link:\n🔗 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\n📌 Assim que o pagamento for aprovado, você receberá um *código de compra*.\nEnvie aqui no chat:\n\n.cupom SEU-CÓDIGO\n(exemplo: .cupom ABC123)\n\n💌 Qualquer dúvida, é só chamar!"
       }
     },
   })

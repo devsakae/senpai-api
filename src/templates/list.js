@@ -18,7 +18,7 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\n🎀 Sou a *Bot do Senpai*, oficialmente reconhecida pelo *WhatsApp*. Comigo, sua *segurança* vem em primeiro lugar, sem nenhum risco de *banimento*. Conte comigo a qualquer hora, com muito carinho e dedicação!\n\nSe é sua primeira vez por aqui, comece explorando uma das opções abaixo:\n\n- 🖼️ *Envie uma imagem ou gif* que eu transformo automaticamente em figurinha pra você!\n- ❤️ *Assinatura VIP*: Aproveite tudo sem limites e com várias funções!\n- 📢 *Canal*: Entre no meu canal no WhatsApp e receba cupons e atualizações!\n- 🛠️ *Suporte*: Precisa de ajuda? Chame meu suporte técnico a qualquer momento.\n\n🚧 Em fase *BETA*, construindo algo especial para tornar seu dia melhor!`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\n🎀 Sou a *BotDoSenpai.com.br*, oficialmente reconhecida pelo *WhatsApp*. Comigo, sua *segurança* vem em primeiro lugar, sem nenhum risco de *banimento*. Conte comigo a qualquer hora, com muito carinho e dedicação!\n\nSe é sua primeira vez por aqui, comece explorando uma das opções abaixo:\n\n- 🖼️ *Envie uma imagem ou gif* que eu transformo automaticamente em figurinha pra você!\n- 💙 *Ativar VIP*: Aproveite tudo sem limites e com várias funções!\n- 📢 *Canal*: Entre no meu canal no WhatsApp e receba cupons e atualizações!\n- 🛠️ *Suporte*: Precisa de ajuda? Chame meu suporte técnico a qualquer momento.\n\n🚧 Em fase *BETA*, construindo algo especial para tornar seu dia melhor!`,
         },
         action: {
           buttons: [
@@ -26,7 +26,7 @@ const rootMenu = async (contact) => {
               type: 'reply',
               reply: {
                 id: '.getpremium',
-                title: '❤️ Assinatura VIP',
+                title: '💙 Ativar VIP',
               },
             },
             {
@@ -91,12 +91,12 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.sticker',
-                  title: '.Sticker',
-                  description: 'Imagem, vídeo ou GIF viram figurinha! (⚠️ Vídeos: máx. 5 seg)',
+                  title: 'Sticker',
+                  description: 'Imagem, vídeo ou GIF viram figurinha! (⚠️ Vídeos: máx. 4 seg)',
                 },
                 {
                   id: '.stickerai',
-                  title: '.Stickerai',
+                  title: 'Stickerai',
                   description: 'Digite uma ideia e veja a mágica da IA virar figurinha!',
                 },
               ],
@@ -106,7 +106,7 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.google',
-                  title: '.Google',
+                  title: 'Google',
                   description: 'Faça buscas no Google sem sair do chat!',
                 },
               ],
@@ -116,12 +116,12 @@ const completeMenu = async (req) => {
               rows: [
                 {
                   id: '.suporte',
-                  title: '.Suporte',
+                  title: 'Suporte',
                   description: 'Atendimento exclusivo.',
                 },
                 {
                   id: '.feedback',
-                  title: '.Feedback',
+                  title: 'Feedback',
                   description: 'Envie sua opinião.',
                 },
                 {
