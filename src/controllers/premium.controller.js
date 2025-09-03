@@ -120,10 +120,10 @@ const premiumPlans = async (req) => {
         type: "button",
         header: {
           type: "text",
-          text: "⛩️ Sua Experiência, Sem Limites!"
+          text: "🌸 Torne-se VIP da Senpai!"
         },
         body: {
-          text: "🎐 Desbloqueie *figurinhas ilimitadas* e recursos exclusivos agora mesmo!\n\n💳 Pague com Pix (mais rápido):\n📌 Chave: pix@botdosenpai.com.br\n👤 Titular: Marcelo Pinho de Oliveira\n\n✅ Após pagar, clique em *Confirmar* abaixo.\n\n🌸 Ou ative no Cartão (assinatura automática *Mercado Pago*):\n\n🔗 *VIP Pro* – R$ 4,90 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6 \n\n🔗 *VIP Mestre* – R$ 9,90 https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c \n\n⏳ Todos os *VIPs* têm duração de *30 dias*.\n\n🔓 Clique em *Benefícios* abaixo e veja tudo o que cada *VIP* oferece!\n\n❓ Em caso de dúvida, clique no botão *Suporte* abaixo e vamos te atender."
+          text: "💎 O que você ganha como VIP:\n\n✅ Figurinhas *sem limites*\n✅ Adicionar a *Senpai* no seu grupo\n✅ Converse com a *Senpai e seja amiga(o) dela*, tirando dúvidas e se divertindo\n✅ Um monte de *recursos e comandos*\n\n🌟 VIPs disponíveis:\n- *VIP Pro* – R$ 4,90 (30 dias)\n- *VIP Mestre (para grupo)* – R$ 9,90 (30 dias)\n\n👉 Caso queira ver *todos os benefícios*, clique no botão *🔓 Benefícios* abaixo.\n\n💳 Ative rapidinho pelo *Pix*:\n📌 *Chave*: pix@botdosenpai.com.br\n👤 *Titular*: Marcelo Pinho de Oliveira\n\n💙 Ou ative no Cartão (assinatura automática *Mercado Pago*):\n\n👉 *[VIP Pro]* https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849564460a0195691fcd1802b6\n👉 *[VIP Mestre]* https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c938084943cdeb601943d5af5f8005c\n\nApós pagar, clique em *Já paguei!* abaixo 😉\n\n❓ Em caso de dúvida, clique no botão Suporte abaixo e vamos te atender."
         },
         action: {
           buttons: [
@@ -131,7 +131,7 @@ const premiumPlans = async (req) => {
               type: "reply",
               reply: {
                 id: ".ativarpremium",
-                title: "✅ Confirmar"
+                title: "✅ Já paguei"
               }
             },
             {
