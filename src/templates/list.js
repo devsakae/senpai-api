@@ -18,7 +18,7 @@ const rootMenu = async (contact) => {
       interactive: {
         type: 'button',
         body: {
-          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\n🎀 Sou a *BotDoSenpai.com.br*, oficialmente reconhecida pelo *WhatsApp*. Comigo, sua *segurança* vem em primeiro lugar, sem nenhum risco de *banimento*. Conte comigo a qualquer hora, com muito carinho e dedicação!\n\nSe é sua primeira vez por aqui, comece explorando uma das opções abaixo:\n\n- 🖼️ *Envie uma imagem ou gif* que eu transformo automaticamente em figurinha pra você!\n- 💙 *Ativar VIP*: Aproveite tudo sem limites e com várias funções!\n- 📢 *Canal*: Entre no meu canal no WhatsApp e receba cupons e atualizações!\n- 🛠️ *Suporte*: Precisa de ajuda? Chame meu suporte técnico a qualquer momento.\n\n🚧 Em fase *BETA*, construindo algo especial para tornar seu dia melhor!`,
+          text: `Olá, *${contact.profile.name}*, como posso ajudar você hoje?\n\n🎀 Sou a *BotDoSenpai.com.br*, oficialmente reconhecida pelo *WhatsApp*. Sua *segurança* vem sempre em primeiro lugar, sem nenhum risco de *banimento*. Pode contar comigo a qualquer hora, com carinho e dedicação! 💖\n\nSe é sua primeira vez por aqui, explore uma das opções abaixo:\n\n🖼️ *Envie uma imagem ou gif* que eu transformo automaticamente em figurinha \n\n💙 *Ativar VIP*: Tenha acesso a *tudo sem limites*, com funções exclusivas\n\n📢 *Canal*: Entre no meu canal e receba *cupons e novidades em primeira mão*\n\n🛠️ *Suporte*: Fale com meu suporte técnico sempre que precisar\n\n💡 Dica: Quem ativa o *VIP* ganha acesso imediato a funções exclusivas e *ilimitadas!*`,
         },
         action: {
           buttons: [
