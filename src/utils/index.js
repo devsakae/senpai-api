@@ -15,7 +15,13 @@ const checkAndLog = (req) => {
     if (msg_type === 'button') {
       return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'clicked on button', payload?.messages[0]?.button?.payload);
     }
-    else return console.error(wa_id, name, 'sent something different...')
+    else {
+      if (process.env.ADMIN_WAID.includes(wa_id)) {
+        console.info("loging for admin!");
+        return console.log(req);
+      }
+      return console.error(wa_id, name, 'sent something different...')
+    }
   }
 }
 
