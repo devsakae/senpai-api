@@ -18,7 +18,7 @@ const checkAndLog = (req) => {
     else {
       if (process.env.ADMIN_WAID.includes(wa_id)) {
         console.info("loging for admin!");
-        return console.log(req);
+        return console.log(req.body);
       }
       return console.error(wa_id, name, 'sent something different...')
     }
