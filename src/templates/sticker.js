@@ -95,7 +95,7 @@ const dynamicSticker = async (req) => {
   await removeExifFromVideo(tempFile, tempFileWithoutExif).then(() => {
     ffmpeg(tempFileWithoutExif)
       .setStartTime(0)
-      .setDuration(6)
+      .setDuration(4)
       .outputOptions('-map_metadata', '-1')
       .output(filePath)
       .outputFormat('webp')
