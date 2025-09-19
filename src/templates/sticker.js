@@ -102,7 +102,9 @@ const dynamicSticker = async (req) => {
     fs.writeFileSync(rawFile, mediaBuffer);
 
     // Remove metadados do vídeo
-    await removeExifFromVideo(rawFile, cleanedFile);
+    await removeExifFromVideo(rawFile, cleanedFile).then(() => {
+      fs.unlinkSync(rawFile);
+    })
 
     // Converte vídeo em WebP animado compatível WhatsApp
     await new Promise((resolve, reject) => {
@@ -132,6 +134,8 @@ const dynamicSticker = async (req) => {
           reject(err);
         })
         .run();
+    }).then(() => {
+      fs.unlinkSync(cleanedFile);
     });
 
     // Envia sticker
