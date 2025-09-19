@@ -44,7 +44,7 @@ const blockUser = async (user) => {
 
 const countUsers = async () => {
   const countedDocs = await senpaiMongoDb.collection('customers').countDocuments({});
-  const countedInfo = `✅ Já estamos com *${countedDocs}* usuários registrados no banco de dados.`
+  const countedInfo = `📊 O sistema já contabiliza *${countedDocs}* registros confirmados.`
   await sendAdmin(countedInfo);
   return console.info(countedInfo);
 }

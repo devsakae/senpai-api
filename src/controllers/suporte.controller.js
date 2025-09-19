@@ -29,7 +29,7 @@ const getSuporte = async (req) => {
 };
 
 const contactAdmin = async (payload) => {
-  const customer_msg = `Usuário @${payload.wa_id} solicitou suporte técnico!`;
+  const customer_msg = `⚙️ Suporte solicitado por +${payload.wa_id}.`;
   await axios({
     method: 'POST',
     url: `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`,
