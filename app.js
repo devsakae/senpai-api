@@ -123,6 +123,10 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
+    app.post(DEVSAKAE, async (req, res) => {
+      console.log(req.body.entry[0]?.changes[0]?.value);
+    })
+
     // app.post('/instahook', async (req, res) => {
     //   console.log(req);
     //   return res.sendStatus(200); 
