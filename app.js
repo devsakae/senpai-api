@@ -128,7 +128,7 @@ app.use(express.json());
       return res.status(200).send({ "message": req.body });
     })
 
-    app.get(DEVSAKAE, async, (req, res) => {
+    app.get(DEVSAKAE, async (req, res) => {
       const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
       if (mode === 'subscribe' && token === verifyToken) {
         console.log('WEBHOOK VERIFIED');
