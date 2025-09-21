@@ -125,6 +125,7 @@ app.use(express.json());
 
     app.post(DEVSAKAE, async (req, res) => {
       console.log(req.body);
+      return res.statusCode(200).send({ "message": req.body });
     })
 
     // app.post('/instahook', async (req, res) => {
