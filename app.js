@@ -124,7 +124,7 @@ app.use(express.json());
     });
 
     app.post(DEVSAKAE, async (req, res) => {
-      console.log(req.body.entry[0]?.changes[0]?.value);
+      console.log(req.body);
     })
 
     // app.post('/instahook', async (req, res) => {
