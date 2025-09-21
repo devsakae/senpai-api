@@ -62,7 +62,7 @@ app.use(express.json());
         return res.sendStatus(403).end();
       }
     });
-    
+
     app.post(MERCADOPAGO_TEST, (req, res) => {
       console.log('** MercadoPago Test');
       console.log(req.body);
@@ -126,6 +126,16 @@ app.use(express.json());
     app.post(DEVSAKAE, async (req, res) => {
       console.log(req.body);
       return res.status(200).send({ "message": req.body });
+    })
+
+    app.get(DEVSAKAE, async, (req, res) => {
+      const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
+      if (mode === 'subscribe' && token === verifyToken) {
+        console.log('WEBHOOK VERIFIED');
+        res.status(200).send(challenge);
+      } else {
+        res.status(403).end();
+      }
     })
 
     // app.post('/instahook', async (req, res) => {
