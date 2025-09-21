@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
-const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST, STRIPE } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST, DEVSAKAE } = process.env;
 
 const app = express();
 app.use(express.json());
