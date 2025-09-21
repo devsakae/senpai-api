@@ -7,7 +7,7 @@ const { senpaiMongoDb } = require('./src/utils/connections');
 const { checkAndLog } = require('./src/utils');
 const { checkType } = require('./src/controllers/checkType.controller');
 const { premiumCheck, callBomDia, premiumClean } = require('./src/utils/cronjobs');
-const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST, DEVSAKAE } = process.env;
+const { WEBHOOK_VERIFY_TOKEN, PORT, DOWNLOAD_FOLDER, MERCADOPAGO, MERCADOPAGO_TEST, DEVSAKAE_WEBHOOK, DEVSAKAE_TOKEN } = process.env;
 
 const app = express();
 app.use(express.json());
@@ -123,14 +123,14 @@ app.use(express.json());
       return res.sendStatus(200);
     });
 
-    app.post(DEVSAKAE, async (req, res) => {
+    app.post(DEVSAKAE_WEBHOOK, async (req, res) => {
       console.log(req.body);
       return res.status(200).send({ "message": req.body });
     })
 
-    app.get(DEVSAKAE, async (req, res) => {
+    app.get(DEVSAKAE_WEBHOOK, async (req, res) => {
       const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
-      if (mode === 'subscribe' && token === verifyToken) {
+      if (mode === 'subscribe' && token === DEVSAKAE_TOKEN) {
         console.log('WEBHOOK VERIFIED');
         res.status(200).send(challenge);
       } else {
