@@ -131,15 +131,14 @@ const dynamicSticker = async (req) => {
           );
       })
       .run()
-      .then(() => {
-        fs.unlink(tempFile, (err) => {
-          console.log("Error deleting raw file", err);
-        })
-        fs.unlink(tempFileWithoutExif, (err) => {
-          console.log("Error deleting file (exif cleaned)", err);
-        })
-      });
-  });
+  }).then(() => {
+    fs.unlink(tempFile, (err) => {
+      console.log("Error deleting raw file", err);
+    })
+    fs.unlink(tempFileWithoutExif, (err) => {
+      console.log("Error deleting file (exif cleaned)", err);
+    })
+  });;
 };
 
 function removeExifFromVideo(inputVideo, outputVideo) {
