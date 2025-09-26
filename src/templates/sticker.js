@@ -130,7 +130,15 @@ const dynamicSticker = async (req) => {
             console.error('Erro dynamicSticker:', err.response?.data || err.message || err),
           );
       })
-      .run();
+      .run()
+      .then(() => {
+        fs.unlink(tempFile, (err) => {
+          console.log("Error deleting raw file", err);
+        })
+        fs.unlink(tempFileWithoutExif, (err) => {
+          console.log("Error deleting file (exif cleaned)", err);
+        })
+      });
   });
 };
 
