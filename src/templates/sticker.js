@@ -133,8 +133,8 @@ const dynamicSticker = async (req) => {
       })
       .run();
   }).then(() => {
-    fs.unlinkSync(tempFile);
-    fs.unlinkSync(tempFileWithoutExif);
+    // fs.unlinkSync(tempFile);
+    // fs.unlinkSync(tempFileWithoutExif);
   });
 };
 
