@@ -1,5 +1,5 @@
 const fs = require('fs');
-const testData = require('../../data/testers.json');
+// const testData = require('../../data/testers.json');
 const { senpaiMongoDb } = require('../utils/connections');
 const { message_hello } = require('../templates');
 const {
@@ -38,14 +38,7 @@ const checkContact = async (req) => {
   if (!user) return await message_hello(req)
 
   // Premium bypass
-  if (user && (user.premium || user.tester)) {
-    testData.log.push(req.body);
-    fs.writeFileSync(
-      './data/testers.json',
-      JSON.stringify(testData, null, 4),
-      'utf-8',
-      (err) => err,
-    );
+  if (user && user.premium) {
     return await checkCommand(user, req);
   }
 
