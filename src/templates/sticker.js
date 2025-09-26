@@ -92,6 +92,7 @@ const dynamicSticker = async (req) => {
   fs.writeFileSync(tempFile, localBuffer);
 
   const tempFileWithoutExif = path.join(destDir, mediaInfo.id + '.' + mediaExtension);
+
   await removeExifFromVideo(tempFile, tempFileWithoutExif).then(() => {
     ffmpeg(tempFileWithoutExif)
       .setStartTime(0)
@@ -130,15 +131,11 @@ const dynamicSticker = async (req) => {
             console.error('Erro dynamicSticker:', err.response?.data || err.message || err),
           );
       })
-      .run()
+      .run();
   }).then(() => {
-    fs.unlink(tempFile, (err) => {
-      console.log("Error deleting raw file", err);
-    })
-    fs.unlink(tempFileWithoutExif, (err) => {
-      console.log("Error deleting file (exif cleaned)", err);
-    })
-  });;
+    fs.unlinkSync(tempFile);
+    fs.unlinkSync(tempFileWithoutExif);
+  });
 };
 
 function removeExifFromVideo(inputVideo, outputVideo) {
