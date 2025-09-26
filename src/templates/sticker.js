@@ -129,13 +129,14 @@ const dynamicSticker = async (req) => {
           })
           .catch((err) =>
             console.error('Erro dynamicSticker:', err.response?.data || err.message || err),
-          );
+          ).then(() => {
+            console.log("deleting files...")
+            fs.unlinkSync(tempFile);
+            fs.unlinkSync(tempFileWithoutExif);
+          });
       })
       .run();
-  }).then(() => {
-    // fs.unlinkSync(tempFile);
-    // fs.unlinkSync(tempFileWithoutExif);
-  });
+  })
 };
 
 function removeExifFromVideo(inputVideo, outputVideo) {
