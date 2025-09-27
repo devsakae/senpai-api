@@ -3,9 +3,9 @@ const { randomizeThis, msg_limitsticker, msg_limitonesticker } = require('./info
 const { VERSION, PHONE_NUMBER_ID, GRAPH_API_TOKEN } = process.env;
 
 const limitedStickers = async (req) => {
-  const period = (req.body?.entry[0].changes[0]?.value?.messages[0]?.timestamp * 1000) + 86400000
+  const period = (req.body?.entry[0].changes[0]?.value?.messages[0]?.timestamp * 1000) + 43200000
   const grace_period =
-    '\n\nVocê pode tentar novamente a partir de: ' +
+    '\n\nPróxima figurinha disponível: ' +
     (req.body?.entry[0]?.changes[0]?.value?.contacts[0]?.wa_id.startsWith('55')
       ? new Date(period).toLocaleString('pt-br')
       : new Date(period).toString());
