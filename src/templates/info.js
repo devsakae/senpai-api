@@ -41,16 +41,19 @@ const msg_sticker = [
 ];
 
 const msg_limitsticker = [
-  '⏰ Você atingiu seu limite diário! *Assine o VIP* para criar figurinhas sem limites e aproveitar benefícios exclusivos!',
-  '🚫 Limite diário atingido! Faça upgrade para o *VIP* e crie quantas figurinhas quiser, além de acessar recursos especiais!',
-  '🌟 Limite diário alcançado! Com o *VIP* você cria sem limites e ainda desbloqueia vários benefícios exclusivos!',
-  '📣 Você já usou sua figurinha do dia! *Assine o VIP* para criar sem parar e aproveitar todas as vantagens!',
-  '😴 Limite diário atingido! No *VIP*, você cria figurinhas ilimitadas e aproveita funcionalidades extras!',
-  '🎉 Limite do dia batido! *Assine o VIP* para criar sem limite e ter acesso a recursos exclusivos!',
-  '🔐 Limite diário atingido! Com o *VIP*, crie quantas figurinhas quiser e desfrute de benefícios exclusivos!',
-  '⌛ Você chegou ao limite hoje! Faça upgrade para o *VIP* e crie figurinhas ilimitadas com vantagens especiais!',
-  '💎 Limite diário atingido! Com o plano *VIP*, crie sem restrições e tenha acesso a várias funções especiais!',
-  '🎁 Limite diário alcançado! *Assine o VIP* para figurinhas ilimitadas e muitos outros benefícios exclusivos!',
+  '⏰ Ops! Você só pode criar uma figurinha a cada 12h! Assine o *VIP* e crie quantas quiser sem esperar!',
+  '🚫 Limite atingido! Só é permitido 1 figurinha a cada 12h. Torne-se VIP e crie sem limites!',
+  '🌟 Figurinha diária já feita! No *VIP*, você pode criar novas figurinhas a qualquer hora, sem restrições!',
+  '📣 Ei! Você só pode criar uma figurinha a cada 12h. Assine o *VIP* e continue criando sem parar!',
+  '😴 Limite diário atingido! No *VIP*, figurinhas ilimitadas e vantagens exclusivas esperam por você!',
+  '🎉 Você só pode criar uma figurinha a cada 12h! Assine o *VIP* e desbloqueie figurinhas ilimitadas!',
+  '🔐 Limite de 12h entre figurinhas atingido! Torne-se VIP e crie quantas quiser, quando quiser!',
+  '⌛ Você precisa esperar 12h para a próxima figurinha. Com o *VIP*, esse limite desaparece!',
+  '💎 Figurinha criada! Próxima disponível só daqui a 12h. No VIP, você cria sem restrições!',
+  '🎁 Só é possível criar 1 figurinha a cada 12h! Assine o *VIP* e crie quantas quiser!',
+  '🔥 Figurinha do dia feita! Seja VIP e nunca mais se preocupe com o intervalo de 12h!',
+  '⚡ Limite de 12h atingido! No *VIP*, você cria figurinhas ilimitadas e aproveita super vantagens!',
+  '💌 Você só pode criar uma figurinha a cada 12h! Torne-se VIP e continue se divertindo sem limites!',
 ];
 
 const msg_premium_thankyou = [
@@ -62,15 +65,17 @@ const msg_premium_thankyou = [
   '🎊 Agora é oficial: você é premium! Obrigado por estar aqui! Aproveite tudo o que preparamos com carinho para você.',
 ];
 
-const msg_premium_wannabe = [
-  '🌟 Que tal desbloquear poderes especiais? Como premium, você tem acesso a vantagens exclusivas e uma experiência mágica! Vem com a gente!',
-  '💖 Ei, você! Sabia que tem um mundo de benefícios te esperando? Ser premium é ter acesso ao melhor! Vem fazer parte do nosso clube!',
-  '🎁 Upgrade na diversão? SIM! Como premium, você desbloqueia recursos incríveis e aproveita tudo ao máximo. Vamos juntos nessa?',
-  '🌈 Sua experiência pode ficar ainda mais especial! Com o plano premium, você ganha vantagens únicas e exclusivas. Que tal experimentar?',
-  '✨ Imagina ter o melhor de nós, sempre? Como premium, você recebe mimos, benefícios e uma experiência personalizada! Não perca essa chance!',
-  '🎊 O clube dos incríveis está te esperando! Como premium, você terá acesso a recursos especiais e muito mais diversão! Vem com a gente!',
-  '💡 Seu lugar no time premium está garantido! Benefícios exclusivos, suporte especial e muito mais esperam por você. Vamos nessa?',
-  '🥳 Você merece o melhor! E como premium, sua experiência será ainda mais divertida e cheia de surpresas! Vem descobrir tudo com a gente!',
+const msg_vip_wannabe = [
+  '💎 Torne-se VIP e desbloqueie figurinhas ilimitadas! Aproveite vantagens exclusivas e recursos que só os VIPs têm!',
+  '🌟 Seja VIP e tenha acesso a benefícios especiais: figurinhas ilimitadas, conteúdos exclusivos e diversão sem limites!',
+  '🎁 VIP é mais que um status: é figurinhas ilimitadas, recursos extras e privilégios exclusivos só para você!',
+  '⚡ Quer criar figurinhas sem esperar 12h? Torne-se VIP e aproveite figurinhas ilimitadas e super vantagens!',
+  '🔥 VIPs não têm limites! Crie figurinhas ilimitadas, desbloqueie recursos exclusivos e curta tudo sem restrições!',
+  '🎊 Seu lugar é VIP! Desbloqueie figurinhas ilimitadas, aproveite vantagens especiais e experimente o melhor do nosso mundo!',
+  '✨ Seja VIP e tenha uma experiência completa: figurinhas ilimitadas, recursos premium e muito mais diversão!',
+  '💡 VIP significa acesso total: crie sem limites, aproveite benefícios exclusivos e domine o mundo das figurinhas!',
+  '🥳 Torne-se VIP e transforme sua experiência: figurinhas ilimitadas, recursos extras e privilégios únicos!',
+  '📣 Quer continuar criando sem limites? Seja VIP e desbloqueie figurinhas ilimitadas com vantagens especiais!',
 ];
 
 const msg_limitonesticker = [
@@ -87,11 +92,16 @@ const msg_limitonesticker = [
 ];
 
 const msg_premium_expiring = [
-  '⏳ Ei! Seu premium está quase acabando! Renove agora e continue aproveitando todas as vantagens.',
-  '⚠️ Aviso rápido! Seu acesso premium expira em breve. Não fique sem seus benefícios, renove agora!',
-  '⏳ Falta pouco! Seu premium termina em alguns dias. Garanta sua renovação e continue se divertindo!',
-  '😢 Oh, não! Seu premium está prestes a expirar. Quer continuar com os recursos exclusivos? Renove já!',
-  '🔄 Atenção! Seu premium acaba em breve! Renove agora para continuar aproveitando tudo sem interrupções!',
+  '⏳ Ei! Seu VIP está quase acabando! Renove agora e continue aproveitando todas as vantagens sem interrupções.',
+  '⚠️ Aviso importante! Seu acesso premium vai expirar em breve. Não perca seus benefícios, renove já!',
+  '⏳ Quase lá! Seu VIP termina em alguns dias. Garanta a renovação e continue se divertindo sem limites!',
+  '😢 Ops! Seu premium está prestes a expirar. Quer continuar com recursos exclusivos? Renove agora!',
+  '🔄 Atenção! Seu VIP vai acabar em breve! Renove já e continue aproveitando figurinhas ilimitadas e muito mais!',
+  '🔥 VIP expirando! Não fique sem seus benefícios. Renove agora e continue criando sem limites!',
+  '💎 Seu acesso premium está acabando! Garanta a renovação e mantenha todos os recursos especiais ativos!',
+  '⚡ Última chamada! Seu VIP expira em breve. Renove já e continue aproveitando vantagens exclusivas!',
+  '🎁 VIP quase no fim! Não perca seus benefícios, renove agora e continue aproveitando tudo!',
+  '⏰ Corra! Seu premium vai expirar em breve. Renove agora e continue se divertindo sem interrupções!',
 ];
 
 const msg_size_errors = [
