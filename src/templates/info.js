@@ -65,7 +65,7 @@ const msg_premium_thankyou = [
   '🎊 Agora é oficial: você é premium! Obrigado por estar aqui! Aproveite tudo o que preparamos com carinho para você.',
 ];
 
-const msg_vip_wannabe = [
+const msg_premium_wannabe = [
   '💎 Torne-se VIP e desbloqueie figurinhas ilimitadas! Aproveite vantagens exclusivas e recursos que só os VIPs têm!',
   '🌟 Seja VIP e tenha acesso a benefícios especiais: figurinhas ilimitadas, conteúdos exclusivos e diversão sem limites!',
   '🎁 VIP é mais que um status: é figurinhas ilimitadas, recursos extras e privilégios exclusivos só para você!',
