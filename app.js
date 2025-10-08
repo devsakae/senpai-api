@@ -109,11 +109,11 @@ app.use(express.json());
     })
 
     app.post('/webhook', async (req, res) => {
-      // Log incoming req;
-      checkAndLog(req);
-
       // Avoid statuses messages
       if (checkType(req)) return;
+
+      // Log incoming req;
+      checkAndLog(req);
 
       if (req?.body?.entry[0]?.changes[0]?.value?.messages) {
         await markAsRead(req.body.entry[0]?.changes[0]?.value);

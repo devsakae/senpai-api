@@ -18,16 +18,17 @@ const checkLastInteraction = async (user, req) => {
   const timestampToTime = payload?.messages[0]?.timestamp * 1000;
   if (
     payload?.messages &&
+    (today.getTime() - timestampToTime) < 1000 // Mensagens enviadas com menos de 1 segundo de diff?
+  ) {
+    return console.info(`👀 ${user?.name} enviou multiplas msg em menos de 1 segundo`)
+  }
+  if (
+    payload?.messages &&
     (today.getTime() - timestampToTime) > 86400000 // Mais de um 1 dia?
   ) {
     return await rootMenu(payload.contacts[0]);
   }
-  if (
-    payload?.messages &&
-    (today.getTime() - timestampToTime) < 60 // Mensagens enviadas com menos de 1 segundo de diff?
-  ) {
-    return console.info(`👀 ${user?.name} enviou multiplas msg em menos de 1 segundo`)
-  }
+  
   return await checkCommand(user, req);
 };
 

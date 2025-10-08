@@ -1,11 +1,11 @@
 const checkAndLog = (req) => {
   const payload = req.body.entry[0]?.changes[0]?.value;
-  if (payload?.statuses) return;;
+  if (payload?.statuses) return;
   if (payload?.messages) {
     if (payload?.contacts.length === 0) return console.error('erro de contato:', payload);
     const { profile: { name }, wa_id } = payload?.contacts[0];
     const msg_type = payload?.messages[0]?.type || 'unknown';
-    if (msg_type === 'text') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent text:', payload?.messages[0]?.text?.body)
+    if (msg_type === 'text') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent text:', payload?.messages[0]?.text?.body.substring(0,255))
     if (msg_type === 'image') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent', payload?.messages[0]?.image?.mime_type, '#id:', payload?.messages[0]?.image?.id);
     if (msg_type === 'video') return console.info(payload?.messages[0]?.timestamp, wa_id, name, 'sent', payload?.messages[0]?.video?.mime_type, '#id:', payload?.messages[0]?.video?.id);
     if (msg_type === 'interactive') {

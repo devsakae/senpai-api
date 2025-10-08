@@ -23,8 +23,26 @@ const checkCupom = async (body, req) => {
   if (validCoupom && validCoupom.left === 0) return await soldOutCoupom(user);
 
   if (validCoupom && validCoupom.left > 0) {
-    if (user.premium) return console.log('usuário premium', user.profile.name, 'tentou utilizar cupom de ativação premium')
     const today = new Date();
+    if (validCoupom.type === 'extend') {
+      if (user.premium) {
+        return await senpaiMongoDb
+          .collection('premium')
+          .findOneAndUpdate(
+            { wa_id: user.wa_id },
+            {
+              $set: {
+                premium: true,
+                subscription: {
+                  end: subscription.end + validCoupom.days,
+                },
+              },
+            },
+            { upsert: true },
+          )
+      }
+      return console.info('usuário não premium tentou usar cupom extensor');
+    }
     let endDay = new Date();
     endDay.setDate(endDay.getDate() + validCoupom.days);
     return await senpaiMongoDb
